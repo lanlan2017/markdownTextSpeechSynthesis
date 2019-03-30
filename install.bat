@@ -17,6 +17,10 @@ cd %~dp0
 echo ############ 生成启动程序 xunfei.bat... #####
 ::覆盖写入
 echo @echo off>xunfei.bat
+echo ::切换盘符>>xunfei.bat
+echo %~d0>>xunfei.bat
+echo :: 进入文件所在路径>>xunfei.bat
+echo cd %~dp0>>xunfei.bat
 echo java -jar "%thispath%\xunfei.jar">>xunfei.bat
 ::
 :: ################# 创建启动程序 结束 #################
