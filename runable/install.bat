@@ -1,22 +1,24 @@
 @echo off
 ::################ 生成当前路径 开始 ########################
-::
+:: 获取当前工作目录
 set thispath=%~dp0
 set "thispath=%thispath:~0,-1%"
 echo   当前文件所在的目录的绝对路径:%thispath%
-::切换盘符
+::因为点击运行的时候默认在C:\Windows\System32\目录下
+::切换到文件所在的盘符
 %~d0
-::进入路径
+::进入文件所在的路径
 cd %~dp0
 ::
 ::################ 生成当前路径 结束 ########################
 ::
 :: ################# 创建启动程序 开始 #################
 ::
-echo ############ 生成启动程序 M.bat... #####
+echo ############ 生成启动程序 xunfei.bat... #####
 ::覆盖写入
-echo @echo off>M.bat
-echo java -jar "%thispath%\M.jar" %%1 %%2 %%3>>M.bat
+echo @echo off>xunfei.bat
+echo java -jar "%thispath%\xunfei.jar">>xunfei.bat
+pause
 ::
 :: ################# 创建启动程序 结束 #################
 :: 
