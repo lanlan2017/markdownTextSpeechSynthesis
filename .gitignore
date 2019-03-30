@@ -4,3 +4,4 @@ APPID.properties
 bin/
 msc/
 *.pcm
+/xunfei.bat
