@@ -1,0 +1,5 @@
+bin/
+msc/
+*.xmp
+*.pcm
+/APPID.properties
