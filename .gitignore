@@ -1,0 +1,7 @@
+.classpath
+.project
+APPID.properties
+bin/
+msc/
+xunfei.bat
+*.pcm

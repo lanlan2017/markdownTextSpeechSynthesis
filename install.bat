@@ -18,7 +18,6 @@ echo ############ 生成启动程序 xunfei.bat... #####
 ::覆盖写入
 echo @echo off>xunfei.bat
 echo java -jar "%thispath%\xunfei.jar">>xunfei.bat
-pause
 ::
 :: ################# 创建启动程序 结束 #################
 :: 
