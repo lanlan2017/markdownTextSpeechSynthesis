@@ -5,4 +5,7 @@ bin/
 msc/
 *.pcm
 *.xmp
-/xunfei.bat
+xunfei.bat
+runable/xunfei.bat
+runable/msc/
+
