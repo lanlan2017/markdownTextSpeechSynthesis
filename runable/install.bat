@@ -21,8 +21,8 @@ echo ::切换盘符>>xunfei.bat
 echo %~d0>>xunfei.bat
 echo :: 进入文件所在路径>>xunfei.bat
 echo cd %~dp0>>xunfei.bat
-echo :: 判断是否可以联网>>xunfei.bat
-echo ping www.xfyun.cn ^> nul>>xunfei.bat
+echo :: 判断是否可以联网,为了节省时间,只发送回显请求1次>>xunfei.bat
+echo ping www.xfyun.cn -n 1 ^> nul>>xunfei.bat
 echo :: 如果可以联网则执行程序>>xunfei.bat
 echo if %%errorlevel%% leq 0 (>>xunfei.bat
 echo    echo 网络链接正常.>>xunfei.bat
