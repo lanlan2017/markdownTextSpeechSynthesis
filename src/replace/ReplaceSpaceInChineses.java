@@ -7,7 +7,7 @@ public class ReplaceSpaceInChineses
 {
 	public static String replaceSpaceInChineses(String line)
 	{
-		Pattern spaceInChPT = Pattern.compile("([\\u4e00-\\u9fa5])\\s+([\\u4e00-\\u9fa5])");
+		Pattern spaceInChPT = Pattern.compile("([\\u4e00-\\u9fa5])[ ]+([\\u4e00-\\u9fa5])");
 		Matcher sepaceInChMT = spaceInChPT.matcher(line);
 		return sepaceInChMT.replaceAll("$1$2");
 	}

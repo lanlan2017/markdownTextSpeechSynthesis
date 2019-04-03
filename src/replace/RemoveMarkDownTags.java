@@ -21,7 +21,7 @@ public class RemoveMarkDownTags
 		// System.out.println(matcher.group(1));
 		// System.out.println(matcher.group(2));
 		// }
-		return line.replaceAll("(#+\\s*?)([^#]+)(?:\\1)?", "$2").trim();
+		return line.replaceAll("(#+\\s*?)([^#]+)(?:\\1)?", "$2");
 	}
 	/**
 	 * 移除markdown图片标记.
@@ -43,7 +43,7 @@ public class RemoveMarkDownTags
 			matcher.appendReplacement(sb, "");
 		}
 		matcher.appendTail(sb);
-		return sb.toString().trim();
+		return sb.toString();
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class RemoveMarkDownTags
 		// {
 		// System.out.println(matcher.group(2));
 		// }
-		return line.replaceAll("(\\*{1,2})([^*]+)(?:\\1)?", "$2").trim();
+		return line.replaceAll("(\\*{1,2})([^*]+)(?:\\1)?", "$2");
 	}
 	/**
 	 * 移除markdown代码段标记
@@ -117,7 +117,9 @@ public class RemoveMarkDownTags
 		// {
 		// System.out.println(matcher.group(2));
 		// }
-		return line.replaceAll("```(\\w+)?", "").trim();
+		line = line.replaceAll("```\\w*\\r?\\n(.+\\r?\\n)+?```", "");
+		return line;
+//		return line.replaceAll("```(\\w+)?", "").trim();
 	}
 	/**
 	 * 移除markdown,引用块。
@@ -141,6 +143,7 @@ public class RemoveMarkDownTags
 	 */
 	public static String replaceMD(String input)
 	{
+		System.out.println("---------------------- 取出markdown标记 开始  ------------------------");
 		// 去除markdown标题# h1 #,## h2 ##,### h3 ###,#### h4 ####,......
 		input = RemoveMarkDownTags.removeMDTitle(input);
 		// 去除markdown加粗: **xxxx**,或者斜体*xxxx*
@@ -149,12 +152,17 @@ public class RemoveMarkDownTags
 		input = RemoveMarkDownTags.removeMDIMG(input);
 		// 只保留超链接部分,丢弃文字部分
 		input = RemoveMarkDownTags.removeMDLink(input);
+//		System.out.println(input);
 		// 移除markdown中的代码块标记部分
 		input = RemoveMarkDownTags.removeMDCodeBlock(input);
+//		System.out.println("-------------------------");
+//		System.out.println(input);
 		// 移除markdown中的代码段标记部分.
 		input = RemoveMarkDownTags.removeCode(input);
 		// 移除markdown代码中的引用块,不要读成大于符号
 		input = RemoveMarkDownTags.removeMDQuoteBlock(input);
+		System.out.println(input);
+		System.out.println("---------------------- 取出markdown标记 开始  ------------------------");
 		return input;
 	}
 	public static void main(String[] args)
@@ -189,14 +197,19 @@ public class RemoveMarkDownTags
 //		String testStr = "附录C： “SSL证书” ，介绍了如何用KeyTool工具生 成公钥/私钥对，并生成数字证书。";
 		// String testStr = "本书所有的示例应用压缩包可以通过如下地址下
 		// 载：[http://books.brainysoftware.com/download](http://books.brainysoftware.com/download)";
-		String testStr = "## 4.3.4 paramValues隐式对象 ##\r\n" + 
-				"利用隐式对象`paramValues`可以获取一个**请求参数**的**多个值**。这个对象表示一个包含所有请求参数的`Map`集合，参数名称作为`key`。每个`key`的对应值是一个`字符串数组`，数组中包含了指定参数名称的所有值。即使该参数只有一个值，它也仍然返回一个只带有一个元素的数组。\r\n" + 
-				"\r\n" + 
-				"例如，为了获得`selectedOptions`参数的第一个值和第二个值，可以使用以下表达式：";
+		String testStr = "例如，下面的`set`标签创建了字符串“`Hello World`”，并将它赋给新创建的页面范围变量`hello`：\r\n" + 
+				"```jsp\r\n" + 
+				"<c:set  value=\"Hello World\" var=\"hello\"/>\r\n" + 
+				"```\r\n" + 
+				"下面的`set `标签则创建了一个名为`job`的有界变量，它引用请求范围中`position`所引用的对象。变量`job `的范围为`page`：\r\n" + 
+				"```jsp\r\n" + 
+				"<c:set var=\"job\" value=\"${requestScope.position}\" scope=\"page\"/>\r\n" + 
+				"```\r\n" + 
+				"";
 		System.out.println(testStr);
 		System.out.println(
 				"##################################### 替换结果: #####################################");
 		// System.out.println(removeMDQuoteBlock(testStr));
-		System.out.println(removeCode(testStr));
+		System.out.println(removeMDCodeBlock(testStr));
 	}
 }
