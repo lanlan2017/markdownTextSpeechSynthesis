@@ -21,7 +21,18 @@ echo ::切换盘符>>xunfei.bat
 echo %~d0>>xunfei.bat
 echo :: 进入文件所在路径>>xunfei.bat
 echo cd %~dp0>>xunfei.bat
-echo java -jar "%thispath%\xunfei.jar">>xunfei.bat
+echo :: 判断是否可以联网>>xunfei.bat
+echo ping www.xfyun.cn ^> nul>>xunfei.bat
+echo :: 如果可以联网则执行程序>>xunfei.bat
+echo if %%errorlevel%% leq 0 (>>xunfei.bat
+echo    echo 网络链接正常.>>xunfei.bat
+echo    java -jar "%thispath%\xunfei.jar">>xunfei.bat
+echo ) else (>>xunfei.bat
+echo :: 如果不可以联网则给出提示>>xunfei.bat
+echo    echo 无法连接到www.xfyun.cn,请求检查网络是否连接正常.>>xunfei.bat
+echo    pause>>xunfei.bat
+echo    exit>>xunfei.bat
+echo )>>xunfei.bat
 ::
 :: ################# 创建启动程序 结束 #################
 :: 
