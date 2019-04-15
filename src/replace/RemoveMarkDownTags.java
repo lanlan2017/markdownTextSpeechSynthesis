@@ -120,8 +120,8 @@ public class RemoveMarkDownTags
 //		// line = line.replaceAll(":", "Ã°ºÅ");
 //		// line = line.replaceAll("/", "Ð±¸Ü");
 //		return sb.toString();
-//		line=line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "");
-		line=line.replaceAll("\\[.*?]\\((.+?)\\)", "");
+		line=line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "");
+//		line=line.replaceAll("\\[.*?]\\((.+?)\\)", "");
 		return line;
 	}
 	/**
