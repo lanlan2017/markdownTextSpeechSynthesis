@@ -70,13 +70,31 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeCode(String line)
 	{
-		// Pattern pattern=Pattern.compile("(\\*\\*)([^*]+)(?:\\1)?");
-		// Matcher matcher=pattern.matcher(line);
-		// while(matcher.find())
-		// {
-		// System.out.println(matcher.group(2));
-		// }
-		return line.replaceAll("`(.+?)`", " $1 ");
+//		Pattern pattern = Pattern.compile("`(.+?)`");
+//		Matcher matcher = pattern.matcher(line);
+//		while (matcher.find())
+//		{
+//			line = matcher.replaceAll(" $1 ");
+//		}
+		line = line.replaceAll("`(.+?)`", " $1 ");
+//		line = line.replace(",", "逗号");
+//		line = line.replace("#", "井号");
+//		line = line.replace(".", "点");
+//		line = line.replace(";", "分号");
+//		line = line.replace("%", "百分号");
+//		line = line.replace("?", "问号");
+		return line;
+	}
+	/**
+	 * 移除markdown表格对齐符号.
+	 * 
+	 * @param line
+	 * @return
+	 */
+	public static String removeMDTableAlign(String line)
+	{
+		// |:---|:---|
+		return line;
 	}
 	/**
 	 * 移除markdown,超链接。
@@ -86,22 +104,24 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDLink(String line)
 	{
-		Pattern pattern = Pattern.compile("\\[.*?]\\((https?://.+?)\\)");
-		Matcher matcher = pattern.matcher(line);
-		String link = null;
-		StringBuffer sb = new StringBuffer(10240);
-		while (matcher.find())
-		{
-			link = matcher.group(0);
-			link = link.replaceAll(":", "冒号");
-			link = link.replaceAll("/", "斜杠");
-			matcher.appendReplacement(sb, link);
-		}
-		matcher.appendTail(sb);
-		// line = line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "$1").trim();
-		// line = line.replaceAll(":", "冒号");
-		// line = line.replaceAll("/", "斜杠");
-		return sb.toString();
+//		Pattern pattern = Pattern.compile("\\[.*?]\\((https?://.+?)\\)");
+//		Matcher matcher = pattern.matcher(line);
+//		String link = null;
+//		StringBuffer sb = new StringBuffer(10240);
+//		while (matcher.find())
+//		{
+//			link = matcher.group(0);
+//			link = link.replaceAll(":", "冒号");
+//			link = link.replaceAll("/", "斜杠");
+//			matcher.appendReplacement(sb, link);
+//		}
+//		matcher.appendTail(sb);
+//		// line = line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "$1").trim();
+//		// line = line.replaceAll(":", "冒号");
+//		// line = line.replaceAll("/", "斜杠");
+//		return sb.toString();
+		line=line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "");
+		return line;
 	}
 	/**
 	 * 移除markdown,代码块。
@@ -117,9 +137,10 @@ public class RemoveMarkDownTags
 		// {
 		// System.out.println(matcher.group(2));
 		// }
+		// 移除Markdown代码块标记.
 		line = line.replaceAll("```\\w*\\r?\\n(.+\\r?\\n)+?```", "");
 		return line;
-//		return line.replaceAll("```(\\w+)?", "").trim();
+		// return line.replaceAll("```(\\w+)?", "").trim();
 	}
 	/**
 	 * 移除markdown,引用块。
@@ -143,7 +164,8 @@ public class RemoveMarkDownTags
 	 */
 	public static String replaceMD(String input)
 	{
-		System.out.println("---------------------- 取出markdown标记 开始  ------------------------");
+		System.out.println(
+				"---------------------- 取出markdown标记 开始  ------------------------");
 		// 去除markdown标题# h1 #,## h2 ##,### h3 ###,#### h4 ####,......
 		input = RemoveMarkDownTags.removeMDTitle(input);
 		// 去除markdown加粗: **xxxx**,或者斜体*xxxx*
@@ -152,17 +174,18 @@ public class RemoveMarkDownTags
 		input = RemoveMarkDownTags.removeMDIMG(input);
 		// 只保留超链接部分,丢弃文字部分
 		input = RemoveMarkDownTags.removeMDLink(input);
-//		System.out.println(input);
+		// System.out.println(input);
 		// 移除markdown中的代码块标记部分
 		input = RemoveMarkDownTags.removeMDCodeBlock(input);
-//		System.out.println("-------------------------");
-//		System.out.println(input);
+		// System.out.println("-------------------------");
+		// System.out.println(input);
 		// 移除markdown中的代码段标记部分.
 		input = RemoveMarkDownTags.removeCode(input);
 		// 移除markdown代码中的引用块,不要读成大于符号
 		input = RemoveMarkDownTags.removeMDQuoteBlock(input);
 		System.out.println(input);
-		System.out.println("---------------------- 取出markdown标记 开始  ------------------------");
+		System.out.println(
+				"---------------------- 取出markdown标记 开始  ------------------------");
 		return input;
 	}
 	public static void main(String[] args)
@@ -194,22 +217,23 @@ public class RemoveMarkDownTags
 		// String testStr = "> **注意**\r\n" +
 		// "> 2011年，标准化组织IETF发布了WebSocket协议，即RFC
 		// 6455规范。该协议允许一个HTTP连接升级为WebSocket连接，支持双向通信，这就使得服务端可以通过WebSocket协议主动发起同客户端的会话通信。";
-//		String testStr = "附录C： “SSL证书” ，介绍了如何用KeyTool工具生 成公钥/私钥对，并生成数字证书。";
+		// String testStr = "附录C： “SSL证书” ，介绍了如何用KeyTool工具生 成公钥/私钥对，并生成数字证书。";
 		// String testStr = "本书所有的示例应用压缩包可以通过如下地址下
 		// 载：[http://books.brainysoftware.com/download](http://books.brainysoftware.com/download)";
-		String testStr = "例如，下面的`set`标签创建了字符串“`Hello World`”，并将它赋给新创建的页面范围变量`hello`：\r\n" + 
-				"```jsp\r\n" + 
-				"<c:set  value=\"Hello World\" var=\"hello\"/>\r\n" + 
-				"```\r\n" + 
-				"下面的`set `标签则创建了一个名为`job`的有界变量，它引用请求范围中`position`所引用的对象。变量`job `的范围为`page`：\r\n" + 
-				"```jsp\r\n" + 
-				"<c:set var=\"job\" value=\"${requestScope.position}\" scope=\"page\"/>\r\n" + 
-				"```\r\n" + 
-				"";
+//		String testStr = "例如，下面的`set`标签创建了字符串“`Hello World`”，并将它赋给新创建的页面范围变量`hello`：\r\n"
+//				+ "```jsp\r\n"
+//				+ "<c:set  value=\"Hello World\" var=\"hello\"/>\r\n"
+//				+ "```\r\n"
+//				+ "下面的`set `标签则创建了一个名为`job`的有界变量，它引用请求范围中`position`所引用的对象。变量`job `的范围为`page`：\r\n"
+//				+ "```jsp\r\n"
+//				+ "<c:set var=\"job\" value=\"${requestScope.position}\" scope=\"page\"/>\r\n"
+//				+ "```\r\n" + "";
+		String testStr="可以通过下面的`URL`来访问这个`JSP`页面：\r\n" + 
+				"[http://localhost:8080/app08a/countries.jsp](http://localhost:8080/app08a/countries.jsp)";
 		System.out.println(testStr);
 		System.out.println(
 				"##################################### 替换结果: #####################################");
 		// System.out.println(removeMDQuoteBlock(testStr));
-		System.out.println(removeMDCodeBlock(testStr));
+		System.out.println(replaceMD(testStr));
 	}
 }
