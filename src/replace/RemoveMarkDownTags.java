@@ -120,7 +120,8 @@ public class RemoveMarkDownTags
 //		// line = line.replaceAll(":", "冒号");
 //		// line = line.replaceAll("/", "斜杠");
 //		return sb.toString();
-		line=line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "");
+//		line=line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "");
+		line=line.replaceAll("\\[.*?]\\((.+?)\\)", "");
 		return line;
 	}
 	/**
@@ -172,7 +173,7 @@ public class RemoveMarkDownTags
 		input = RemoveMarkDownTags.removeMDStrongOrItalic(input);
 		// 去除Markdown文档中的图片标签
 		input = RemoveMarkDownTags.removeMDIMG(input);
-		// 只保留超链接部分,丢弃文字部分
+		// 移除Markdown文档中的超链接
 		input = RemoveMarkDownTags.removeMDLink(input);
 		// System.out.println(input);
 		// 移除markdown中的代码块标记部分
