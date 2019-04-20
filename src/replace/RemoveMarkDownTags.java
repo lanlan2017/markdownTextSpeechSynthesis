@@ -94,7 +94,7 @@ public class RemoveMarkDownTags
 		{
 			//获取匹配文本
 			matcherStr=matcher.group(1);
-			matcherStr=matcherStr.replace("-", "杠");
+			matcherStr=matcherStr.replace("-", " 杠");
 			matcherStr=matcherStr.replaceAll("url", "URL");
 			matcherStr=" "+matcherStr+" ";
 			matcher.appendReplacement(sb, matcherStr);
