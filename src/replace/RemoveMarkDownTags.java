@@ -94,8 +94,18 @@ public class RemoveMarkDownTags
 		{
 			//获取匹配文本
 			matcherStr=matcher.group(1);
+			//替换容易读错的符号
 			matcherStr=matcherStr.replace("-", " 杠");
-			matcherStr=matcherStr.replaceAll("url", "URL");
+			matcherStr=matcherStr.replace("=", "等于");
+			matcherStr=matcherStr.replace("&", "单与符号");
+			matcherStr=matcherStr.replace("?", "问号");
+			matcherStr=matcherStr.replace("*", "星号");
+			matcherStr=matcherStr.replace("/", "斜杠");
+			matcherStr=matcherStr.replace(":", "冒号");
+			//替换容易读出的单词
+			matcherStr=matcherStr.replace("javax", "java x");
+			matcherStr=matcherStr.replace("https", "http s");
+			matcherStr=matcherStr.replace("url", "URL");
 			matcherStr=" "+matcherStr+" ";
 			matcher.appendReplacement(sb, matcherStr);
 		}
