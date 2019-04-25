@@ -171,7 +171,7 @@ public class RemoveMarkDownTags
 		// System.out.println(matcher.group(2));
 		// }
 		// ÒÆ³ıMarkdown´úÂë¿é±ê¼Ç.
-		line = line.replaceAll("```\\w*\\r?\\n(.+\\r?\\n)+?```", "");
+		line = line.replaceAll("```\\w*\\r?\\n(.*\\r?\\n)+?```", "");
 		return line;
 		// return line.replaceAll("```(\\w+)?", "").trim();
 	}

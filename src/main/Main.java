@@ -42,29 +42,26 @@ public class Main
 		//从剪贴板中获取数据
 		String input=SysClipboardUtil.getSysClipboardText();
 		// 移除中文之间的一个或多个空格
+		System.out.println("---------------------------------- 移除中文中的空格 ----------------------------------");
 		input = ReplaceSpaceInChineses.replaceSpaceInChineses(input);
-		System.out.println(
-				"---------------------------------- 移除中文中的空格 ----------------------------------");
 		System.out.println(input);
 		//把没有中文空格的字符写回剪贴板.
 		SysClipboardUtil.setSysClipboardText(input);
 		System.out.println(
 				"---------------------------------- 移除中文中的空格 ----------------------------------");
+		System.out.println("---------------------------------- 特殊字符处理 ----------------------------------");
 		// 去除中文点号
 		input = Replace.replaceTitle(input);
 		// 移除markdown标记
 		input = RemoveMarkDownTags.replaceMD(input);
 		// 移除xml标记
-		input = ReplaceHtmlXmlTags.replaceHtmlXmlTags(input);
-		// 拆分Java关键字
+//		input = ReplaceHtmlXmlTags.replaceHtmlXmlTags(input);
+		// 拆分驼峰命名法,
 		input = Replace.replaceEnglish(input);
 		// 替换斜杠/,反斜杠\,单与符号&这样的特殊字符.
 //		input = ReplaceSpecialCharacter.replaceSpecialCharacter(input);
-		System.out.println(
-				"---------------------------------- 特殊字符处理 ----------------------------------");
 		System.out.println(input);
-		System.out.println(
-				"---------------------------------- 特殊字符处理 ----------------------------------");
+		System.out.println("---------------------------------- 特殊字符处理 ----------------------------------");
 
 		// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
 		mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
