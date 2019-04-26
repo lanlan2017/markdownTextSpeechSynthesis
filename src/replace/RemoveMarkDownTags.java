@@ -95,12 +95,34 @@ public class RemoveMarkDownTags
 			//获取匹配文本
 			matcherStr=matcher.group(1);
 			//替换容易读错的符号
-			matcherStr=matcherStr.replace("-", " 杠");
+			//处理横线:负,杠
+			if(matcherStr.contains("-"))
+			{
+				//找到该字符
+				int index=matcherStr.indexOf("-");
+				//找到下一个字符
+				int after=index+1;
+				//如果下一个字符是数字
+				if('0'<=matcherStr.charAt(after)&&matcherStr.charAt(after)<='9')
+				{
+					//这说明是负数,替换所有的`-`为符号,
+					//但是这样其实并不是很正确的算法
+					//类似于`-1,jsp-config`这样的应该读为,负1,jsp杠config,
+					//但是下面的算法,会读成:负1, jsp 负 config
+					//不过没有关系,我应该不会这样写markdown
+					matcherStr=matcherStr.replace("-", " 负");
+				}
+				else
+				{
+					matcherStr=matcherStr.replace("-", " 杠");
+				}
+			}
 			matcherStr=matcherStr.replace("=", "等于");
 			matcherStr=matcherStr.replace("&", "单与符号");
 			matcherStr=matcherStr.replace("?", "问号");
 			matcherStr=matcherStr.replace("*", "星号");
 			matcherStr=matcherStr.replace("/", "斜杠");
+			matcherStr=matcherStr.replace("\\", "反斜杠");
 			matcherStr=matcherStr.replace(":", "冒号");
 			//替换容易读出的单词
 			matcherStr=matcherStr.replace("javax", "java x");

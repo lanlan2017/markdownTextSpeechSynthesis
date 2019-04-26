@@ -1,4 +1,4 @@
-package main;
+package test;
 
 import java.util.Scanner;
 import com.iflytek.cloud.speech.SpeechConstant;
@@ -11,15 +11,19 @@ import replace.RemoveMarkDownTags;
 import replace.Replace;
 import replace.ReplaceSpaceInChineses;
 import tools.io.reader.PropertiesReader;
-public class Main
+/**
+ * 测试文本处理的类,该类是Main类的一个副本. 该类用于测试字符替换效果,没有在最后一句调用语音合成API.
+ */
+public class Test
 {
 	static Scanner scanner = new Scanner(System.in);
 	public static void main(String[] args)
 	{
 		// 2 将“XXXXXXXX”替换成您申请的APPID
 		String fileName;
-		//从配置文件中读取APPID
-		SpeechUtility.createUtility(SpeechConstant.APPID + "="+PropertiesReader.getAPPID());
+		// 从配置文件中读取APPID
+		SpeechUtility.createUtility(
+				SpeechConstant.APPID + "=" + PropertiesReader.getAPPID());
 		// 3.创建SpeechSynthesizer对象
 		SpeechSynthesizer mTts = SpeechSynthesizer.createSynthesizer();
 		// 设置语速，范围0~100
@@ -35,40 +39,43 @@ public class Main
 		// String text = "测试语音合成";
 		System.out.println(
 				"######################################## 讯飞语音合成系统 ########################################");
-//		System.out.println("输入要合成的文字(以: \"#\"作为结束符):");
-//		//从控制台读取输入.
-//		String input = getInput();
-		//从剪贴板中获取数据
-		String input=SysClipboardUtil.getSysClipboardText();
+		// System.out.println("输入要合成的文字(以: \"#\"作为结束符):");
+		// //从控制台读取输入.
+		// String input = getInput();
+		// 从剪贴板中获取数据
+		String input = SysClipboardUtil.getSysClipboardText();
 		// 移除中文之间的一个或多个空格
-		System.out.println("---------------------------------- 移除中文中的空格 ----------------------------------");
+		System.out.println(
+				"---------------------------------- 移除中文中的空格 ----------------------------------");
 		input = ReplaceSpaceInChineses.replaceSpaceInChineses(input);
 		System.out.println(input);
-		//把没有中文空格的字符写回剪贴板.
+		// 把没有中文空格的字符写回剪贴板.
 		SysClipboardUtil.setSysClipboardText(input);
 		System.out.println(
 				"---------------------------------- 移除中文中的空格 ----------------------------------");
-		System.out.println("---------------------------------- 特殊字符处理 ----------------------------------");
+		System.out.println(
+				"---------------------------------- 特殊字符处理 ----------------------------------");
 		// 去除中文点号
 		input = Replace.replaceTitle(input);
 		// 移除markdown标记
 		input = RemoveMarkDownTags.replaceMD(input);
 		// 移除xml标记
-//		input = ReplaceHtmlXmlTags.replaceHtmlXmlTags(input);
+		// input = ReplaceHtmlXmlTags.replaceHtmlXmlTags(input);
 		// 拆分驼峰命名法,
 		input = Replace.replaceEnglish(input);
 		// 替换斜杠/,反斜杠\,单与符号&这样的特殊字符.
-//		input = ReplaceSpecialCharacter.replaceSpecialCharacter(input);
+		// input = ReplaceSpecialCharacter.replaceSpecialCharacter(input);
 		System.out.println(input);
-		System.out.println("---------------------------------- 特殊字符处理 ----------------------------------");
+		System.out.println(
+				"---------------------------------- 特殊字符处理 ----------------------------------");
 
 		// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
-		mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+		// mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
 	}
 
-	/**   
-	 * @return  
-	 */  
+	/**
+	 * @return
+	 */
 	public static String getInput()
 	{
 		StringBuffer sbBuffer = new StringBuffer(10240);
