@@ -21,23 +21,23 @@ public class RemoveMarkDownTags
 		// System.out.println(matcher.group(1));
 		// System.out.println(matcher.group(2));
 		// }
-//		line= line.replaceAll("(#+\\s*?)([^#]+)(?:\\1)?", "$2");
+		// line= line.replaceAll("(#+\\s*?)([^#]+)(?:\\1)?", "$2");
 		Pattern pattern = Pattern.compile("(#+\\s*?)([^#]+)(?:\\1)?");
 		Matcher matcher = pattern.matcher(line);
 		StringBuffer sb = new StringBuffer();
 		String matcherStr;
 		while (matcher.find())
 		{
-			//获取匹配文本
-			matcherStr=matcher.group(2);
-			matcherStr=matcherStr.replace("-", "杠");
-			matcherStr=matcherStr.replace(".", "点");
-			matcherStr=" "+matcherStr+" ";
+			// 获取匹配文本
+			matcherStr = matcher.group(2);
+			matcherStr = matcherStr.replace("-", "杠");
+			matcherStr = matcherStr.replace(".", "点");
+			matcherStr = " " + matcherStr + " ";
 			matcher.appendReplacement(sb, matcherStr);
 		}
 		matcher.appendTail(sb);
 		return sb.toString();
-//		return line.replaceAll("(#+\\s*?)([^#]+)(?:\\1)?", "$2");
+		// return line.replaceAll("(#+\\s*?)([^#]+)(?:\\1)?", "$2");
 	}
 	/**
 	 * 移除markdown图片标记.
@@ -92,43 +92,22 @@ public class RemoveMarkDownTags
 		String matcherStr;
 		while (matcher.find())
 		{
-			//获取匹配文本
-			matcherStr=matcher.group(1);
-			//替换容易读错的符号
-			//处理横线:负,杠
-			if(matcherStr.contains("-"))
-			{
-				//找到该字符
-				int index=matcherStr.indexOf("-");
-				//找到下一个字符
-				int after=index+1;
-				//如果下一个字符是数字
-				if('0'<=matcherStr.charAt(after)&&matcherStr.charAt(after)<='9')
-				{
-					//这说明是负数,替换所有的`-`为符号,
-					//但是这样其实并不是很正确的算法
-					//类似于`-1,jsp-config`这样的应该读为,负1,jsp杠config,
-					//但是下面的算法,会读成:负1, jsp 负 config
-					//不过没有关系,我应该不会这样写markdown
-					matcherStr=matcherStr.replace("-", " 负");
-				}
-				else
-				{
-					matcherStr=matcherStr.replace("-", " 杠");
-				}
-			}
-			matcherStr=matcherStr.replace("=", "等于");
-			matcherStr=matcherStr.replace("&", "单与符号");
-			matcherStr=matcherStr.replace("?", "问号");
-			matcherStr=matcherStr.replace("*", "星号");
-			matcherStr=matcherStr.replace("/", "斜杠");
-			matcherStr=matcherStr.replace("\\", "反斜杠");
-			matcherStr=matcherStr.replace(":", "冒号");
-			//替换容易读出的单词
-			matcherStr=matcherStr.replace("javax", "java x");
-			matcherStr=matcherStr.replace("https", "http s");
-			matcherStr=matcherStr.replace("url", "URL");
-			matcherStr=" "+matcherStr+" ";
+			// 获取匹配文本
+			matcherStr = matcher.group(1);
+			// 替换容易读错的符号
+			// 处理横线:负,杠
+			// 负数的情况
+			// 处理匹配特定正则表达式的情况
+			matcherStr = MDCodeReplace.replaceMatcher(matcherStr);
+			// 处理匹配特定单词的情况
+			matcherStr = MDCodeReplace.replaceSpecialWords(matcherStr);
+			// 处理匹配特定字符的情况
+			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
+			// 替换容易读出的单词
+			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
+
+			// 添加空格让机器人好识别
+			matcherStr = " " + matcherStr + " ";
 			matcher.appendReplacement(sb, matcherStr);
 		}
 		matcher.appendTail(sb);
@@ -245,13 +224,16 @@ public class RemoveMarkDownTags
 	}
 	public static void main(String[] args)
 	{
-//		String testStr = "可以通过下面的`URL`来访问这个`JSP`页面：\r\n"
-//				+ "[http://localhost:8080/app08a/countries.jsp](http://localhost:8080/app08a/countries.jsp)";
-		String testStr="# 12.1.2 实施安全约束 #\r\n" + 
-				"**`WEB-INF`目录下的资源客户端不能直接通过`URL`访问**,不过,我们可以通过`Servlet`或`JSP`页面访问`WEB-INF`目录下的资源。"
-				+ "### web-resource-collection子元素 ###\r\n" + 
-				"**`web-resource-collection`元素表示需要限制访问的资源集合**。包括`web-resource-name`、`description`、`url-pattern`、`http-method`和`http-method-ommission`等子元素。\r\n" + 
-				"- `web-resource-name`子元素用于设置与受保护资源相关联的名称。";
+		// String testStr = "可以通过下面的`URL`来访问这个`JSP`页面：\r\n"
+		// +
+		// "[http://localhost:8080/app08a/countries.jsp](http://localhost:8080/app08a/countries.jsp)";
+		String testStr = "# 12.1.2 实施安全约束 #\r\n"
+				+ "**`WEB-INF`目录下的资源客户端不能直接通过`URL`访问**,不过,我们可以通过`Servlet`或`JSP`页面访问`WEB-INF`目录下的资源。"
+				+ "### web-resource-collection子元素 ###\r\n"
+				+ "**`web-resource-collection`元素表示需要限制访问的资源集合**。包括`web-resource-name`、`description`、`url-pattern`、`http-method`和`http-method-ommission`等子元素。\r\n"
+				+ "- `web-resource-name`子元素用于设置与受保护资源相关联的名称。\r\n"
+				+ "则该方法返回:`-1`\r\n" + "编码为:`ISO-8859-1`\r\n" + "获取内部的`id`值\r\n"
+				+ "`url`\r\n" + "`MIME`\r\n" + "`GET`方法\r\n";
 		System.out.println(testStr);
 		System.out.println(
 				"##################################### 替换结果: #####################################");
