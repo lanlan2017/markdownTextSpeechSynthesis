@@ -11,6 +11,7 @@ import replace.RemoveMarkDownTags;
 import replace.Replace;
 import replace.ReplaceSpaceInChineses;
 import tools.io.reader.PropertiesReader;
+import tools.io.writer.MyStringWriter;
 /**
  * 测试文本处理的类,该类是Main类的一个副本. 该类用于测试字符替换效果,没有在最后一句调用语音合成API.
  */
@@ -71,6 +72,8 @@ public class Test
 
 		// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
 		// mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+		//写入处理结果,便于后续分析
+		MyStringWriter.writerString(input);
 	}
 
 	/**

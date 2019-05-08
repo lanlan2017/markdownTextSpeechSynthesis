@@ -10,6 +10,7 @@ public class MDCodeReplace
 	{
 		matcherStr = matcherStr.replace("javax", "java x");
 		matcherStr = matcherStr.replace("https", "http s");
+		matcherStr = matcherStr.replace("JavaEE", "java E E");
 		return matcherStr;
 	}
 	/**
@@ -59,8 +60,16 @@ public class MDCodeReplace
 				break;
 			case "url" :
 				matcherStr = "URL";
+				break;
 			case "GET" :
 				matcherStr = "get";
+				break;
+			case "CRUD" :
+				matcherStr = "C R U D";
+				break;
+			case "JavaEE" :
+				matcherStr = "Java E E";
+				break;
 			default :
 				break;
 		}

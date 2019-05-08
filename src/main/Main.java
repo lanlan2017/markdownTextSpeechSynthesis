@@ -1,5 +1,9 @@
 package main;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import com.iflytek.cloud.speech.SpeechConstant;
 import com.iflytek.cloud.speech.SpeechError;
@@ -11,6 +15,7 @@ import replace.RemoveMarkDownTags;
 import replace.Replace;
 import replace.ReplaceSpaceInChineses;
 import tools.io.reader.PropertiesReader;
+import tools.io.writer.MyStringWriter;
 public class Main
 {
 	static Scanner scanner = new Scanner(System.in);
@@ -61,10 +66,13 @@ public class Main
 //		input = ReplaceSpecialCharacter.replaceSpecialCharacter(input);
 		System.out.println(input);
 		System.out.println("---------------------------------- 特殊字符处理 ----------------------------------");
-
 		// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
 		mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+		//写入处理结果
+		MyStringWriter.writerString(input);
 	}
+
+
 
 	/**   
 	 * @return  

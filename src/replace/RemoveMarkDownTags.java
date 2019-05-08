@@ -30,6 +30,8 @@ public class RemoveMarkDownTags
 		{
 			// 获取匹配文本
 			matcherStr = matcher.group(2);
+
+			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
 			matcherStr = matcherStr.replace("-", "杠");
 			matcherStr = matcherStr.replace(".", "点");
 			matcherStr = " " + matcherStr + " ";
