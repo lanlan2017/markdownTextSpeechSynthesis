@@ -11,6 +11,8 @@ public class MDCodeReplace
 		matcherStr = matcherStr.replace("javax", "java x");
 		matcherStr = matcherStr.replace("https", "http s");
 		matcherStr = matcherStr.replace("JavaEE", "java E E");
+		matcherStr = matcherStr.replace("radiobutton", "radio button");
+		matcherStr = matcherStr.replace("radio buttons", "radio buttons");
 		return matcherStr;
 	}
 	/**

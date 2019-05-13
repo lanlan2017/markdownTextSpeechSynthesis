@@ -13,15 +13,6 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDTitle(String line)
 	{
-		// Pattern pattern=Pattern.compile("(#+)([^#]+)(?:\\1)?");
-		// Matcher matcher=pattern.matcher(line);
-		// while(matcher.find())
-		// {
-		// System.out.println(matcher.group(0));
-		// System.out.println(matcher.group(1));
-		// System.out.println(matcher.group(2));
-		// }
-		// line= line.replaceAll("(#+\\s*?)([^#]+)(?:\\1)?", "$2");
 		Pattern pattern = Pattern.compile("(#+\\s*?)([^#]+)(?:\\1)?");
 		Matcher matcher = pattern.matcher(line);
 		StringBuffer sb = new StringBuffer();
