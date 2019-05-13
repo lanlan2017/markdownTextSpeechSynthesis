@@ -1,8 +1,13 @@
 package replace;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MDCodeReplace
 {
 	/**
+	 * 处理包含这些单词的情况.
+	 * 
 	 * @param matcherStr
 	 * @return
 	 */
@@ -16,6 +21,8 @@ public class MDCodeReplace
 		return matcherStr;
 	}
 	/**
+	 * 替换特殊字符.
+	 * 
 	 * @param matcherStr
 	 * @return
 	 */
@@ -32,15 +39,26 @@ public class MDCodeReplace
 		return matcherStr;
 	}
 	/**
+	 * 处理匹配特定正则表达式的情况.
+	 * 
 	 * @param matcherStr
 	 * @return
 	 */
 	public static String replaceMatcher(String matcherStr)
 	{
+		// HTML代码
+		Pattern htmlTagPattern = Pattern.compile("<(.+?)/?>");
+		Matcher htmlTagMatcher = htmlTagPattern.matcher(matcherStr);
+		// 如果是负数的情况
 		if (matcherStr.matches("-\\d+"))
 		{
-//			System.out.println("匹配到负数: " + matcherStr);
+			// System.out.println("匹配到负数: " + matcherStr);
 			matcherStr = matcherStr.replace("-", "负");
+		}
+		// 如果是html标签
+		if (htmlTagMatcher.matches())
+		{
+			matcherStr = htmlTagMatcher.replaceAll("$1");
 		}
 		return matcherStr;
 	}

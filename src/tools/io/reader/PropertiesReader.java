@@ -9,6 +9,7 @@ public class PropertiesReader
 {
 	// —∂∑…”Ô“Ù∫œ≥…APPID
 	private static String APPID = null;
+	// 
 	public static String getAPPID()
 	{
 		if(APPID==null)

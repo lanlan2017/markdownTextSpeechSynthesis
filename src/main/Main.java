@@ -7,6 +7,7 @@ import com.iflytek.cloud.speech.SpeechSynthesizer;
 import com.iflytek.cloud.speech.SpeechUtility;
 import com.iflytek.cloud.speech.SynthesizeToUriListener;
 import clipboard.util.SysClipboardUtil;
+import replace.RemoveHtmlTags;
 import replace.RemoveMarkDownTags;
 import replace.ReplaceEnglishString;
 import replace.ReplaceSpaceInChineses;
@@ -41,21 +42,28 @@ public class Main
 		// 从剪贴板中获取数据
 		String input = SysClipboardUtil.getSysClipboardText();
 		// 移除中文之间的一个或多个空格
-		System.out.println(
-				"---------------------------------- 移除中文中的空格 ----------------------------------");
+		System.out.println("------------------- 删除中文中多余空格 开始 --------");
 		input = ReplaceSpaceInChineses.replaceSpaceInChineses(input);
-		System.out.println(input);
-		System.out.println(
-				"---------------------------------- 移除中文中的空格 ----------------------------------");
-		System.out.println(
-				"---------------------------------- 特殊字符处理 ----------------------------------");
+//		System.out.println(input);
+		System.out.println("------------------- 删除中文中多余空格 结束 --------");
+		System.out.println("------------------- 处理Markown文本 开始 ----------");
 		// 移除markdown标记
 		input = RemoveMarkDownTags.replaceMD(input);
+//		System.out.println(input);
+		System.out.println("------------------- 处理Markown文本 结束 ----------");
+		System.out.println("------------------- 处理HTML文本 开始 -------------");
+		// 注意要放在RemoveMarkDownTags.replaceMD(input);之后,以免移除掉代码块中的内容
+		// 移除类似`<center><strong>表19.3input标签的属性</strong></center>`这样的标签
+		input = RemoveHtmlTags.removeHtmlDoubleTags(input);
+//		System.out.println(input);
+		System.out.println("------------------- 处理HTML文本 结束 -------------");
+		System.out.println("------------------- 拆分Java驼峰命名法 开始  -------");
 		// 拆分驼峰命名法
 		input = ReplaceEnglishString.replaceEnglish(input);
+		System.out.println("------------------- 拆分Java驼峰命名法 开始  --------");
+		System.out.println("------------------- 处理结果: ---------------------");
 		System.out.println(input);
-		System.out.println(
-				"---------------------------------- 特殊字符处理 ----------------------------------");
+
 		return input;
 	}
 

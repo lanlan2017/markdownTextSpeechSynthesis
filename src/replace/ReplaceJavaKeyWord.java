@@ -33,11 +33,6 @@ public class ReplaceJavaKeyWord
 		}
 		return javaKeyWord;
 	}
-	public static String replaceSuffixName(String input)
-	{
-		
-		return null;
-	}
 	public static void main(String[] args)
 	{
 		String testStr="ReplaceJavaKeyWord";

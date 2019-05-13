@@ -6,6 +6,20 @@ import java.util.regex.Pattern;
 public class RemoveMarkDownTags
 {
 	/**
+	 * 移除markdown表格的对齐代码.
+	 * 
+	 * @param line
+	 *            markdown文本.
+	 * @return 没有对齐方式的markdown文本
+	 */
+	public static String removeMDTable(String line)
+	{
+		line = line.replaceAll("\\|(:?\\-+:?\\|)+\\n", "");
+		line = line.replaceAll("(?m)^\\|", "");
+		return line;
+	}
+
+	/**
 	 * 移除markdown标题标记.
 	 * 
 	 * @param line
@@ -45,9 +59,6 @@ public class RemoveMarkDownTags
 		StringBuffer sb = new StringBuffer();
 		while (matcher.find())
 		{
-			// System.out.println("-----------------------------------------------");
-			// System.out.println(matcher.group());
-			// System.out.println("-----------------------------------------------");
 			// 把匹配到的图片替换成空字符串。
 			matcher.appendReplacement(sb, "");
 		}
@@ -63,12 +74,6 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDStrongOrItalic(String line)
 	{
-		// Pattern pattern=Pattern.compile("(\\*\\*)([^*]+)(?:\\1)?");
-		// Matcher matcher=pattern.matcher(line);
-		// while(matcher.find())
-		// {
-		// System.out.println(matcher.group(2));
-		// }
 		return line.replaceAll("(\\*{1,2})([^*]+)(?:\\1)?", "$2");
 	}
 	/**
@@ -100,22 +105,11 @@ public class RemoveMarkDownTags
 			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
 
 			// 添加空格让机器人好识别
-			matcherStr = " " + matcherStr + " ";
+			// matcherStr = " " + matcherStr + " ";
 			matcher.appendReplacement(sb, matcherStr);
 		}
 		matcher.appendTail(sb);
 		return sb.toString();
-	}
-	/**
-	 * 移除markdown表格对齐符号.
-	 * 
-	 * @param line
-	 * @return
-	 */
-	public static String removeMDTableAlign(String line)
-	{
-		// |:---|:---|
-		return line;
 	}
 	/**
 	 * 移除markdown,超链接。
@@ -125,22 +119,6 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDLink(String line)
 	{
-		// Pattern pattern = Pattern.compile("\\[.*?]\\((https?://.+?)\\)");
-		// Matcher matcher = pattern.matcher(line);
-		// String link = null;
-		// StringBuffer sb = new StringBuffer(10240);
-		// while (matcher.find())
-		// {
-		// link = matcher.group(0);
-		// link = link.replaceAll(":", "冒号");
-		// link = link.replaceAll("/", "斜杠");
-		// matcher.appendReplacement(sb, link);
-		// }
-		// matcher.appendTail(sb);
-		// // line = line.replaceAll("\\[.*?]\\((https?://.+?)\\)",
-		// "$1").trim();
-		// // line = line.replaceAll(":", "冒号");
-		// // line = line.replaceAll("/", "斜杠");
 		// return sb.toString();
 		// 替换中文站内超链接
 		line = line.replaceAll("\\[([\\u4e00-\\u9fa5]*?)\\]\\(/blog/.+?/\\)",
@@ -158,12 +136,6 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDCodeBlock(String line)
 	{
-		// Pattern pattern=Pattern.compile("(\\*\\*)([^*]+)(?:\\1)?");
-		// Matcher matcher=pattern.matcher(line);
-		// while(matcher.find())
-		// {
-		// System.out.println(matcher.group(2));
-		// }
 		// 移除Markdown代码块标记.
 		line = line.replaceAll("```\\w*\\r?\\n(.*\\r?\\n)+?```", "");
 		return line;
@@ -177,12 +149,6 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDQuoteBlock(String line)
 	{
-		// Pattern pattern=Pattern.compile("(\\*\\*)([^*]+)(?:\\1)?");
-		// Matcher matcher=pattern.matcher(line);
-		// while(matcher.find())
-		// {
-		// System.out.println(matcher.group(2));
-		// }
 		return line.replaceAll("(?m)^> ", "").trim();
 	}
 	/**
@@ -194,25 +160,24 @@ public class RemoveMarkDownTags
 		System.out.println(
 				"---------------------- 取出markdown标记 开始  ------------------------");
 		// 去除markdown标题# h1 #,## h2 ##,### h3 ###,#### h4 ####,......
-		input = RemoveMarkDownTags.removeMDTitle(input);
+		input = removeMDTitle(input);
 		// 去除markdown加粗: **xxxx**,或者斜体*xxxx*
-		input = RemoveMarkDownTags.removeMDStrongOrItalic(input);
+		input = removeMDStrongOrItalic(input);
 		// 去除Markdown文档中的图片标签
-		input = RemoveMarkDownTags.removeMDIMG(input);
+		input = removeMDIMG(input);
 		// 移除Markdown文档中的超链接
-		input = RemoveMarkDownTags.removeMDLink(input);
-		// System.out.println(input);
+		input = removeMDLink(input);
 		// 移除markdown中的代码块标记部分
-		input = RemoveMarkDownTags.removeMDCodeBlock(input);
-		// System.out.println("-------------------------");
-		// System.out.println(input);
+		input = removeMDCodeBlock(input);
 		// 移除markdown中的代码段标记部分.
-		input = RemoveMarkDownTags.removeMDCode(input);
+		input = removeMDCode(input);
 		// 移除markdown代码中的引用块,不要读成大于符号
-		input = RemoveMarkDownTags.removeMDQuoteBlock(input);
+		input = removeMDQuoteBlock(input);
+		// 移除markdown表格对齐符号,
+		input = removeMDTable(input);
 		System.out.println(input);
 		System.out.println(
-				"---------------------- 取出markdown标记 开始  ------------------------");
+				"---------------------- 取出markdown标记 结束  ------------------------");
 		return input;
 	}
 	public static void main(String[] args)
