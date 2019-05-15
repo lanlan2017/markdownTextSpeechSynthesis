@@ -103,7 +103,6 @@ public class RemoveMarkDownTags
 			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
 			// 替换容易读出的单词
 			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
-
 			// 添加空格让机器人好识别
 			// matcherStr = " " + matcherStr + " ";
 			matcher.appendReplacement(sb, matcherStr);

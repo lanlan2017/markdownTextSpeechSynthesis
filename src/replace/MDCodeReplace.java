@@ -17,13 +17,14 @@ public class MDCodeReplace
 		matcherStr = matcherStr.replace("https", "http s");
 		matcherStr = matcherStr.replace("JavaEE", "java E E");
 		matcherStr = matcherStr.replace("radiobutton", "radio button");
-		matcherStr = matcherStr.replace("radio buttons", "radio buttons");
+		matcherStr = matcherStr.replace("springframework",
+				"spring framework");
 		return matcherStr;
 	}
 	/**
 	 * Ìæ»»ÌØÊâ×Ö·û.
 	 * 
-	 * @param matcherStr
+	 * @param matcherStr.
 	 * @return
 	 */
 	public static String replaceSpecialChars(String matcherStr)
@@ -36,6 +37,7 @@ public class MDCodeReplace
 		matcherStr = matcherStr.replace("/", "Ð±¸Ü");
 		matcherStr = matcherStr.replace("\\", "·´Ð±¸Ü");
 		matcherStr = matcherStr.replace(":", "Ã°ºÅ");
+		matcherStr = matcherStr.replace(".", "µã");
 		return matcherStr;
 	}
 	/**
