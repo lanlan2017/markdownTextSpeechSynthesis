@@ -2,6 +2,8 @@ package replace;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import tools.io.properties.ContainSpecialWordsProperties;
+import tools.io.properties.SpecialWordsProperties;
 
 public class MDCodeReplace
 {
@@ -13,12 +15,8 @@ public class MDCodeReplace
 	 */
 	public static String replaceContainSpecialWords(String matcherStr)
 	{
-		matcherStr = matcherStr.replace("javax", "java x");
-		matcherStr = matcherStr.replace("https", "http s");
-		matcherStr = matcherStr.replace("JavaEE", "java E E");
-		matcherStr = matcherStr.replace("radiobutton", "radio button");
-		matcherStr = matcherStr.replace("springframework",
-				"spring framework");
+		matcherStr = ContainSpecialWordsProperties
+				.repalceByProperties(matcherStr);
 		return matcherStr;
 	}
 	/**
@@ -62,40 +60,19 @@ public class MDCodeReplace
 		{
 			matcherStr = htmlTagMatcher.replaceAll("$1");
 		}
+
 		return matcherStr;
 	}
 	/**
 	 * Ìæ»»ÈÝÒ×¶Á´íµÄµ¥´Ê.
 	 * 
 	 * @param matcherStr
+	 *            ÈÝÒ×¶Á´íµÄµ¥´Ê.
 	 * @return
 	 */
 	public static String replaceSpecialWords(String matcherStr)
 	{
-		switch (matcherStr)
-		{
-			case "id" :
-				matcherStr = "ID";
-				break;
-			case "MIME" :
-				matcherStr = "M I M E";
-				break;
-			case "url" :
-				matcherStr = "URL";
-				break;
-			case "GET" :
-				matcherStr = "get";
-				break;
-			case "CRUD" :
-				matcherStr = "C R U D";
-				break;
-			case "JavaEE" :
-				matcherStr = "Java E E";
-				break;
-			default :
-				break;
-		}
-
+		matcherStr = SpecialWordsProperties.replace(matcherStr);
 		return matcherStr;
 	}
 }
