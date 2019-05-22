@@ -6,6 +6,7 @@ bin/
 msc/
 *.pcm
 *.xmp
+*.flac
 xunfei.bat
 runable/xunfei.bat
 runable/msc/

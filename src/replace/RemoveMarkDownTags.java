@@ -2,6 +2,7 @@ package replace;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.iflytek.cloud.b.b.e;
 
 public class RemoveMarkDownTags
 {
@@ -135,9 +136,34 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDCodeBlock(String line)
 	{
+		Pattern codeBlockPattern = Pattern
+				.compile("```(\\w*)\\r?\\n((?:.*\\r?\\n)+?)```");
+		Matcher codeBlockMatcher = codeBlockPattern.matcher(line);
+		StringBuffer sb = new StringBuffer();
+		String sql;
+		while (codeBlockMatcher.find())
+		{
+			// System.out.println(codeBlockMatcher.group());
+			// System.out.println("-----------");
+			// System.out.println(codeBlockMatcher.group(2));
+			if (codeBlockMatcher.group(1).equals("sql"))
+			{
+				sql = codeBlockMatcher.group(2);
+				sql = sql.replace("(", "括号开始");
+				sql = sql.replace(")", "括号结束");
+				sql = sql.replace(";", "分号");
+				codeBlockMatcher.appendReplacement(sb,
+						"sequel语句开始\r\n" + sql + "\r\nsequel语句结束");
+			} else
+			{
+				codeBlockMatcher.appendReplacement(sb, "");
+			}
+		}
+		codeBlockMatcher.appendTail(sb);
 		// 移除Markdown代码块标记.
-		line = line.replaceAll("```\\w*\\r?\\n(.*\\r?\\n)+?```", "");
-		return line;
+		// line = line.replaceAll("``\\w*\\r?\\n(.*\\r?\\n)+?```", "");
+
+		return sb.toString();
 		// return line.replaceAll("```(\\w+)?", "").trim();
 	}
 	/**
@@ -184,13 +210,19 @@ public class RemoveMarkDownTags
 		// String testStr = "可以通过下面的`URL`来访问这个`JSP`页面：\r\n"
 		// +
 		// "[http://localhost:8080/app08a/countries.jsp](http://localhost:8080/app08a/countries.jsp)";
-		String testStr = "# 12.1.2 实施安全约束 #\r\n"
-				+ "**`WEB-INF`目录下的资源客户端不能直接通过`URL`访问**,不过,我们可以通过`Servlet`或`JSP`页面访问`WEB-INF`目录下的资源。"
-				+ "### web-resource-collection子元素 ###\r\n"
-				+ "**`web-resource-collection`元素表示需要限制访问的资源集合**。包括`web-resource-name`、`description`、`url-pattern`、`http-method`和`http-method-ommission`等子元素。\r\n"
-				+ "- `web-resource-name`子元素用于设置与受保护资源相关联的名称。\r\n"
-				+ "则该方法返回:`-1`\r\n" + "编码为:`ISO-8859-1`\r\n" + "获取内部的`id`值\r\n"
-				+ "`url`\r\n" + "`MIME`\r\n" + "`GET`方法\r\n";
+		// String testStr = "# 12.1.2 实施安全约束 #\r\n"
+		// +
+		// "**`WEB-INF`目录下的资源客户端不能直接通过`URL`访问**,不过,我们可以通过`Servlet`或`JSP`页面访问`WEB-INF`目录下的资源。"
+		// + "### web-resource-collection子元素 ###\r\n"
+		// +
+		// "**`web-resource-collection`元素表示需要限制访问的资源集合**。包括`web-resource-name`、`description`、`url-pattern`、`http-method`和`http-method-ommission`等子元素。\r\n"
+		// + "- `web-resource-name`子元素用于设置与受保护资源相关联的名称。\r\n"
+		// + "则该方法返回:`-1`\r\n" + "编码为:`ISO-8859-1`\r\n" + "获取内部的`id`值\r\n"
+		// + "`url`\r\n" + "`MIME`\r\n" + "`GET`方法\r\n";
+		String testStr = "修改表结构使用`alter table`，修改表结构包括`增加列定义`、`修改列定义`、`删除列`、`重命名列`等操作。增加列定义的语法如下:\r\n"
+				+ "```java\r\n" + "alter table 表名\r\n" + "add\r\n" + "(\r\n"
+				+ "    colum_nam1 datatype [default expr],\r\n" + "    ...\r\n"
+				+ ");\r\n" + "```";
 		System.out.println(testStr);
 		System.out.println(
 				"##################################### 替换结果: #####################################");

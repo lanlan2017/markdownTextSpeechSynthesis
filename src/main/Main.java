@@ -11,6 +11,8 @@ import replace.RemoveHtmlTags;
 import replace.RemoveMarkDownTags;
 import replace.ReplaceEnglishString;
 import replace.ReplaceSpaceInChineses;
+import tools.io.markdown.reader.MyMarkdownReader;
+import tools.io.properties.SpeechSynthesisProperties;
 import tools.io.reader.PropertiesReader;
 import tools.io.writer.MyStringWriter;
 public class Main
@@ -18,16 +20,48 @@ public class Main
 	static Scanner scanner = new Scanner(System.in);
 	public static void main(String[] args)
 	{
-		String fileName;
-		// 讯飞机器人设置
-		SpeechSynthesizer mTts = xunfeiSettings();
-		fileName = "小研vixy.pcm";
-		// 处理输入的文本
-		String input = inputProcessing();
-		// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
-		 mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
-		// 写入处理结果
-		MyStringWriter.writerString(input);
+		// 从剪贴板获取文件路径
+		String path = SysClipboardUtil.getSysClipboardText();
+		if (path.contains("source\\_posts"))
+		{
+			// 根据markdown文件的路径生成音频文件的路径
+			String fileName = filePath(path);
+			// 从文件中读取markdown文本
+			String input = MyMarkdownReader.readerMyMarkdownFile(path)
+					.toString();
+			// 讯飞机器人设置
+			SpeechSynthesizer mTts = xunfeiSettings();
+			// 处理输入的文本
+			input = inputProcessing(input);
+			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
+			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+			// 7.给出提示
+			MyStringWriter.writerString(input);
+			System.out.println(fileName);
+		} else
+		{
+			System.err.println("地址错误:" + path);
+		}
+	}
+
+	/**
+	 * 生成音频文件的绝对路径.
+	 * 
+	 * @param path
+	 *            hexo博客中markdown文件的路径.
+	 * @return 生成的音频文件的路径.
+	 */
+	public static String filePath(String path)
+	{
+		// 存放语音文件的根目录
+		// String fileName = "G:\\Desktop\\语音合成";
+		String fileName = SpeechSynthesisProperties.getRootDir();
+		// markdown文件相对于博客文章目录的相对路径
+		String relativePath = path.substring(
+				path.indexOf("source\\_posts") + "source\\_posts".length());
+		// 语音文件的根路径拼接上相对路径得到语音文件的绝对路径
+		fileName = fileName + relativePath.replace(".md", ".pcm");
+		return fileName;
 	}
 
 	/**
@@ -35,27 +69,26 @@ public class Main
 	 * 
 	 * @return
 	 */
-	public static String inputProcessing()
+	public static String inputProcessing(String input)
 	{
 		System.out.println(
 				"######################################## 讯飞语音合成系统 ########################################");
-		// 从剪贴板中获取数据
-		String input = SysClipboardUtil.getSysClipboardText();
+
 		// 移除中文之间的一个或多个空格
 		System.out.println("------------------- 删除中文中多余空格 开始 --------");
 		input = ReplaceSpaceInChineses.replaceSpaceInChineses(input);
-//		System.out.println(input);
+		// System.out.println(input);
 		System.out.println("------------------- 删除中文中多余空格 结束 --------");
 		System.out.println("------------------- 处理Markown文本 开始 ----------");
 		// 移除markdown标记
 		input = RemoveMarkDownTags.replaceMD(input);
-//		System.out.println(input);
+		// System.out.println(input);
 		System.out.println("------------------- 处理Markown文本 结束 ----------");
 		System.out.println("------------------- 处理HTML文本 开始 -------------");
 		// 注意要放在RemoveMarkDownTags.replaceMD(input);之后,以免移除掉代码块中的内容
 		// 移除类似`<center><strong>表19.3input标签的属性</strong></center>`这样的标签
 		input = RemoveHtmlTags.removeHtmlDoubleTags(input);
-//		System.out.println(input);
+		// System.out.println(input);
 		System.out.println("------------------- 处理HTML文本 结束 -------------");
 		System.out.println("------------------- 拆分Java驼峰命名法 开始  -------");
 		// 拆分驼峰命名法
