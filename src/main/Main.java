@@ -1,6 +1,7 @@
 package main;
 
 import java.util.Scanner;
+import javax.smartcardio.CommandAPDU;
 import com.iflytek.cloud.speech.SpeechConstant;
 import com.iflytek.cloud.speech.SpeechError;
 import com.iflytek.cloud.speech.SpeechSynthesizer;
@@ -11,6 +12,7 @@ import replace.RemoveHtmlTags;
 import replace.RemoveMarkDownTags;
 import replace.ReplaceEnglishString;
 import replace.ReplaceSpaceInChineses;
+import system.call.cmd.Command;
 import tools.io.markdown.reader.MyMarkdownReader;
 import tools.io.properties.SpeechSynthesisProperties;
 import tools.io.reader.PropertiesReader;
@@ -18,6 +20,7 @@ import tools.io.writer.MyStringWriter;
 public class Main
 {
 	static Scanner scanner = new Scanner(System.in);
+	static String fileName = null;
 	public static void main(String[] args)
 	{
 		// 从剪贴板获取文件路径
@@ -25,7 +28,7 @@ public class Main
 		if (path.contains("source\\_posts"))
 		{
 			// 根据markdown文件的路径生成音频文件的路径
-			String fileName = filePath(path);
+			fileName = filePath(path);
 			// 从文件中读取markdown文本
 			String input = MyMarkdownReader.readerMyMarkdownFile(path)
 					.toString();
@@ -42,6 +45,24 @@ public class Main
 		{
 			System.err.println("地址错误:" + path);
 		}
+		// "F:\软件\安装包_音频处理\Adobe Audition CS6\Adobe Audition CS6.exe"
+		// "G:\Desktop\语音合成\疯狂Java讲义第三版\第13章\13.2.4 DDL语句 2.修改表结构的语法.pcm"
+		// String audition = "F:\\软件\\安装包_音频处理\\Adobe\" \"Audition\"
+		// \"CS6\\Adobe\" \"Audition\" \"CS6.exe "
+		// + "\"G:\\Desktop\\语音合成\\疯狂Java讲义第三版\\第13章\\13.2.4 DDL语句
+		// 2.修改表结构的语法.pcm\"";
+	}
+
+	/**   
+	 *   
+	 */
+	public static void openFileUseAudition(String filePath)
+	{
+		String audition = SpeechSynthesisProperties.getAuditionPath();
+		// String filePath = "G:\\Desktop\\语音合成\\疯狂Java讲义第三版\\第13章\\13.2.4 DDL语句
+		// 2.修改表结构的语法.pcm";
+		audition += "\"" + filePath + "\"";
+		Command.exeCmd("cmd /c start " + audition);
 	}
 
 	/**
@@ -154,8 +175,11 @@ public class Main
 		public void onSynthesizeCompleted(String uri, SpeechError error)
 		{
 			if (error == null)
+			{
 				System.out.println("    合成成功");
-			else
+				// 8.使用auditon打开文件.
+				openFileUseAudition(fileName);
+			} else
 				System.out.println("    合成失败");
 
 		}
