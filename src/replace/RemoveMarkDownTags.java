@@ -146,18 +146,20 @@ public class RemoveMarkDownTags
 			// System.out.println(codeBlockMatcher.group());
 			// System.out.println("-----------");
 			// System.out.println(codeBlockMatcher.group(2));
-			if (codeBlockMatcher.group(1).equals("sql"))
-			{
-				sql = codeBlockMatcher.group(2);
-				sql = sql.replace("(", "括号开始");
-				sql = sql.replace(")", "括号结束");
-				sql = sql.replace(";", "分号");
-				codeBlockMatcher.appendReplacement(sb,
-						"sequel语句开始\r\n" + sql + "\r\nsequel语句结束");
-			} else
-			{
-				codeBlockMatcher.appendReplacement(sb, "");
-			}
+			// if (codeBlockMatcher.group(1).equals("sql"))
+			// {
+			// sql = codeBlockMatcher.group(2);
+			// sql = sql.replace("(", "括号开始");
+			// sql = sql.replace(")", "括号结束");
+			// sql = sql.replace(";", "分号");
+			// codeBlockMatcher.appendReplacement(sb,
+			// "sequel语句开始\r\n" + sql + "\r\nsequel语句结束");
+			// } else
+			// {
+			// codeBlockMatcher.appendReplacement(sb, "");
+			// }
+			// 删除代码块
+			codeBlockMatcher.appendReplacement(sb, "");
 		}
 		codeBlockMatcher.appendTail(sb);
 		// 移除Markdown代码块标记.

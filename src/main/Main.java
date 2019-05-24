@@ -1,7 +1,7 @@
 package main;
 
+import java.io.File;
 import java.util.Scanner;
-import javax.smartcardio.CommandAPDU;
 import com.iflytek.cloud.speech.SpeechConstant;
 import com.iflytek.cloud.speech.SpeechError;
 import com.iflytek.cloud.speech.SpeechSynthesizer;
@@ -19,13 +19,15 @@ import tools.io.reader.PropertiesReader;
 import tools.io.writer.MyStringWriter;
 public class Main
 {
+	
 	static Scanner scanner = new Scanner(System.in);
 	static String fileName = null;
 	public static void main(String[] args)
 	{
 		// 从剪贴板获取文件路径
 		String path = SysClipboardUtil.getSysClipboardText();
-		if (path.contains("source\\_posts"))
+		// 如果是文件的地址的话
+		if (new File(path).isFile() && path.contains("source\\_posts"))
 		{
 			// 根据markdown文件的路径生成音频文件的路径
 			fileName = filePath(path);
@@ -43,14 +45,14 @@ public class Main
 			System.out.println(fileName);
 		} else
 		{
-			System.err.println("地址错误:" + path);
+			System.out.println("直接合成:" + path);
+			fileName = System.getProperty("user.dir") + File.separator
+					+ "直接合成.pcm";
+			// 讯飞机器人设置
+			SpeechSynthesizer mTts = xunfeiSettings();
+			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
+			mTts.synthesizeToUri(path, fileName, synthesizeToUriListener);
 		}
-		// "F:\软件\安装包_音频处理\Adobe Audition CS6\Adobe Audition CS6.exe"
-		// "G:\Desktop\语音合成\疯狂Java讲义第三版\第13章\13.2.4 DDL语句 2.修改表结构的语法.pcm"
-		// String audition = "F:\\软件\\安装包_音频处理\\Adobe\" \"Audition\"
-		// \"CS6\\Adobe\" \"Audition\" \"CS6.exe "
-		// + "\"G:\\Desktop\\语音合成\\疯狂Java讲义第三版\\第13章\\13.2.4 DDL语句
-		// 2.修改表结构的语法.pcm\"";
 	}
 
 	/**   
