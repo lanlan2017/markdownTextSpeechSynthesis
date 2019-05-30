@@ -1,9 +1,5 @@
 package tools.io.properties;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
@@ -18,21 +14,24 @@ public class ContainSpecialWordsProperties
 	{
 		if (pr == null)
 		{
-			try
-			{
-				pr = new Properties();
-				// 2.加载配置文件
-				pr.load(new InputStreamReader(
-						new FileInputStream(
-								new File("ContainSpecialWords.properties")),
-						"utf-8"));
-				// 获取所有的key
-				keySet = pr.stringPropertyNames();
-			} catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			// try
+			// {
+			// pr = new Properties();
+			// // 2.加载配置文件
+			// pr.load(new InputStreamReader(
+			// new FileInputStream(
+			// new File("ContainSpecialWords.properties")),
+			// "utf-8"));
+			// // 获取所有的key
+			// keySet = pr.stringPropertyNames();
+			// } catch (IOException e)
+			// {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
+			pr = PropertiesInstance
+					.getPropertiesInstanceUTF8("ContainSpecialWords.properties");
+			 keySet = pr.stringPropertyNames();
 		}
 		for (Iterator<String> iterator = keySet.iterator(); iterator.hasNext();)
 		{
@@ -44,4 +43,8 @@ public class ContainSpecialWordsProperties
 		}
 		return input;
 	}
+//	public static void main(String[] args)
+//	{
+//		System.out.println(repalceByProperties("javax.https."));
+//	}
 }

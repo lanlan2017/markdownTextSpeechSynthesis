@@ -1,9 +1,5 @@
 package tools.io.properties;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 /**
@@ -14,30 +10,20 @@ public class SpecialWordsProperties
 	// 1.实例化配置文件对象
 	private static Properties properties = null;
 	/**
-	 * 查找配置文件之中有没有相关的key.
+	 * 使用配置文件中的value替换key
 	 * 
 	 * @param keyToFind
 	 *            想要查找的key.
-	 * @return 如果找到返回true,如果没有找到返回false.
+	 * @return 如果找到返回key对应的value表示替换成value,如果没有找到返回keyToFind表示不替换.
 	 */
-	public static String replace(String keyToFind)
+	public static String replaceByVlaue(String keyToFind)
 	{
+		// 单例模式获取.
 		if (properties == null)
 		{
-			try
-			{
-				// 1.创建配置文件列表
-				properties = new Properties();
-				// 2.加载配置文件
-				properties
-						.load(new InputStreamReader(
-								new FileInputStream(
-										new File("SpecialWords.properties")),
-								"utf-8"));
-			} catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+			// 生成对象并加载所有配置
+			properties = PropertiesInstance
+					.getPropertiesInstanceUTF8("SpecialWords.properties");
 		}
 		return properties.getProperty(keyToFind, keyToFind);
 	}

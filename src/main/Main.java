@@ -14,12 +14,13 @@ import replace.ReplaceEnglishString;
 import replace.ReplaceSpaceInChineses;
 import system.call.cmd.Command;
 import tools.io.markdown.reader.MyMarkdownReader;
+import tools.io.properties.PerorationProperties;
 import tools.io.properties.SpeechSynthesisProperties;
 import tools.io.reader.PropertiesReader;
 import tools.io.writer.MyStringWriter;
 public class Main
 {
-	
+
 	static Scanner scanner = new Scanner(System.in);
 	static String fileName = null;
 	public static void main(String[] args)
@@ -38,6 +39,9 @@ public class Main
 			SpeechSynthesizer mTts = xunfeiSettings();
 			// 处理输入的文本
 			input = inputProcessing(input);
+			input = input + PerorationProperties.getPeroration();
+			System.out.println("--------------------------------------------");
+			System.out.println(input);
 			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
 			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
 			// 7.给出提示
@@ -45,13 +49,15 @@ public class Main
 			System.out.println(fileName);
 		} else
 		{
-			System.out.println("直接合成:" + path);
+			// 为了阅读方便
+			String input = path;
+			System.out.println("直接合成:" + input);
 			fileName = System.getProperty("user.dir") + File.separator
 					+ "直接合成.pcm";
 			// 讯飞机器人设置
 			SpeechSynthesizer mTts = xunfeiSettings();
 			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
-			mTts.synthesizeToUri(path, fileName, synthesizeToUriListener);
+			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
 		}
 	}
 

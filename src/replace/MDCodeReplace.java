@@ -72,7 +72,7 @@ public class MDCodeReplace
 	 */
 	public static String replaceSpecialWords(String matcherStr)
 	{
-		matcherStr = SpecialWordsProperties.replace(matcherStr);
+		matcherStr = SpecialWordsProperties.replaceByVlaue(matcherStr);
 		return matcherStr;
 	}
 }
