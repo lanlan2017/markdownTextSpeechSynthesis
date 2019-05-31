@@ -28,7 +28,7 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDTitle(String line)
 	{
-		Pattern pattern = Pattern.compile("(#+\\s*?)([^#]+)(?:\\1)?");
+		Pattern pattern = Pattern.compile("(#+\\s*?)([^#]+?)(?:\\1)?");
 		Matcher matcher = pattern.matcher(line);
 		StringBuffer sb = new StringBuffer();
 		String matcherStr;
@@ -137,7 +137,7 @@ public class RemoveMarkDownTags
 	public static String removeMDCodeBlock(String line)
 	{
 		Pattern codeBlockPattern = Pattern
-				.compile("```(\\w*)\\r?\\n((?:.*\\r?\\n)+?)```");
+				.compile("```\\w*?\\r\\n(?:.*\\r\\n)+?```");
 		Matcher codeBlockMatcher = codeBlockPattern.matcher(line);
 		StringBuffer sb = new StringBuffer();
 		String sql;

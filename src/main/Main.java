@@ -43,7 +43,7 @@ public class Main
 			System.out.println("--------------------------------------------");
 			System.out.println(input);
 			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
-			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+//			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
 			// 7.给出提示
 			MyStringWriter.writerString(input);
 			System.out.println(fileName);
