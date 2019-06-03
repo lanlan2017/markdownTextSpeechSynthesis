@@ -26,7 +26,7 @@ echo ping www.xfyun.cn -n 1 ^> nul>>xunfei.bat
 echo :: 如果可以联网则执行程序>>xunfei.bat
 echo if %%errorlevel%% leq 0 (>>xunfei.bat
 echo    echo 网络链接正常.>>xunfei.bat
-echo    java -jar "%thispath%\xunfei.jar">>xunfei.bat
+echo    java -jar "%thispath%\xunfei.jar" %%1>>xunfei.bat
 echo ) else (>>xunfei.bat
 echo :: 如果不可以联网则给出提示>>xunfei.bat
 echo    echo 无法连接到www.xfyun.cn,请求检查网络是否连接正常.>>xunfei.bat

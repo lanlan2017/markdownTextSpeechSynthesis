@@ -25,6 +25,39 @@ public class Main
 	static String fileName = null;
 	public static void main(String[] args)
 	{
+		switch (args.length)
+		{
+			case 0 :
+				noArgs();
+				break;
+			case 1 :
+				oneArgs(args);
+			default :
+				break;
+		}
+
+	}
+	/**
+	 * @param args
+	 * 
+	 */
+	private static void oneArgs(String[] args)
+	{
+		switch (args[0])
+		{
+			case "setting" :
+//				System.out.println(System.getProperty("user.dir"));
+				Command.exeCmd("explorer.exe "+System.getProperty("user.dir"));
+				break;
+			default :
+				break;
+		}
+	}
+	/**   
+	 *   
+	 */
+	private static void noArgs()
+	{
 		// 从剪贴板获取文件路径
 		String path = SysClipboardUtil.getSysClipboardText();
 		// 如果是文件的地址的话
