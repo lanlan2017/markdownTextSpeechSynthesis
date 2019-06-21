@@ -46,8 +46,9 @@ public class Main
 		switch (args[0])
 		{
 			case "setting" :
-//				System.out.println(System.getProperty("user.dir"));
-				Command.exeCmd("explorer.exe "+System.getProperty("user.dir"));
+				// System.out.println(System.getProperty("user.dir"));
+				Command.exeCmd(
+						"explorer.exe " + System.getProperty("user.dir"));
 				break;
 			default :
 				break;
@@ -84,7 +85,10 @@ public class Main
 		{
 			// 为了阅读方便
 			String input = path;
-			System.out.println("直接合成:" + input);
+			input = inputProcessing(input);
+			System.out.println("---------------- 直接合成 --------------------");
+			System.out.println(input);
+			System.out.println("---------------- 直接合成 --------------------");
 			fileName = System.getProperty("user.dir") + File.separator
 					+ "直接合成.pcm";
 			// 讯飞机器人设置
