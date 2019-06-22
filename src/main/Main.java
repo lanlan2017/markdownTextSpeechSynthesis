@@ -161,6 +161,7 @@ public class Main
 		input = ReplaceEnglishString.replaceEnglish(input);
 		System.out.println("------------------- 拆分Java驼峰命名法 开始  --------");
 		System.out.println("------------------- 处理结果: ---------------------");
+		input=input.replaceAll("(?m)[ ]+$","");
 		System.out.println(input);
 
 		return input;
