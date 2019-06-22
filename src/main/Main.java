@@ -76,11 +76,13 @@ public class Main
 			input = input + PerorationProperties.getPeroration();
 			System.out.println("--------------------------------------------");
 			System.out.println(input);
-			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
-			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+//			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
+//			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+			int maxSize = 4000;
+			XunFei.xunfeiAll(input, maxSize, fileName);
 			// 7.给出提示
 			MyStringWriter.writerString(input);
-			System.out.println(fileName);
+//			System.out.println(fileName);
 		} else
 		{
 			// 为了阅读方便
@@ -92,9 +94,11 @@ public class Main
 			fileName = System.getProperty("user.dir") + File.separator
 					+ "直接合成.pcm";
 			// 讯飞机器人设置
-			SpeechSynthesizer mTts = xunfeiSettings();
-			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
-			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+//			SpeechSynthesizer mTts = xunfeiSettings();
+//			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
+//			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+			int maxSize = 4000;
+			XunFei.xunfeiAll(input, maxSize, fileName);
 		}
 	}
 

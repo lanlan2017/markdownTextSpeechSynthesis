@@ -121,10 +121,10 @@ public class RemoveMarkDownTags
 	{
 		// return sb.toString();
 		// 替换中文站内超链接
-		line = line.replaceAll("\\[([\\u4e00-\\u9fa5]*?)\\]\\(/blog/.+?/\\)",
+		line = line.replaceAll("\\[(.*)\\]\\(.+\\)",
 				" $1 ");
 		// 替换站外超链接
-		line = line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "");
+//		line = line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "");
 		// line=line.replaceAll("\\[.*?]\\((.+?)\\)", "");
 		return line;
 	}
