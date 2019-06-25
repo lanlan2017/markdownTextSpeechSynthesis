@@ -192,8 +192,16 @@ public class XunFei
 	public static String fileNamePart(String fileName, int count)
 	{
 		String fileNamePart;
-		fileNamePart = fileName.substring(0, fileName.lastIndexOf(".pcm"))
-				+ (count) + fileName.substring(fileName.lastIndexOf(".pcm"));
+//		fileNamePart = fileName.substring(0, fileName.lastIndexOf(".pcm"))
+//				+ (count) + fileName.substring(fileName.lastIndexOf(".pcm"));
+		if(count==0)
+		{
+			fileNamePart = fileName;
+		}
+		else {
+			fileNamePart = fileName.substring(0, fileName.lastIndexOf(".pcm"))
+					+ (count) + fileName.substring(fileName.lastIndexOf(".pcm"));
+		}
 		return fileNamePart;
 	}
 	/**   

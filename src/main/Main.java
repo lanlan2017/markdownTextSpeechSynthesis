@@ -2,12 +2,15 @@ package main;
 
 import java.io.File;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import com.iflytek.cloud.speech.SpeechConstant;
 import com.iflytek.cloud.speech.SpeechError;
 import com.iflytek.cloud.speech.SpeechSynthesizer;
 import com.iflytek.cloud.speech.SpeechUtility;
 import com.iflytek.cloud.speech.SynthesizeToUriListener;
 import clipboard.util.SysClipboardUtil;
+import latex.reader.LatexReader;
 import replace.RemoveHtmlTags;
 import replace.RemoveMarkDownTags;
 import replace.ReplaceEnglishString;
@@ -76,13 +79,13 @@ public class Main
 			input = input + PerorationProperties.getPeroration();
 			System.out.println("--------------------------------------------");
 			System.out.println(input);
-//			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
-//			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+			// // 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
+			// mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
 			int maxSize = 4000;
 			XunFei.xunfeiAll(input, maxSize, fileName);
 			// 7.给出提示
 			MyStringWriter.writerString(input);
-//			System.out.println(fileName);
+			// System.out.println(fileName);
 		} else
 		{
 			// 为了阅读方便
@@ -94,9 +97,9 @@ public class Main
 			fileName = System.getProperty("user.dir") + File.separator
 					+ "直接合成.pcm";
 			// 讯飞机器人设置
-//			SpeechSynthesizer mTts = xunfeiSettings();
-//			// 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
-//			mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
+			// SpeechSynthesizer mTts = xunfeiSettings();
+			// // 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
+			// mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
 			int maxSize = 4000;
 			XunFei.xunfeiAll(input, maxSize, fileName);
 		}
@@ -149,6 +152,9 @@ public class Main
 		input = ReplaceSpaceInChineses.replaceSpaceInChineses(input);
 		// System.out.println(input);
 		System.out.println("------------------- 删除中文中多余空格 结束 --------");
+//		System.out.println("------------------- 移除latex行内公式 开始 --------");
+//		input = replaceLatexCode(input);
+//		System.out.println("------------------- 移除latex行内公式 结束 --------");
 		System.out.println("------------------- 处理Markown文本 开始 ----------");
 		// 移除markdown标记
 		input = RemoveMarkDownTags.replaceMD(input);
@@ -165,9 +171,33 @@ public class Main
 		input = ReplaceEnglishString.replaceEnglish(input);
 		System.out.println("------------------- 拆分Java驼峰命名法 开始  --------");
 		System.out.println("------------------- 处理结果: ---------------------");
-		input=input.replaceAll("(?m)[ ]+$","");
+		input = input.replaceAll("(?m)[ ]+$", "");
 		System.out.println(input);
 
+		return input;
+	}
+	/**
+	 * @param input
+	 * @return
+	 */
+	public static String replaceLatexCode(String input)
+	{
+		Pattern pattern = Pattern.compile("\\$(.+?)\\$");
+		Matcher matcher = pattern.matcher(input);
+		StringBuffer sb = new StringBuffer();
+		String latexCode;
+		while (matcher.find())
+		{
+			// 获取匹配到的一个分组
+			latexCode = matcher.group(1);
+			// 朗读Latex行内公式
+			latexCode = LatexReader.readeLaTexCode(latexCode);
+			// 替换原来匹配的文本
+			matcher.appendReplacement(sb, latexCode);
+		}
+		// 添加后面没有匹配的文本
+		matcher.appendTail(sb);
+		input = sb.toString();
 		return input;
 	}
 
