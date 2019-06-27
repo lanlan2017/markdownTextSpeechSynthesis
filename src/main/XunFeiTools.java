@@ -128,8 +128,8 @@ public class XunFeiTools
 		System.out.println(input);
 		fileNamePart = fileNamePart(fileName, count);
 		xunfeiOnes(input, fileNamePart);
-		// 合并为一个文件
-		heBing(fileName);
+		// 合并为一个文件,并用audition打开这个文件.
+		mergeAndOpenFile(fileName, XunFeiTools.getFileNameList());
 	}
 	/**
 	 * @param input
@@ -143,65 +143,65 @@ public class XunFeiTools
 		waitFor();
 	}
 	/**
-	 * 合并生成的文件.
+	 * 合并文件ArrayList中的多个源文件为一个文件.
 	 * 
-	 * @param fileName
+	 * @param targetFilePath
+	 *            目标文件路径名称字符串.
+	 * @param sourceFilePathList
+	 *            存放源文件的路径名称字符串的ArrayList集合.
 	 */
-	public static void heBing(String fileName)
+	public static void merge2TargetFileDeleteSourceFile(String targetFilePath,
+			ArrayList<String> sourceFilePathList)
 	{
-		ArrayList<String> fileNameList = XunFeiTools.getFileNameList();
-		System.out.println("一共合成了如下文件:");
-		if (fileNameList.size() > 0)
+		// 如果ArrayList中有东西
+		if (sourceFilePathList.size() > 0)
 		{
-			File file = new File(fileName);
-			if (!file.exists())
+			BufferedInputStream in;
+			try (BufferedOutputStream out = new BufferedOutputStream(
+					new FileOutputStream(new File(targetFilePath)));)
 			{
-				try
+
+				System.out.println("源文件列表:");
+				for (Iterator<String> iterator = sourceFilePathList
+						.iterator(); iterator.hasNext();)
 				{
-					file.createNewFile();
-				} catch (IOException e)
-				{
-					e.printStackTrace();
+					String sourceFilePath = iterator.next();
+					System.out.println("    " + sourceFilePath);
+
+					File sourceFile = new File(sourceFilePath);
+					in = new BufferedInputStream(
+							new FileInputStream(sourceFile));
+					// 缓存数组
+					byte[] buffer = new byte[2048];
+					// 每次读入的字节数量
+					int inSize = -1;
+					// 批量读入字节到buffer缓存中,并返回读入的自己数量给inSize
+					while ((inSize = in.read(buffer)) != -1)
+					{
+						// 把buffer缓存中的字节写入输出流(也就是目标文件)
+						out.write(buffer, 0, inSize);
+					}
+					// 关闭源文件
+					in.close();
+					// 删除这个源文件
+					sourceFile.delete();
 				}
-			}
-			BufferedOutputStream out = null;
-			try
-			{
-				out = new BufferedOutputStream(new FileOutputStream(file));
 			} catch (FileNotFoundException e)
 			{
 				e.printStackTrace();
-			}
-			if (out != null)
+			} catch (IOException e)
 			{
-				BufferedInputStream in;
-				try
-				{
-					for (Iterator<String> iterator = fileNameList
-							.iterator(); iterator.hasNext();)
-					{
-						String partFileName = iterator.next();
-						System.out.println("    " + partFileName);
-						File partFile = new File(partFileName);
-						in = new BufferedInputStream(
-								new FileInputStream(partFile));
-						byte[] inBytes = new byte[1024];
-						int inSize = -1;
-						while ((inSize = in.read(inBytes)) != -1)
-						{
-							out.write(inBytes, 0, inSize);
-						}
-						// 删除临时文件
-						partFile.delete();
-					}
-				} catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-				// 打开合并后的文件
-				System.out.println("打开合并后的文件:" + fileName);
-				XunFeiTools.openFileUseAudition(fileName);
+				e.printStackTrace();
 			}
 		}
+	}
+	public static void mergeAndOpenFile(String targetFilePath,
+			ArrayList<String> sourceFilePathList)
+	{
+		// 合并list中的源文件到目标文件,并删除源文件
+		merge2TargetFileDeleteSourceFile(targetFilePath, sourceFilePathList);
+		// 打开合并后的文件
+		System.out.println("打开合并后的文件:" + targetFilePath);
+		XunFeiTools.openFileUseAudition(targetFilePath);
 	}
 }
