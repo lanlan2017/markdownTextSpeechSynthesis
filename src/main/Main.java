@@ -73,7 +73,7 @@ public class Main
 			String input = MyMarkdownReader.readerMyMarkdownFile(path)
 					.toString();
 			// 讯飞机器人设置
-			SpeechSynthesizer mTts = xunfeiSettings();
+			// SpeechSynthesizer mTts = xunfeiSettings();
 			// 处理输入的文本
 			input = inputProcessing(input);
 			input = input + PerorationProperties.getPeroration();
@@ -82,7 +82,7 @@ public class Main
 			// // 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
 			// mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
 			int maxSize = 4000;
-			XunFei.xunfeiAll(input, maxSize, fileName);
+			XunFeiTools.xunfeiAll(input, maxSize, fileName);
 			// 7.给出提示
 			MyStringWriter.writerString(input);
 			// System.out.println(fileName);
@@ -101,7 +101,7 @@ public class Main
 			// // 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
 			// mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
 			int maxSize = 4000;
-			XunFei.xunfeiAll(input, maxSize, fileName);
+			XunFeiTools.xunfeiAll(input, maxSize, fileName);
 		}
 	}
 
@@ -152,9 +152,9 @@ public class Main
 		input = ReplaceSpaceInChineses.replaceSpaceInChineses(input);
 		// System.out.println(input);
 		System.out.println("------------------- 删除中文中多余空格 结束 --------");
-//		System.out.println("------------------- 移除latex行内公式 开始 --------");
-//		input = replaceLatexCode(input);
-//		System.out.println("------------------- 移除latex行内公式 结束 --------");
+		// System.out.println("------------------- 移除latex行内公式 开始 --------");
+		// input = replaceLatexCode(input);
+		// System.out.println("------------------- 移除latex行内公式 结束 --------");
 		System.out.println("------------------- 处理Markown文本 开始 ----------");
 		// 移除markdown标记
 		input = RemoveMarkDownTags.replaceMD(input);
