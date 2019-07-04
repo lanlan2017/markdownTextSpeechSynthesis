@@ -38,8 +38,8 @@ public class RemoveMarkDownTags
 			matcherStr = matcher.group(3).trim();
 			System.out.println("---->" + matcherStr);
 			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
-			matcherStr = matcherStr.replace("-", "¸Ü");
-			matcherStr = matcherStr.replace(".", "µã");
+			// Ìæ»»ÌØÊâ×Ö·û
+			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
 			// matcherStr = " " + matcherStr + " ";
 			matcher.appendReplacement(sb, matcherStr);
 		}
@@ -121,10 +121,9 @@ public class RemoveMarkDownTags
 	{
 		// return sb.toString();
 		// Ìæ»»ÖÐÎÄÕ¾ÄÚ³¬Á´½Ó
-		line = line.replaceAll("\\[(.*)\\]\\(.+\\)",
-				" $1 ");
+		line = line.replaceAll("\\[(.*)\\]\\(.+\\)", " $1 ");
 		// Ìæ»»Õ¾Íâ³¬Á´½Ó
-//		line = line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "");
+		// line = line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "");
 		// line=line.replaceAll("\\[.*?]\\((.+?)\\)", "");
 		return line;
 	}

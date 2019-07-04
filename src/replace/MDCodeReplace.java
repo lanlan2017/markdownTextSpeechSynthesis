@@ -35,6 +35,8 @@ public class MDCodeReplace
 		matcherStr = matcherStr.replace("/", "Ð±¸Ü");
 		matcherStr = matcherStr.replace("\\", "·´Ð±¸Ü");
 		matcherStr = matcherStr.replace(":", "Ã°ºÅ");
+		matcherStr = matcherStr.replace("$", "ÃÀÔª");
+		matcherStr = matcherStr.replace("#", "¾®ºÅ");
 		matcherStr = matcherStr.replace(".", "µã");
 		return matcherStr;
 	}
