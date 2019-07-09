@@ -110,7 +110,7 @@ public class RemoveMarkDownTags
 		}
 		matcher.appendTail(sb);
 		return sb.toString();
-	}
+}
 	/**
 	 * ÒÆ³ýmarkdown,³¬Á´½Ó¡£
 	 * 
