@@ -27,4 +27,8 @@ public class SpecialWordsProperties
 		}
 		return properties.getProperty(keyToFind, keyToFind);
 	}
+	public static void main(String[] args)
+	{
+		System.out.println(replaceByVlaue("GET"));
+	}
 }

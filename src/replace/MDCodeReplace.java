@@ -121,16 +121,16 @@ public class MDCodeReplace
 
 		Pattern pattern = Pattern.compile("[A-Z]+");
 		Matcher matcher = pattern.matcher(matcherStr);
-		StringBuffer sbBuffer = new StringBuffer(matcherStr.length() * 2);
 		if (matcher.matches())
 		{
+			StringBuffer sbBuffer = new StringBuffer(matcherStr.length() * 2);
 			for (int i = 0, length = matcherStr.length(); i < length; i++)
 			{
 				sbBuffer.append(matcherStr.charAt(i) + " ");
 			}
-
+			return sbBuffer.toString();
 		}
-		return sbBuffer.toString();
+		return matcherStr;
 	}
 	/**
 	 * Ìæ»»ÈÝÒ×¶Á´íµÄµ¥´Ê.

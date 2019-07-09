@@ -93,13 +93,12 @@ public class RemoveMarkDownTags
 		{
 			// 获取匹配文本
 			matcherStr = matcher.group(1);
-			// 替换容易读错的符号
-			// 处理横线:负,杠
-			// 负数的情况
+
 			// 处理匹配特定正则表达式的情况
-			matcherStr = MDCodeReplace.replaceMatcher(matcherStr);
+			// System.out.println("-->"+matcherStr+"<---");
 			// 处理匹配特定单词的情况
 			matcherStr = MDCodeReplace.replaceSpecialWords(matcherStr);
+			matcherStr = MDCodeReplace.replaceMatcher(matcherStr);
 			// 处理匹配特定字符的情况
 			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
 			// 替换容易读出的单词
@@ -110,7 +109,7 @@ public class RemoveMarkDownTags
 		}
 		matcher.appendTail(sb);
 		return sb.toString();
-}
+	}
 	/**
 	 * 移除markdown,超链接。
 	 * 
