@@ -99,7 +99,7 @@ public class MDCodeReplace
 			matcherStr = group2 + "方法,该方法定义 " + group1;
 			if (!"".equals(group3))
 			{
-				matcherStr = matcherStr + " 该方法参数列表 " + group3;
+				matcherStr = matcherStr + " 该方法参数列表 " + group3.replace(",", "逗号");
 			} else
 			{
 				matcherStr = matcherStr + " 该方法是无参方法 ";
