@@ -94,8 +94,6 @@ public class RemoveMarkDownTags
 			// 获取匹配文本
 			matcherStr = matcher.group(1);
 
-			// 处理匹配特定正则表达式的情况
-			// System.out.println("-->"+matcherStr+"<---");
 			// 处理匹配特定单词的情况
 			matcherStr = MDCodeReplace.replaceSpecialWords(matcherStr);
 			matcherStr = MDCodeReplace.replaceMatcher(matcherStr);

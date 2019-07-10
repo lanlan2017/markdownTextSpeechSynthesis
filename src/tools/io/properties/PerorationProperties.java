@@ -2,6 +2,9 @@ package tools.io.properties;
 
 import java.util.Properties;
 
+/**
+ * ½áÊøÓï
+ */
 public class PerorationProperties
 {
 	private static Properties instance = null;
@@ -15,6 +18,11 @@ public class PerorationProperties
 		}
 		return instance;
 	}
+	/**
+	 * ·µ»Ø½áÊøÓï.
+	 * 
+	 * @return
+	 */
 	public static String getPeroration()
 	{
 		return getInstance().getProperty("peroration");

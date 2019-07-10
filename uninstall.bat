@@ -1,10 +1,8 @@
 @echo off
 ::
 ::
-:: ### 获取当前文件(uninstall.bat)所在的目录的绝对路径 ####
+:: ### 获取当前文件(install.bat)所在的目录的绝对路径 ####
 set thispath=%~dp0
-echo 获取到的路径%thispath%
-::
 set "thispath=%thispath:~0,-1%"
 echo   当前文件所在的目录的绝对路径:%thispath%
 :: ###################################################

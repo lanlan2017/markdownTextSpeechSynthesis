@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
+/**
+ * ¾²Ì¬PropertiesÉú³ÉÆ÷.
+ */
 public class PropertiesInstance
 {
 	/**

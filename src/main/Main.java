@@ -17,6 +17,7 @@ import replace.ReplaceEnglishString;
 import replace.ReplaceSpaceInChineses;
 import system.call.cmd.Command;
 import tools.io.markdown.reader.MyMarkdownReader;
+import tools.io.properties.ChinesePolysyllabicWordsProperties;
 import tools.io.properties.PerorationProperties;
 import tools.io.properties.SpeechSynthesisProperties;
 import tools.io.reader.PropertiesReader;
@@ -146,7 +147,6 @@ public class Main
 	{
 		System.out.println(
 				"######################################## 讯飞语音合成系统 ########################################");
-
 		// 移除中文之间的一个或多个空格
 		System.out.println("------------------- 删除中文中多余空格 开始 --------");
 		input = ReplaceSpaceInChineses.replaceSpaceInChineses(input);
@@ -155,21 +155,24 @@ public class Main
 		// System.out.println("------------------- 移除latex行内公式 开始 --------");
 		// input = replaceLatexCode(input);
 		// System.out.println("------------------- 移除latex行内公式 结束 --------");
-		System.out.println("------------------- 处理Markown文本 开始 ----------");
 		// 移除markdown标记
+		System.out.println("------------------- 处理Markown文本 开始 ----------");
 		input = RemoveMarkDownTags.replaceMD(input);
-		// System.out.println(input);
 		System.out.println("------------------- 处理Markown文本 结束 ----------");
 		System.out.println("------------------- 处理HTML文本 开始 -------------");
 		// 注意要放在RemoveMarkDownTags.replaceMD(input);之后,以免移除掉代码块中的内容
 		// 移除类似`<center><strong>表19.3input标签的属性</strong></center>`这样的标签
 		input = RemoveHtmlTags.removeHtmlDoubleTags(input);
-		// System.out.println(input);
 		System.out.println("------------------- 处理HTML文本 结束 -------------");
+		// 替换多音词,如重载,长度,机器可能会读错
+		System.out.println("------------------- 替换 中文多音词 开始  --------");
+		input = ChinesePolysyllabicWordsProperties.replaceByValue(input);
+		System.out.println("------------------- 替换 中文多音词 结束  --------");
+		// 拆分java驼峰命名法
 		System.out.println("------------------- 拆分Java驼峰命名法 开始  -------");
-		// 拆分驼峰命名法
 		input = ReplaceEnglishString.replaceEnglish(input);
-		System.out.println("------------------- 拆分Java驼峰命名法 开始  --------");
+		System.out.println("------------------- 拆分Java驼峰命名法 结束  --------");
+
 		System.out.println("------------------- 处理结果: ---------------------");
 		input = input.replaceAll("(?m)[ ]+$", "");
 		System.out.println(input);
