@@ -11,6 +11,7 @@ import com.iflytek.cloud.speech.SpeechUtility;
 import com.iflytek.cloud.speech.SynthesizeToUriListener;
 import clipboard.util.SysClipboardUtil;
 import latex.reader.LatexReader;
+import regex.RegexLatex;
 import replace.RemoveHtmlTags;
 import replace.RemoveMarkDownTags;
 import replace.ReplaceEnglishString;
@@ -185,7 +186,8 @@ public class Main
 	 */
 	public static String replaceLatexCode(String input)
 	{
-		Pattern pattern = Pattern.compile("\\$(.+?)\\$");
+		// Pattern pattern = Pattern.compile("\\$(.+?)\\$");
+		Pattern pattern = Pattern.compile(RegexLatex.latexFormulaInLine);
 		Matcher matcher = pattern.matcher(input);
 		StringBuffer sb = new StringBuffer();
 		String latexCode;

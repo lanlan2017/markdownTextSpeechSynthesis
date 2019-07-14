@@ -2,6 +2,7 @@ package replace;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import regex.RegexMath;
 import tools.io.properties.ContainSpecialWordsProperties;
 import tools.io.properties.SpecialWordsProperties;
 
@@ -53,14 +54,12 @@ public class MDCodeReplace
 		Pattern htmlTagPattern = Pattern.compile("<(.+?)/?>");
 		Matcher htmlTagMatcher = htmlTagPattern.matcher(matcherStr);
 		// 如果是负数的情况
-		if (matcherStr.matches("-\\d+"))
+//		if (matcherStr.matches("-\\d+"))
+		if (matcherStr.matches(RegexMath.negativeNumber))
 		{
 			// System.out.println("匹配到负数: " + matcherStr);
 			matcherStr = matcherStr.replace("-", "负");
 		}
-
-		// 朗读Java方法
-		matcherStr = replaceJavaMethod(matcherStr);
 		// 朗读全大写字符串
 		matcherStr = replaceStringAllUpperCase(matcherStr);
 
@@ -73,47 +72,6 @@ public class MDCodeReplace
 		return matcherStr;
 	}
 	/**
-	 * java方法的朗读规则.
-	 * 
-	 * @param matcherStr
-	 *            java方法定义字符串.
-	 * @return 朗读后的java方法.
-	 */
-	private static String replaceJavaMethod(String matcherStr)
-	{
-		Pattern pattern = Pattern
-				.compile("((?:[a-zA-Z]+ )*([a-zA-Z]+))\\((.*)\\)");
-		Matcher matcher = pattern.matcher(matcherStr);
-		String group1;
-		String group2;
-		String group3;
-		if (matcher.matches())
-		{
-			// 获取匹配到的一个分组
-			group1 = matcher.group(1);
-			group2 = matcher.group(2);
-			group3 = matcher.group(3);
-			System.out.println("group1-->" + group1);
-			System.out.println("group2-->" + group2);
-			System.out.println("group3-->" + group3);
-			matcherStr = group2 + " 方法 ";
-			if (!group1.equals(group2))
-			{
-				matcherStr = matcherStr + " 该方法定义 " + group1;
-			}
-			if (!"".equals(group3))
-			{
-				matcherStr = matcherStr + " 该方法参数列表 " + group3.replace(",", "逗号");
-			} else
-			{
-				matcherStr = matcherStr + " 该方法是无参方法 ";
-			}
-			matcherStr = matcherStr + " 该方法功能 ";
-			System.out.println("替换结果:" + matcherStr);
-		}
-		return matcherStr;
-	}
-	/**
 	 * 朗读全大写的字符串.
 	 * 
 	 * @param matcherStr
@@ -122,7 +80,6 @@ public class MDCodeReplace
 	 */
 	private static String replaceStringAllUpperCase(String matcherStr)
 	{
-
 		Pattern pattern = Pattern.compile("[A-Z]+");
 		Matcher matcher = pattern.matcher(matcherStr);
 		if (matcher.matches())
