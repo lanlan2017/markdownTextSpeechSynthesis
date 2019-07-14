@@ -38,6 +38,7 @@ public class MDCodeReplace
 		matcherStr = matcherStr.replace("$", "美元");
 		matcherStr = matcherStr.replace("#", "井号");
 		matcherStr = matcherStr.replace(".", "点");
+		matcherStr = matcherStr.replace("|", "竖杠");
 		return matcherStr;
 	}
 	/**
@@ -81,7 +82,7 @@ public class MDCodeReplace
 	private static String replaceJavaMethod(String matcherStr)
 	{
 		Pattern pattern = Pattern
-				.compile("((?:[a-zA-Z]+ )+([a-zA-Z]+))\\((.*)\\)");
+				.compile("((?:[a-zA-Z]+ )*([a-zA-Z]+))\\((.*)\\)");
 		Matcher matcher = pattern.matcher(matcherStr);
 		String group1;
 		String group2;
@@ -95,8 +96,11 @@ public class MDCodeReplace
 			System.out.println("group1-->" + group1);
 			System.out.println("group2-->" + group2);
 			System.out.println("group3-->" + group3);
-
-			matcherStr = group2 + "方法,该方法定义 " + group1;
+			matcherStr = group2 + " 方法 ";
+			if (!group1.equals(group2))
+			{
+				matcherStr = matcherStr + " 该方法定义 " + group1;
+			}
 			if (!"".equals(group3))
 			{
 				matcherStr = matcherStr + " 该方法参数列表 " + group3.replace(",", "逗号");

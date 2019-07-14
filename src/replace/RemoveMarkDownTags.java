@@ -96,6 +96,7 @@ public class RemoveMarkDownTags
 
 			// 处理匹配特定单词的情况
 			matcherStr = MDCodeReplace.replaceSpecialWords(matcherStr);
+			// 处理匹配正则表达式的情况
 			matcherStr = MDCodeReplace.replaceMatcher(matcherStr);
 			// 处理匹配特定字符的情况
 			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
@@ -136,33 +137,12 @@ public class RemoveMarkDownTags
 				.compile("```\\w*?\\r\\n(?:.*\\r\\n)+?```");
 		Matcher codeBlockMatcher = codeBlockPattern.matcher(line);
 		StringBuffer sb = new StringBuffer();
-		// String sql;
 		while (codeBlockMatcher.find())
 		{
-			// System.out.println(codeBlockMatcher.group());
-			// System.out.println("-----------");
-			// System.out.println(codeBlockMatcher.group(2));
-			// if (codeBlockMatcher.group(1).equals("sql"))
-			// {
-			// sql = codeBlockMatcher.group(2);
-			// sql = sql.replace("(", "括号开始");
-			// sql = sql.replace(")", "括号结束");
-			// sql = sql.replace(";", "分号");
-			// codeBlockMatcher.appendReplacement(sb,
-			// "sequel语句开始\r\n" + sql + "\r\nsequel语句结束");
-			// } else
-			// {
-			// codeBlockMatcher.appendReplacement(sb, "");
-			// }
-			// 删除代码块
 			codeBlockMatcher.appendReplacement(sb, "");
 		}
 		codeBlockMatcher.appendTail(sb);
-		// 移除Markdown代码块标记.
-		// line = line.replaceAll("``\\w*\\r?\\n(.*\\r?\\n)+?```", "");
-
 		return sb.toString();
-		// return line.replaceAll("```(\\w+)?", "").trim();
 	}
 	/**
 	 * 移除markdown,引用块。
