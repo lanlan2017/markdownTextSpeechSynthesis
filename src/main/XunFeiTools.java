@@ -85,7 +85,7 @@ public class XunFeiTools
 	 */
 	public static void xunfeiAll(String input, int maxSize, String fileName)
 	{
-		System.out.println("字符串总长度:" + input.length());
+		// System.out.println("字符串总长度:" + input.length());
 		// 整个字符串的长度
 		int inputLength = input.length();
 		// 当前朗读的文本.
@@ -110,8 +110,8 @@ public class XunFeiTools
 			}
 			// 获取当前的文本.
 			now = input.substring(0, splitIndex + 1);
-			System.out.println(
-					"------------------------------------------------");
+			// System.out.println(
+			// "-----------------------中间分段-------------------------");
 			System.out.println(now);
 			// 动态生成文件名
 			fileNamePart = fileNamePart(fileName, count++);
@@ -124,7 +124,8 @@ public class XunFeiTools
 			inputLength = input.length();
 		}
 		// 输出剩下的文本
-		System.out.println("------------------------------------------------");
+		// System.out.println(
+		// "-----------------------最后分段-------------------------");
 		System.out.println(input);
 		fileNamePart = fileNamePart(fileName, count);
 		xunfeiOnes(input, fileNamePart);

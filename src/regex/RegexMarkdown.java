@@ -13,7 +13,7 @@ public class RegexMarkdown
 	/**
 	 * 匹配markdown 加粗或斜体 的正则表达式.
 	 */
-	public final static String MDStrongOrItalicRegex = "(\\*{1,2})([^*]+)(?:\\1)?";
+	public final static String MDStrongOrItalicRegex = "(\\*{1,2})([^*]+?)(?:\\1)?";
 	/**
 	 * 匹配markdown 超链接 的正则表达式.
 	 */
@@ -21,7 +21,7 @@ public class RegexMarkdown
 	/**
 	 * 匹配Markdown 代码块 的正则表达式.
 	 */
-	public final static String MDCodeBlockRegex = "\\[(.*)\\]\\(.+\\)";
+	public final static String MDCodeBlockRegex = "```\\w*(?:(?:\\r\\n|\\n).*?)+?```";
 	/**
 	 * 匹配markdown 引用块 的正则表达式.
 	 */
@@ -29,7 +29,7 @@ public class RegexMarkdown
 	/**
 	 * 匹配markdown 无序列表 的正则表达式.
 	 */
-	public final static String MDUnOrderListBlockRegex = "(?m)^> ";
+	public final static String MDUnOrderListBlockRegex = "(?m)^- ";
 	/**
 	 * 匹配markdown 标题 的正则表达式.
 	 */

@@ -55,8 +55,8 @@ public class MyMarkdownReader
 		{
 			e.printStackTrace();
 		}
-		System.out.println(
-				"------------------------------------------------------------");
+		// System.out.println(
+		// "------------------------------------------------------------");
 		deleteLastLine(sbBuffer);
 		return sbBuffer;
 	}

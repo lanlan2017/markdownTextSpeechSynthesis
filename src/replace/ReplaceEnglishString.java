@@ -19,18 +19,12 @@ public class ReplaceEnglishString
 
 		StringBuffer sb = new StringBuffer();
 		String line = null;
-		// find()方法向前查找匹配的子串
-		boolean englishFind = false;
-		while ((englishFind = englishMatcher.find()))
+		while (englishMatcher.find())
 		{
-			if (englishFind)
-			{
-				line = englishMatcher.group();// 这个效果也还行
-				// 拆分java关键字.
-				line = ReplaceJavaKeyWord.replaceJavaKeyWord(line);
-				englishMatcher.appendReplacement(sb, line);
-			}
-
+			line = englishMatcher.group();
+			// 拆分java关键字.
+			line = ReplaceJavaKeyWord.replaceJavaKeyWord(line);
+			englishMatcher.appendReplacement(sb, line);
 		}
 		// 把文本中没有匹配的剩下的文本也加入到StringBuffer中
 		englishMatcher.appendTail(sb);

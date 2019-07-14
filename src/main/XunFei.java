@@ -28,7 +28,7 @@ public class XunFei
 		{
 			if (error == null)
 			{
-				System.out.println("合成:" + fileNamePart + "-->成功");
+				System.out.println("    合成:" + fileNamePart + "-->成功");
 				// 8.使用auditon打开文件.
 				// openFileUseAudition(fileName);
 				// 第一次合成成功时,创建集合保存合成成功的文件名
@@ -38,7 +38,7 @@ public class XunFei
 				}
 				XunFeiTools.getFileNameList().add(fileNamePart);
 			} else
-				System.out.println("合成:" + fileNamePart + "-->失败");
+				System.out.println("    合成:" + fileNamePart + "-->失败");
 			// 不再等待,继续合成下一个分组.
 			XunFeiTools.wait = false;
 		}

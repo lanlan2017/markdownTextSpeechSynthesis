@@ -16,7 +16,8 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDTitle(String line)
 	{
-//		Pattern pattern = Pattern.compile("(#+)(\\s+)([^#]+)(?:\\2)?(?:\\1)?");
+		// Pattern pattern =
+		// Pattern.compile("(#+)(\\s+)([^#]+)(?:\\2)?(?:\\1)?");
 		Pattern pattern = Pattern.compile(RegexMarkdown.MDTitleRegex);
 		Matcher matcher = pattern.matcher(line);
 		StringBuffer sb = new StringBuffer();
@@ -25,11 +26,14 @@ public class RemoveMarkDownTags
 		{
 			// 获取匹配文本,并删除头部和尾部空白符
 			matcherStr = matcher.group(3).trim();
-			System.out.println("---->" + matcherStr);
+			// System.out.println("捕捉到标题:开始处理------");
+			// System.out.println(" 标题:" + matcherStr);
+
 			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
 			// 替换特殊字符
 			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
-			// matcherStr = " " + matcherStr + " ";
+			// System.out.println("处理结果:" + matcherStr);
+			// System.out.println("捕捉到标题:处理结束------");
 			matcher.appendReplacement(sb, matcherStr);
 		}
 		matcher.appendTail(sb);
@@ -129,6 +133,9 @@ public class RemoveMarkDownTags
 		StringBuffer sb = new StringBuffer();
 		while (codeBlockMatcher.find())
 		{
+			// System.out.println("捕获到代码块:开始-----------");
+			// System.out.println(codeBlockMatcher.group());
+			// System.out.println("捕获到代码块:结束-----------");
 			codeBlockMatcher.appendReplacement(sb, "");
 		}
 		codeBlockMatcher.appendTail(sb);
@@ -152,7 +159,8 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDUnorderListBlock(String line)
 	{
-		return line.replaceAll(RegexMarkdown.MDUnOrderListBlockRegex, "").trim();
+		return line.replaceAll(RegexMarkdown.MDUnOrderListBlockRegex, "")
+				.trim();
 	}
 	/**
 	 * @param input
@@ -160,29 +168,32 @@ public class RemoveMarkDownTags
 	 */
 	public static String replaceMD(String input)
 	{
-		System.out.println(
-				"---------------------- 取出markdown标记 开始  ------------------------");
-		// 去除markdown标题# h1 #,## h2 ##,### h3 ###,#### h4 ####,......
-		input = removeMDTitle(input);
+//		System.out.println(
+//				"---------------------- 取出markdown标记 开始  ------------------------");
 		// 去除markdown加粗: **xxxx**,或者斜体*xxxx*
 		input = removeMDStrongOrItalic(input);
-		// 去除Markdown文档中的图片标签
+		// 移除markdown代码中的 引用块,不要读成大于符号
+		input = removeMDQuoteBlock(input);
+		// 移除markdown代码中的 无序列表项.
+		input = removeMDUnorderListBlock(input);
+
+		// 去除Markdown文档中 的图片标签
 		input = removeMDIMG(input);
-		// 移除Markdown文档中的超链接
+		// 移除Markdown文档中的 超链接
 		input = removeMDLink(input);
-		// 朗读Markdown表格.
-		input = MDTableReplace.MDTableSpeech(input);
-		// 移除markdown中的代码块标记部分
+
+		// 移除markdown中的 行内代码
 		input = removeMDCodeBlock(input);
+		// 去除markdown标题# h1 #,## h2 ##,### h3 ###,#### h4 ####,......
+		input = removeMDTitle(input);
+
+		// 朗读Markdown表格,这个要放在removeMDCode(input)之前
+		input = MDTableReplace.MDTableSpeech(input);
 		// 移除markdown中的代码段标记部分.
 		input = removeMDCode(input);
-		// 移除markdown代码中的引用块,不要读成大于符号
-		input = removeMDQuoteBlock(input);
-		// 移除markdown代码中的无序列表项.
-		input = removeMDUnorderListBlock(input);
-		System.out.println(input);
-		System.out.println(
-				"---------------------- 取出markdown标记 结束  ------------------------");
+		// System.out.println(input);
+		// System.out.println(
+		// "---------------------- 取出markdown标记 结束 ------------------------");
 		return input;
 	}
 	public static void main(String[] args)
