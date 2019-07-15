@@ -29,7 +29,7 @@ public class RegexMarkdown
 	/**
 	 * 匹配markdown 无序列表 的正则表达式.
 	 */
-	public final static String MDUnOrderListBlockRegex = "(?m)^- ";
+	public final static String MDUnOrderListBlockRegex = "(?m)^\\s*- ";
 	/**
 	 * 匹配markdown 标题 的正则表达式.
 	 */

@@ -87,7 +87,8 @@ public class MDTableReplace
 			// System.out.println(" group1-->" + group1);
 			// System.out.println(" group2-->" + group2);
 			// System.out.println(" group3-->" + group3);
-			// matcherStr = group2 + " 方法 ";
+
+			matcherStr = group2 + " 方法 ";
 			if (!group1.equals(group2))
 			{
 				matcherStr = matcherStr + " 该方法定义 " + group1;

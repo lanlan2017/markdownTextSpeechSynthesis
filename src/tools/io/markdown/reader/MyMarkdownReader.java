@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import clipboard.util.SysClipboardUtil;
+import read.ReadFlag;
 
 public class MyMarkdownReader
 {
@@ -18,13 +19,14 @@ public class MyMarkdownReader
 		System.out.print(readerMyMarkdownFile(path));
 
 	}
-	
+
 	/**
 	 * @param path
 	 */
 	public static StringBuffer readerMyMarkdownFile(String path)
 	{
 		boolean fileStart = false;
+		boolean read = false;
 		StringBuffer sbBuffer = new StringBuffer();
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
 				new FileInputStream(new File(path)), "utf-8"));)
@@ -38,7 +40,17 @@ public class MyMarkdownReader
 					fileStart = true;
 					continue;
 				}
-				if (fileStart)
+				if (ReadFlag.SSTStart.equals(line))
+				{
+					read = true;
+					continue;
+				}
+				if (ReadFlag.SSTStop.equals(line))
+				{
+					read = false;
+					continue;
+				}
+				if (fileStart && read)
 				{
 					// System.out.print(line + "\r\n");
 					// ±£´æµ½»º³å×Ö·û´®ÖÐ
