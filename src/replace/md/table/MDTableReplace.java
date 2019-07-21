@@ -91,12 +91,17 @@ public class MDTableReplace
 			matcherStr = group2 + " 方法 ";
 			if (!group1.equals(group2))
 			{
+				group1 = group1.replace("<?>", "泛型");
+				group1 = group1.replace("[]", "数组");
 				matcherStr = matcherStr + " 该方法定义 " + group1;
 			}
 			if (!"".equals(group3))
 			{
-				matcherStr = matcherStr + " 该方法参数列表 "
-						+ group3.replace(",", "逗号");
+				group3 = group3.replace(",", "逗号");
+				group3 = group3.replace("...", "变长参数");
+				group3 = group3.replace("<?>", "泛型");
+				group3 = group3.replace("[]", "数组");
+				matcherStr = matcherStr + " 该方法参数列表 " + group3;
 			} else
 			{
 				matcherStr = matcherStr + " 该方法是无参方法 ";

@@ -8,5 +8,5 @@ public class RegexJava
 	/**
 	 * 匹配java方法声明的正则表达式
 	 */
-	public final static String javaMethedRegex = "((?:[a-zA-Z]+ )*([a-zA-Z]+))\\((.*)\\)";
+	public final static String javaMethedRegex = "((?:[a-zA-Z\\[\\]<?>]+ )*([a-zA-Z]+))\\((.*)\\)";
 }
