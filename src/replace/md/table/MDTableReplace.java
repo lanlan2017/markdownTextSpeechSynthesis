@@ -3,6 +3,7 @@ package replace.md.table;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import clipboard.util.SysClipboardUtil;
+import replace.MDCodeReplace;
 import static regex.RegexJava.javaMethedRegex;
 //导入正则表达式
 import static regex.RegexMarkdown.MDTableRegex;
@@ -56,6 +57,8 @@ public class MDTableReplace
 			group1 = matcher.group(1);
 			// 朗读Java方法
 			group1 = replaceJavaMethod(group1);
+			//替换特殊字符
+			group1=MDCodeReplace.replaceSpecialChars(group1);
 			// 替换原来匹配的文本
 			matcher.appendReplacement(sb, group1);
 		}
@@ -97,7 +100,7 @@ public class MDTableReplace
 			}
 			if (!"".equals(group3))
 			{
-				group3 = group3.replace(",", "逗号");
+//				group3 = group3.replace(",", "逗号");
 				group3 = group3.replace("...", "变长参数");
 				group3 = group3.replace("<?>", "泛型");
 				group3 = group3.replace("[]", "数组");
