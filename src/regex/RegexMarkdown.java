@@ -11,6 +11,10 @@ public class RegexMarkdown
 	 */
 	public final static String MDCodeInLineRegex = "`(.+?)`";
 	/**
+	 * 匹配Markdown 表格内的 行内代码 正则表达式 
+	 */
+	public final static String MDCodeInLineInMDTableColsRegex = "\\|`(.+?)`\\|";
+	/**
 	 * 匹配markdown 加粗或斜体 的正则表达式.
 	 */
 	public final static String MDStrongOrItalicRegex = "(\\*{1,2})([^*]+?)(?:\\1)?";

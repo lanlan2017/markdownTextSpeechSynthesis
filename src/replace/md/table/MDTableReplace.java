@@ -3,11 +3,12 @@ package replace.md.table;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import clipboard.util.SysClipboardUtil;
+import regex.RegexMarkdown;
 import replace.MDCodeReplace;
 import static regex.RegexJava.javaMethedRegex;
 //导入正则表达式
 import static regex.RegexMarkdown.MDTableRegex;
-import static regex.RegexMarkdown.MDCodeInLineRegex;
+import static regex.RegexMarkdown.MDCodeInLineInMDTableColsRegex;
 
 public class MDTableReplace
 {
@@ -47,7 +48,8 @@ public class MDTableReplace
 	 */
 	public static String MDTableCodeInLineRepalce(String tableBody)
 	{
-		Pattern pattern = Pattern.compile(MDCodeInLineRegex);
+		// Pattern pattern = Pattern.compile(MDCodeInLineRegex);
+		Pattern pattern = Pattern.compile(MDCodeInLineInMDTableColsRegex);
 		Matcher matcher = pattern.matcher(tableBody);
 		StringBuffer sb = new StringBuffer();
 		String group1;
@@ -57,13 +59,17 @@ public class MDTableReplace
 			group1 = matcher.group(1);
 			// 朗读Java方法
 			group1 = replaceJavaMethod(group1);
-			//替换特殊字符
-			group1=MDCodeReplace.replaceSpecialChars(group1);
+			// 替换特殊字符
+			group1 = "|" + MDCodeReplace.replaceSpecialChars(group1) + "|";
 			// 替换原来匹配的文本
 			matcher.appendReplacement(sb, group1);
 		}
 		// 添加后面没有匹配的文本
 		matcher.appendTail(sb);
+//		// 删除多余的反引号
+//		String result = sb.toString();
+//		result = result.replaceAll(RegexMarkdown.MDCodeInLineRegex, "$1");
+//		return sb.toString();
 		return sb.toString();
 	}
 	/**
@@ -100,7 +106,7 @@ public class MDTableReplace
 			}
 			if (!"".equals(group3))
 			{
-//				group3 = group3.replace(",", "逗号");
+				// group3 = group3.replace(",", "逗号");
 				group3 = group3.replace("...", "变长参数");
 				group3 = group3.replace("<?>", "泛型");
 				group3 = group3.replace("[]", "数组");
