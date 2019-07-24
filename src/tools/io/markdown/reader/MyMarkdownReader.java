@@ -4,16 +4,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.Set;
 import clipboard.util.SysClipboardUtil;
 import read.IOFlag;
 import regex.RegexHTML;
+import tools.io.properties.PropertiesInstance;
 
 public class MyMarkdownReader
 {
@@ -96,7 +99,7 @@ public class MyMarkdownReader
 		deleteLastLine(sbBuffer);
 		if (repalceMap.size() > 0)
 		{
-			// 替换特殊字符串
+			// 替换特殊单词,以便正确朗读.
 			sbBuffer = replaceKeyToValue(sbBuffer.toString(), repalceMap);
 		}
 
@@ -104,7 +107,7 @@ public class MyMarkdownReader
 	}
 
 	/**
-	 * 使用Map中的key,替换value
+	 * 使用Map中的key,替换value.
 	 * 
 	 * @param input
 	 *            需要替换的字符串
@@ -115,6 +118,11 @@ public class MyMarkdownReader
 	public static StringBuffer replaceKeyToValue(String input,
 			HashMap<String, String> repalceMap)
 	{
+		//
+		Properties properties = PropertiesInstance
+				.getPropertiesInstanceUTF8("ContainSpecialWords.properties");
+		Set<String> keySet = properties.stringPropertyNames();
+
 		// 1 获取Map.Entry对象的Set集合
 		Set<Entry<String, String>> mapEntry = repalceMap.entrySet();
 		// 2 Map.Entry对象的Set集合迭代器
@@ -128,8 +136,30 @@ public class MyMarkdownReader
 			String value = mapEntryElement.getValue();
 			System.err.println("key=" + key + ",value=" + value);
 			// 使用key替换value
-			input = input.replace(key, value);
+			// input = input.replace(key, value);
+			input = input.replaceAll("\\b" + key + "\\b", value);
+			// 如果属性文件中没有这个key的话
+			if (!keySet.contains(key))
+			{
+				// 保存到属性文件对象中
+				properties.setProperty(key, value);
+			}
 		}
+		try
+		{
+			// 保存到磁盘上的属性文件
+			properties.store(
+					new FileOutputStream(
+							new File("ContainSpecialWords.properties")),
+					"utf-8");
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
 		StringBuffer sb = new StringBuffer(input);
 		return sb;
 	}
