@@ -13,7 +13,7 @@ public class RegexMarkdown
 	/**
 	 * 匹配Markdown 表格内的 行内代码 正则表达式 
 	 */
-	public final static String MDCodeInLineInMDTableColsRegex = "\\|`(.+?)`\\|";
+	public final static String MDCodeInLineInMDTableColsRegex = "(?m)^\\|`(.+?)`\\|";
 	/**
 	 * 匹配markdown 加粗或斜体 的正则表达式.
 	 */

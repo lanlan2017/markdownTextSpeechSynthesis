@@ -1,14 +1,13 @@
 package replace.md.table;
 
+//导入正则表达式
+import static regex.RegexJava.javaMethedRegex;
+import static regex.RegexMarkdown.MDCodeInLineInMDTableColsRegex;
+import static regex.RegexMarkdown.MDTableRegex;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import clipboard.util.SysClipboardUtil;
-import regex.RegexMarkdown;
 import replace.MDCodeReplace;
-import static regex.RegexJava.javaMethedRegex;
-//导入正则表达式
-import static regex.RegexMarkdown.MDTableRegex;
-import static regex.RegexMarkdown.MDCodeInLineInMDTableColsRegex;
 
 public class MDTableReplace
 {
@@ -66,10 +65,10 @@ public class MDTableReplace
 		}
 		// 添加后面没有匹配的文本
 		matcher.appendTail(sb);
-//		// 删除多余的反引号
-//		String result = sb.toString();
-//		result = result.replaceAll(RegexMarkdown.MDCodeInLineRegex, "$1");
-//		return sb.toString();
+		// // 删除多余的反引号
+		// String result = sb.toString();
+		// result = result.replaceAll(RegexMarkdown.MDCodeInLineRegex, "$1");
+		// return sb.toString();
 		return sb.toString();
 	}
 	/**
@@ -106,10 +105,10 @@ public class MDTableReplace
 			}
 			if (!"".equals(group3))
 			{
-				// group3 = group3.replace(",", "逗号");
 				group3 = group3.replace("...", "变长参数");
 				group3 = group3.replace("<?>", "泛型");
 				group3 = group3.replace("[]", "数组");
+				group3 = group3.replace(",", "逗号");
 				matcherStr = matcherStr + " 该方法参数列表 " + group3;
 			} else
 			{

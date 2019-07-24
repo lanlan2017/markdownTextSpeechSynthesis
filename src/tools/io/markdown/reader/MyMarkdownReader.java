@@ -7,17 +7,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
 import clipboard.util.SysClipboardUtil;
-import read.ReadFlag;
+import read.IOFlag;
+import regex.RegexHTML;
 
 public class MyMarkdownReader
 {
 	public static void main(String[] args)
 	{
 		String path = SysClipboardUtil.getSysClipboardText();
-
 		System.out.print(readerMyMarkdownFile(path));
-
 	}
 
 	/**
@@ -27,27 +30,47 @@ public class MyMarkdownReader
 	{
 		boolean fileStart = false;
 		boolean read = false;
+		HashMap<String, String> repalceMap = new HashMap<String, String>();
 		StringBuffer sbBuffer = new StringBuffer();
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
 				new FileInputStream(new File(path)), "utf-8"));)
 		{
 
 			String line = null;
+			String[] replaceEntry;
+			String key;
+			String value;
 			while ((line = reader.readLine()) != null)
 			{
+				// 如果文件开始了
 				if (!fileStart && "<!--end-->".equals(line))
 				{
 					fileStart = true;
 					continue;
 				}
-				if (ReadFlag.SSTStart.equals(line))
+				if (IOFlag.SSTStart.equals(line))
 				{
 					read = true;
 					continue;
-				}
-				if (ReadFlag.SSTStop.equals(line))
+				} else if (IOFlag.SSTStop.equals(line))
 				{
 					read = false;
+					continue;
+				}
+				// 如果扫描到正确读音标记
+				else if (line.matches(RegexHTML.correctReading))
+				{
+					// 取出读音文件
+					line = line.replaceAll(RegexHTML.correctReading, "$1");
+					replaceEntry = line.split("&");
+					for (int i = 0; i < replaceEntry.length; i++)
+					{
+						key = replaceEntry[i].substring(0,
+								replaceEntry[i].indexOf("="));
+						value = replaceEntry[i]
+								.substring(replaceEntry[i].indexOf("=") + 1);
+						repalceMap.put(key, value);
+					}
 					continue;
 				}
 				if (fileStart && read)
@@ -69,11 +92,51 @@ public class MyMarkdownReader
 		}
 		// System.out.println(
 		// "------------------------------------------------------------");
+		// 删除最后一行,这行带着文章的超链接
 		deleteLastLine(sbBuffer);
+		if (repalceMap.size() > 0)
+		{
+			// 替换特殊字符串
+			sbBuffer = replaceKeyToValue(sbBuffer.toString(), repalceMap);
+		}
+
 		return sbBuffer;
 	}
 
 	/**
+	 * 使用Map中的key,替换value
+	 * 
+	 * @param input
+	 *            需要替换的字符串
+	 * @param repalceMap
+	 *            保存key和value的map集合
+	 * @return 保存替换后的字符串的StringBuffer.
+	 */
+	public static StringBuffer replaceKeyToValue(String input,
+			HashMap<String, String> repalceMap)
+	{
+		// 1 获取Map.Entry对象的Set集合
+		Set<Entry<String, String>> mapEntry = repalceMap.entrySet();
+		// 2 Map.Entry对象的Set集合迭代器
+		Iterator<Entry<String, String>> mapEntryIt = mapEntry.iterator();
+		while (mapEntryIt.hasNext())
+		{
+			// 2 从Set集合中取出一个 Map.Entry实例
+			Entry<String, String> mapEntryElement = mapEntryIt.next();
+			// 3 分别取出键和值
+			String key = mapEntryElement.getKey();
+			String value = mapEntryElement.getValue();
+			System.err.println("key=" + key + ",value=" + value);
+			// 使用key替换value
+			input = input.replace(key, value);
+		}
+		StringBuffer sb = new StringBuffer(input);
+		return sb;
+	}
+
+	/**
+	 * 删除最后一行文本.
+	 * 
 	 * @param sbBuffer
 	 */
 	public static void deleteLastLine(StringBuffer sbBuffer)
