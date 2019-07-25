@@ -33,7 +33,7 @@ public class SpeechSynthesisProperties
 		if (pr == null)
 		{
 			pr = PropertiesInstance
-					.getPropertiesInstanceUTF8("SpeechSynthesis.properties");
+					.getPropertiesInstanceUTF8("SST.properties");
 		}
 	}
 }

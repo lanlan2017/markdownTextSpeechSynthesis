@@ -16,6 +16,7 @@ public class SpecialWordsProperties
 	 *            想要查找的key.
 	 * @return 如果找到返回key对应的value表示替换成value,如果没有找到返回keyToFind表示不替换.
 	 */
+	//SpecialWordsProperties.replaceByVlaue
 	public static String replaceByVlaue(String keyToFind)
 	{
 		// 单例模式获取.

@@ -137,6 +137,7 @@ public class MyMarkdownReader
 			System.err.println("key=" + key + ",value=" + value);
 			// 使用key替换value
 			// input = input.replace(key, value);
+			// 替换该单词,而是不替换其他单词中出现的子串。
 			input = input.replaceAll("\\b" + key + "\\b", value);
 			// 如果属性文件中没有这个key的话
 			if (!keySet.contains(key))

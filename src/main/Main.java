@@ -19,6 +19,7 @@ import replace.ReplaceSpaceInChineses;
 import system.call.cmd.Command;
 import tools.io.markdown.reader.MyMarkdownReader;
 import tools.io.properties.ChinesePolysyllabicWordsProperties;
+import tools.io.properties.ContainSpecialWordsProperties;
 import tools.io.properties.PerorationProperties;
 import tools.io.properties.SpeechSynthesisProperties;
 import tools.io.reader.PropertiesReader;
@@ -28,6 +29,8 @@ public class Main
 
 	static Scanner scanner = new Scanner(System.in);
 	static String fileName = null;
+	// 一次支持合成的最大字符数量
+	static int maxSize = 4000;
 	public static void main(String[] args)
 	{
 		switch (args.length)
@@ -74,36 +77,26 @@ public class Main
 			// 从文件中读取markdown文本
 			String input = MyMarkdownReader.readerMyMarkdownFile(path)
 					.toString();
-			// 讯飞机器人设置
-			// SpeechSynthesizer mTts = xunfeiSettings();
 			// 处理输入的文本
 			input = inputProcessing(input);
+			// 添加结束语
 			input = input + PerorationProperties.getPeroration();
-			// System.out.println(
-			// "--------------------- 总处理结果 -----------------------");
-			// System.out.println(input);
-			// // 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
-			// mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
-			int maxSize = 4000;
+			// 合成所有的文本
 			XunFeiTools.xunfeiAll(input, maxSize, fileName);
 			// 7.给出提示
 			MyStringWriter.writerString(input);
-			// System.out.println(fileName);
 		} else
 		{
 			// 为了阅读方便
 			String input = path;
+			// 处理输入的文本
 			input = inputProcessing(input);
 			System.out.println("---------------- 直接合成 --------------------");
 			System.out.println(input);
 			System.out.println("---------------- 直接合成 --------------------");
 			fileName = System.getProperty("user.dir") + File.separator
 					+ "直接合成.pcm";
-			// 讯飞机器人设置
-			// SpeechSynthesizer mTts = xunfeiSettings();
-			// // 6.开始合成 //设置合成音频保存位置（可自定义保存位置），默认保存在“./tts_test.pcm”
-			// mTts.synthesizeToUri(input, fileName, synthesizeToUriListener);
-			int maxSize = 4000;
+			// 合成所有的文本
 			XunFeiTools.xunfeiAll(input, maxSize, fileName);
 		}
 	}
@@ -151,12 +144,14 @@ public class Main
 				"######################################## 讯飞语音合成系统 ########################################");
 		// 移除中文之间的一个或多个空格
 		input = ReplaceSpaceInChineses.replaceSpaceInChineses(input);
-		// 移除markdown标记
-		input = RemoveMarkDownTags.replaceMD(input);
 		// 移除类似`<center><strong>表19.3input标签的属性</strong></center>`这样的标签
 		input = RemoveHtmlTags.removeHtmlDoubleTags(input);
 		// 替换多音词,如重载,长度,机器可能会读错
 		input = ChinesePolysyllabicWordsProperties.replaceByValue(input);
+		// 替换容易读错的单词
+		input = ContainSpecialWordsProperties.repalceByProperties(input);
+		// 移除markdown标记
+		input = RemoveMarkDownTags.replaceMD(input);
 		// 拆分java驼峰命名法
 		input = ReplaceEnglishString.replaceEnglish(input);
 		//
