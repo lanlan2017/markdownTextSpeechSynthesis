@@ -14,8 +14,7 @@ public class ReplaceJavaKeyWord
 	 */
 	public static String replaceJavaKeyWord(String englishWord)
 	{
-//		System.out.println("驼峰命名法: 处理开始-------");
-		// java关键字模板
+		// 替换驼峰
 		Pattern javaKeyWordPattern = Pattern.compile("([A-Z][a-z]+)");
 		// java关键字匹配器
 		Matcher javaKeyWordMatcher;
@@ -32,23 +31,21 @@ public class ReplaceJavaKeyWord
 		// 如果处理后这个单词前面没有带空格,这说明这个单词是小写字母
 		else if (!javaKeyWord.startsWith(" "))
 			javaKeyWord = " " + javaKeyWord;
-//		System.out.println("    拆分结果:" + javaKeyWord);
-//		System.out.println("驼峰命名法: 处理结束-------");
 		return javaKeyWord;
 	}
-	public static void main(String[] args)
-	{
-		String testStr = "ReplaceJavaKeyWord";
-		String testStr1 = "replaceJavaKeyWord";
-		String testStr2 = "replace";
-		String testStr4 = "Java";
-		String testStr5 = "doGet()";
-		String testStr6 = "String()";
-		System.out.println(replaceJavaKeyWord(testStr));
-		System.out.println(replaceJavaKeyWord(testStr1));
-		System.out.println(replaceJavaKeyWord(testStr2));
-		System.out.println(replaceJavaKeyWord(testStr4));
-		System.out.println(replaceJavaKeyWord(testStr5));
-		System.out.println(replaceJavaKeyWord(testStr6));
-	}
+//	public static void main(String[] args)
+//	{
+//		String testStr = "ReplaceJavaKeyWord";
+//		String testStr1 = "replaceJavaKeyWord";
+//		String testStr2 = "replace";
+//		String testStr4 = "Java";
+//		String testStr5 = "doGet()";
+//		String testStr6 = "String()";
+//		System.out.println(replaceJavaKeyWord(testStr));
+//		System.out.println(replaceJavaKeyWord(testStr1));
+//		System.out.println(replaceJavaKeyWord(testStr2));
+//		System.out.println(replaceJavaKeyWord(testStr4));
+//		System.out.println(replaceJavaKeyWord(testStr5));
+//		System.out.println(replaceJavaKeyWord(testStr6));
+//	}
 }

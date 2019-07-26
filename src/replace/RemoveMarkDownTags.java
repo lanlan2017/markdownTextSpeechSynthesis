@@ -16,8 +16,6 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDTitle(String line)
 	{
-		// Pattern pattern =
-		// Pattern.compile("(#+)(\\s+)([^#]+)(?:\\2)?(?:\\1)?");
 		Pattern pattern = Pattern.compile(RegexMarkdown.MDTitleRegex);
 		Matcher matcher = pattern.matcher(line);
 		StringBuffer sb = new StringBuffer();
@@ -26,14 +24,9 @@ public class RemoveMarkDownTags
 		{
 			// 获取匹配文本,并删除头部和尾部空白符
 			matcherStr = matcher.group(3).trim();
-			// System.out.println("捕捉到标题:开始处理------");
-			// System.out.println(" 标题:" + matcherStr);
-
 			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
 			// 替换特殊字符
 			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
-			// System.out.println("处理结果:" + matcherStr);
-			// System.out.println("捕捉到标题:处理结束------");
 			matcher.appendReplacement(sb, matcherStr);
 		}
 		matcher.appendTail(sb);
@@ -77,7 +70,6 @@ public class RemoveMarkDownTags
 	 */
 	public static String removeMDCode(String line)
 	{
-		// Pattern pattern = Pattern.compile("`(.+?)`");
 		Pattern pattern = Pattern.compile(RegexMarkdown.MDCodeInLineRegex);
 		Matcher matcher = pattern.matcher(line);
 		StringBuffer sb = new StringBuffer();

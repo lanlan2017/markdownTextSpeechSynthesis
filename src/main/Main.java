@@ -2,16 +2,14 @@ package main;
 
 import java.io.File;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 import com.iflytek.cloud.speech.SpeechConstant;
 import com.iflytek.cloud.speech.SpeechError;
 import com.iflytek.cloud.speech.SpeechSynthesizer;
 import com.iflytek.cloud.speech.SpeechUtility;
 import com.iflytek.cloud.speech.SynthesizeToUriListener;
+
 import clipboard.util.SysClipboardUtil;
-import latex.reader.LatexReader;
-import regex.RegexLatex;
 import replace.RemoveHtmlTags;
 import replace.RemoveMarkDownTags;
 import replace.ReplaceEnglishString;
@@ -54,7 +52,6 @@ public class Main
 		switch (args[0])
 		{
 			case "setting" :
-				// System.out.println(System.getProperty("user.dir"));
 				Command.exeCmd(
 						"explorer.exe " + System.getProperty("user.dir"));
 				break;
@@ -158,31 +155,31 @@ public class Main
 		input = input.replaceAll("(?m)[ ]+$", "");
 		return input;
 	}
-	/**
-	 * @param input
-	 * @return
-	 */
-	public static String replaceLatexCode(String input)
-	{
-		// Pattern pattern = Pattern.compile("\\$(.+?)\\$");
-		Pattern pattern = Pattern.compile(RegexLatex.latexFormulaInLine);
-		Matcher matcher = pattern.matcher(input);
-		StringBuffer sb = new StringBuffer();
-		String latexCode;
-		while (matcher.find())
-		{
-			// 获取匹配到的一个分组
-			latexCode = matcher.group(1);
-			// 朗读Latex行内公式
-			latexCode = LatexReader.readeLaTexCode(latexCode);
-			// 替换原来匹配的文本
-			matcher.appendReplacement(sb, latexCode);
-		}
-		// 添加后面没有匹配的文本
-		matcher.appendTail(sb);
-		input = sb.toString();
-		return input;
-	}
+//	/**
+//	 * @param input
+//	 * @return
+//	 */
+//	public static String replaceLatexCode(String input)
+//	{
+//		// Pattern pattern = Pattern.compile("\\$(.+?)\\$");
+//		Pattern pattern = Pattern.compile(RegexLatex.latexFormulaInLine);
+//		Matcher matcher = pattern.matcher(input);
+//		StringBuffer sb = new StringBuffer();
+//		String latexCode;
+//		while (matcher.find())
+//		{
+//			// 获取匹配到的一个分组
+//			latexCode = matcher.group(1);
+//			// 朗读Latex行内公式
+//			latexCode = LatexReader.readeLaTexCode(latexCode);
+//			// 替换原来匹配的文本
+//			matcher.appendReplacement(sb, latexCode);
+//		}
+//		// 添加后面没有匹配的文本
+//		matcher.appendTail(sb);
+//		input = sb.toString();
+//		return input;
+//	}
 
 	/**
 	 * @return
@@ -203,27 +200,6 @@ public class Main
 		// 4.合成参数设置，详见《MSC Reference Manual》SpeechSynthesizer 类
 		mTts.setParameter(SpeechConstant.VOICE_NAME, "vixy");// 小研
 		return mTts;
-	}
-
-	/**
-	 * @return
-	 */
-	public static String getInput()
-	{
-		StringBuffer sbBuffer = new StringBuffer(10240);
-		String line = null;
-		while (scanner.hasNext())
-		{
-			line = scanner.nextLine();
-			if ("#".equals(line))
-			{
-				break;
-			}
-			sbBuffer.append(line.concat("\r\n"));
-		}
-		// 获取输入的数据.
-		String input = sbBuffer.toString();
-		return input;
 	}
 
 	// 1 设置合成监听器

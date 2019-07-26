@@ -18,7 +18,6 @@ public class MyStringWriter
 			bufferedWriter.write(input);
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
