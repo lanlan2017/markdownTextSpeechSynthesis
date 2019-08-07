@@ -40,6 +40,7 @@ public class MDCodeReplace
 		matcherStr = matcherStr.replace("#", "¾®ºÅ");
 		matcherStr = matcherStr.replace(".", "µã");
 		matcherStr = matcherStr.replace("|", "Êú¸Ü");
+		matcherStr = matcherStr.replace("!", "¸ÐÌ¾ºÅ");
 //		matcherStr = matcherStr.replace(",", "¶ººÅ");
 		return matcherStr;
 	}

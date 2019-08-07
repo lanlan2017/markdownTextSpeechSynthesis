@@ -24,9 +24,9 @@ public class RemoveMarkDownTags
 		{
 			// 获取匹配文本,并删除头部和尾部空白符
 			matcherStr = matcher.group(3).trim();
-			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
-			// 替换特殊字符
 			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
+			// 替换特殊字符
+			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
 			matcher.appendReplacement(sb, matcherStr);
 		}
 		matcher.appendTail(sb);
@@ -79,12 +79,12 @@ public class RemoveMarkDownTags
 			// 获取匹配文本
 			matcherStr = matcher.group(1);
 
+			// 处理匹配特定字符的情况
+			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
 			// 处理匹配特定单词的情况
 			matcherStr = MDCodeReplace.replaceSpecialWords(matcherStr);
 			// 处理匹配正则表达式的情况
 			matcherStr = MDCodeReplace.replaceMatcher(matcherStr);
-			// 处理匹配特定字符的情况
-			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
 			// 替换容易读出的单词
 			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
 			// 添加空格让机器人好识别
@@ -160,8 +160,16 @@ public class RemoveMarkDownTags
 	 */
 	public static String replaceMD(String input)
 	{
-//		System.out.println(
-//				"---------------------- 取出markdown标记 开始  ------------------------");
+		// System.out.println(
+		// "---------------------- 取出markdown标记 开始 ------------------------");
+		// 朗读Markdown表格,这个要放在removeMDCode(input)之前,因为表格中可以有代码段
+		input = MDTableReplace.MDTableSpeech(input);
+		// 移除markdown中的代码段标记部分.要放在去除加粗之前,代码段中可以有星号
+		input = removeMDCode(input);
+		// 去除markdown标题要放在去除加粗之前,因为标题中可能带星号
+		input = removeMDTitle(input);
+
+		
 		// 去除markdown加粗: **xxxx**,或者斜体*xxxx*
 		input = removeMDStrongOrItalic(input);
 		// 移除markdown代码中的 引用块,不要读成大于符号
@@ -174,15 +182,9 @@ public class RemoveMarkDownTags
 		// 移除Markdown文档中的 超链接
 		input = removeMDLink(input);
 
-		// 移除markdown中的 行内代码
+		// 移除markdown中的 代码块
 		input = removeMDCodeBlock(input);
-		// 去除markdown标题# h1 #,## h2 ##,### h3 ###,#### h4 ####,......
-		input = removeMDTitle(input);
 
-		// 朗读Markdown表格,这个要放在removeMDCode(input)之前
-		input = MDTableReplace.MDTableSpeech(input);
-		// 移除markdown中的代码段标记部分.
-		input = removeMDCode(input);
 		// System.out.println(input);
 		// System.out.println(
 		// "---------------------- 取出markdown标记 结束 ------------------------");
