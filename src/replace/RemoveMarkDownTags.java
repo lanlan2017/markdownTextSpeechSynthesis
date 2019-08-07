@@ -162,6 +162,8 @@ public class RemoveMarkDownTags
 	{
 		// System.out.println(
 		// "---------------------- 取出markdown标记 开始 ------------------------");
+		// 移除markdown中的 代码块,要放在代码段之前
+		input = removeMDCodeBlock(input);
 		// 朗读Markdown表格,这个要放在removeMDCode(input)之前,因为表格中可以有代码段
 		input = MDTableReplace.MDTableSpeech(input);
 		// 移除markdown中的代码段标记部分.要放在去除加粗之前,代码段中可以有星号
@@ -169,7 +171,6 @@ public class RemoveMarkDownTags
 		// 去除markdown标题要放在去除加粗之前,因为标题中可能带星号
 		input = removeMDTitle(input);
 
-		
 		// 去除markdown加粗: **xxxx**,或者斜体*xxxx*
 		input = removeMDStrongOrItalic(input);
 		// 移除markdown代码中的 引用块,不要读成大于符号
@@ -181,9 +182,6 @@ public class RemoveMarkDownTags
 		input = removeMDIMG(input);
 		// 移除Markdown文档中的 超链接
 		input = removeMDLink(input);
-
-		// 移除markdown中的 代码块
-		input = removeMDCodeBlock(input);
 
 		// System.out.println(input);
 		// System.out.println(
