@@ -9,7 +9,7 @@ import replace.md.table.MDTableReplace;
 public class RemoveMarkDownTags
 {
 	/**
-	 * ÒÆ³ımarkdown±êÌâ±ê¼Ç.
+	 * ç§»é™¤markdownæ ‡é¢˜æ ‡è®°.
 	 * 
 	 * @param line
 	 * @return
@@ -22,10 +22,10 @@ public class RemoveMarkDownTags
 		String matcherStr;
 		while (matcher.find())
 		{
-			// »ñÈ¡Æ¥ÅäÎÄ±¾,²¢É¾³ıÍ·²¿ºÍÎ²²¿¿Õ°×·û
+			// è·å–åŒ¹é…æ–‡æœ¬,å¹¶åˆ é™¤å¤´éƒ¨å’Œå°¾éƒ¨ç©ºç™½ç¬¦
 			matcherStr = matcher.group(3).trim();
 			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
-			// Ìæ»»ÌØÊâ×Ö·û
+			// æ›¿æ¢ç‰¹æ®Šå­—ç¬¦
 			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
 			matcher.appendReplacement(sb, matcherStr);
 		}
@@ -33,7 +33,7 @@ public class RemoveMarkDownTags
 		return sb.toString();
 	}
 	/**
-	 * ÒÆ³ımarkdownÍ¼Æ¬±ê¼Ç.
+	 * ç§»é™¤markdownå›¾ç‰‡æ ‡è®°.
 	 * 
 	 * @param line
 	 * @return
@@ -45,7 +45,7 @@ public class RemoveMarkDownTags
 		StringBuffer sb = new StringBuffer();
 		while (matcher.find())
 		{
-			// °ÑÆ¥Åäµ½µÄÍ¼Æ¬Ìæ»»³É¿Õ×Ö·û´®¡£
+			// æŠŠåŒ¹é…åˆ°çš„å›¾ç‰‡æ›¿æ¢æˆç©ºå­—ç¬¦ä¸²ã€‚
 			matcher.appendReplacement(sb, "");
 		}
 		matcher.appendTail(sb);
@@ -53,7 +53,7 @@ public class RemoveMarkDownTags
 	}
 
 	/**
-	 * ÒÆ³ımarkdownĞ±Ìå±ê¼Ç,ÒÆ³ımarkdown¼Ó´Ö±ê¼Ç¡£
+	 * ç§»é™¤markdownæ–œä½“æ ‡è®°,ç§»é™¤markdownåŠ ç²—æ ‡è®°ã€‚
 	 * 
 	 * @param line
 	 * @return
@@ -63,7 +63,7 @@ public class RemoveMarkDownTags
 		return line.replaceAll(RegexMarkdown.MDStrongOrItalicRegex, "$2");
 	}
 	/**
-	 * ÒÆ³ımarkdown´úÂë¶Î±ê¼Ç
+	 * ç§»é™¤markdownä»£ç æ®µæ ‡è®°
 	 * 
 	 * @param line
 	 * @return
@@ -76,18 +76,18 @@ public class RemoveMarkDownTags
 		String matcherStr;
 		while (matcher.find())
 		{
-			// »ñÈ¡Æ¥ÅäÎÄ±¾
+			// è·å–åŒ¹é…æ–‡æœ¬
 			matcherStr = matcher.group(1);
 
-			// ´¦ÀíÆ¥ÅäÌØ¶¨×Ö·ûµÄÇé¿ö
+			// å¤„ç†åŒ¹é…ç‰¹å®šå­—ç¬¦çš„æƒ…å†µ
 			matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
-			// ´¦ÀíÆ¥ÅäÌØ¶¨µ¥´ÊµÄÇé¿ö
+			// å¤„ç†åŒ¹é…ç‰¹å®šå•è¯çš„æƒ…å†µ
 			matcherStr = MDCodeReplace.replaceSpecialWords(matcherStr);
-			// ´¦ÀíÆ¥ÅäÕıÔò±í´ïÊ½µÄÇé¿ö
+			// å¤„ç†åŒ¹é…æ­£åˆ™è¡¨è¾¾å¼çš„æƒ…å†µ
 			matcherStr = MDCodeReplace.replaceMatcher(matcherStr);
-			// Ìæ»»ÈİÒ×¶Á³öµÄµ¥´Ê
+			// æ›¿æ¢å®¹æ˜“è¯»å‡ºçš„å•è¯
 			matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
-			// Ìí¼Ó¿Õ¸ñÈÃ»úÆ÷ÈËºÃÊ¶±ğ
+			// æ·»åŠ ç©ºæ ¼è®©æœºå™¨äººå¥½è¯†åˆ«
 			// matcherStr = " " + matcherStr + " ";
 			matcher.appendReplacement(sb, matcherStr);
 		}
@@ -95,7 +95,7 @@ public class RemoveMarkDownTags
 		return sb.toString();
 	}
 	/**
-	 * ÒÆ³ımarkdown,³¬Á´½Ó¡£
+	 * ç§»é™¤markdown,è¶…é“¾æ¥ã€‚
 	 * 
 	 * @param line
 	 * @return
@@ -103,16 +103,16 @@ public class RemoveMarkDownTags
 	public static String removeMDLink(String line)
 	{
 		// return sb.toString();
-		// Ìæ»»ÖĞÎÄÕ¾ÄÚ³¬Á´½Ó
+		// æ›¿æ¢ä¸­æ–‡ç«™å†…è¶…é“¾æ¥
 		// line = line.replaceAll("\\[(.*)\\]\\(.+\\)", " $1 ");
 		line = line.replaceAll(RegexMarkdown.MDLinkRegex, " $1 ");
-		// Ìæ»»Õ¾Íâ³¬Á´½Ó
+		// æ›¿æ¢ç«™å¤–è¶…é“¾æ¥
 		// line = line.replaceAll("\\[.*?]\\((https?://.+?)\\)", "");
 		// line=line.replaceAll("\\[.*?]\\((.+?)\\)", "");
 		return line;
 	}
 	/**
-	 * ÒÆ³ımarkdown,´úÂë¿é¡£
+	 * ç§»é™¤markdown,ä»£ç å—ã€‚
 	 * 
 	 * @param line
 	 * @return
@@ -125,16 +125,16 @@ public class RemoveMarkDownTags
 		StringBuffer sb = new StringBuffer();
 		while (codeBlockMatcher.find())
 		{
-			// System.out.println("²¶»ñµ½´úÂë¿é:¿ªÊ¼-----------");
+			// System.out.println("æ•è·åˆ°ä»£ç å—:å¼€å§‹-----------");
 			// System.out.println(codeBlockMatcher.group());
-			// System.out.println("²¶»ñµ½´úÂë¿é:½áÊø-----------");
+			// System.out.println("æ•è·åˆ°ä»£ç å—:ç»“æŸ-----------");
 			codeBlockMatcher.appendReplacement(sb, "");
 		}
 		codeBlockMatcher.appendTail(sb);
 		return sb.toString();
 	}
 	/**
-	 * ÒÆ³ımarkdown,ÒıÓÃ¿é¡£
+	 * ç§»é™¤markdown,å¼•ç”¨å—ã€‚
 	 * 
 	 * @param line
 	 * @return
@@ -144,7 +144,7 @@ public class RemoveMarkDownTags
 		return line.replaceAll(RegexMarkdown.MDQuoteBlockRegex, "").trim();
 	}
 	/**
-	 * ÒÆ³ımarkdown,ÎŞĞòÁĞ±íÏî¡£
+	 * ç§»é™¤markdown,æ— åºåˆ—è¡¨é¡¹ã€‚
 	 * 
 	 * @param line
 	 * @return
@@ -161,56 +161,56 @@ public class RemoveMarkDownTags
 	public static String replaceMD(String input)
 	{
 		// System.out.println(
-		// "---------------------- È¡³ömarkdown±ê¼Ç ¿ªÊ¼ ------------------------");
-		// ÒÆ³ımarkdownÖĞµÄ ´úÂë¿é,Òª·ÅÔÚ´úÂë¶ÎÖ®Ç°
+		// "---------------------- å–å‡ºmarkdownæ ‡è®° å¼€å§‹ ------------------------");
+		// ç§»é™¤markdownä¸­çš„ ä»£ç å—,è¦æ”¾åœ¨ä»£ç æ®µä¹‹å‰
 		input = removeMDCodeBlock(input);
-		// ÀÊ¶ÁMarkdown±í¸ñ,Õâ¸öÒª·ÅÔÚremoveMDCode(input)Ö®Ç°,ÒòÎª±í¸ñÖĞ¿ÉÒÔÓĞ´úÂë¶Î
+		// æœ—è¯»Markdownè¡¨æ ¼,è¿™ä¸ªè¦æ”¾åœ¨removeMDCode(input)ä¹‹å‰,å› ä¸ºè¡¨æ ¼ä¸­å¯ä»¥æœ‰ä»£ç æ®µ
 		input = MDTableReplace.MDTableSpeech(input);
-		// ÒÆ³ımarkdownÖĞµÄ´úÂë¶Î±ê¼Ç²¿·Ö.Òª·ÅÔÚÈ¥³ı¼Ó´ÖÖ®Ç°,´úÂë¶ÎÖĞ¿ÉÒÔÓĞĞÇºÅ
+		// ç§»é™¤markdownä¸­çš„ä»£ç æ®µæ ‡è®°éƒ¨åˆ†.è¦æ”¾åœ¨å»é™¤åŠ ç²—ä¹‹å‰,ä»£ç æ®µä¸­å¯ä»¥æœ‰æ˜Ÿå·
 		input = removeMDCode(input);
-		// È¥³ımarkdown±êÌâÒª·ÅÔÚÈ¥³ı¼Ó´ÖÖ®Ç°,ÒòÎª±êÌâÖĞ¿ÉÄÜ´øĞÇºÅ
+		// å»é™¤markdownæ ‡é¢˜è¦æ”¾åœ¨å»é™¤åŠ ç²—ä¹‹å‰,å› ä¸ºæ ‡é¢˜ä¸­å¯èƒ½å¸¦æ˜Ÿå·
 		input = removeMDTitle(input);
 
-		// È¥³ımarkdown¼Ó´Ö: **xxxx**,»òÕßĞ±Ìå*xxxx*
+		// å»é™¤markdownåŠ ç²—: **xxxx**,æˆ–è€…æ–œä½“*xxxx*
 		input = removeMDStrongOrItalic(input);
-		// ÒÆ³ımarkdown´úÂëÖĞµÄ ÒıÓÃ¿é,²»Òª¶Á³É´óÓÚ·ûºÅ
+		// ç§»é™¤markdownä»£ç ä¸­çš„ å¼•ç”¨å—,ä¸è¦è¯»æˆå¤§äºç¬¦å·
 		input = removeMDQuoteBlock(input);
-		// ÒÆ³ımarkdown´úÂëÖĞµÄ ÎŞĞòÁĞ±íÏî.
+		// ç§»é™¤markdownä»£ç ä¸­çš„ æ— åºåˆ—è¡¨é¡¹.
 		input = removeMDUnorderListBlock(input);
 
-		// È¥³ıMarkdownÎÄµµÖĞ µÄÍ¼Æ¬±êÇ©
+		// å»é™¤Markdownæ–‡æ¡£ä¸­ çš„å›¾ç‰‡æ ‡ç­¾
 		input = removeMDIMG(input);
-		// ÒÆ³ıMarkdownÎÄµµÖĞµÄ ³¬Á´½Ó
+		// ç§»é™¤Markdownæ–‡æ¡£ä¸­çš„ è¶…é“¾æ¥
 		input = removeMDLink(input);
 
 		// System.out.println(input);
 		// System.out.println(
-		// "---------------------- È¡³ömarkdown±ê¼Ç ½áÊø ------------------------");
+		// "---------------------- å–å‡ºmarkdownæ ‡è®° ç»“æŸ ------------------------");
 		return input;
 	}
 	public static void main(String[] args)
 	{
-		// String testStr = "¿ÉÒÔÍ¨¹ıÏÂÃæµÄ`URL`À´·ÃÎÊÕâ¸ö`JSP`Ò³Ãæ£º\r\n"
+		// String testStr = "å¯ä»¥é€šè¿‡ä¸‹é¢çš„`URL`æ¥è®¿é—®è¿™ä¸ª`JSP`é¡µé¢ï¼š\r\n"
 		// +
 		// "[http://localhost:8080/app08a/countries.jsp](http://localhost:8080/app08a/countries.jsp)";
-		// String testStr = "# 12.1.2 ÊµÊ©°²È«Ô¼Êø #\r\n"
+		// String testStr = "# 12.1.2 å®æ–½å®‰å…¨çº¦æŸ #\r\n"
 		// +
-		// "**`WEB-INF`Ä¿Â¼ÏÂµÄ×ÊÔ´¿Í»§¶Ë²»ÄÜÖ±½ÓÍ¨¹ı`URL`·ÃÎÊ**,²»¹ı,ÎÒÃÇ¿ÉÒÔÍ¨¹ı`Servlet`»ò`JSP`Ò³Ãæ·ÃÎÊ`WEB-INF`Ä¿Â¼ÏÂµÄ×ÊÔ´¡£"
-		// + "### web-resource-collection×ÓÔªËØ ###\r\n"
+		// "**`WEB-INF`ç›®å½•ä¸‹çš„èµ„æºå®¢æˆ·ç«¯ä¸èƒ½ç›´æ¥é€šè¿‡`URL`è®¿é—®**,ä¸è¿‡,æˆ‘ä»¬å¯ä»¥é€šè¿‡`Servlet`æˆ–`JSP`é¡µé¢è®¿é—®`WEB-INF`ç›®å½•ä¸‹çš„èµ„æºã€‚"
+		// + "### web-resource-collectionå­å…ƒç´  ###\r\n"
 		// +
-		// "**`web-resource-collection`ÔªËØ±íÊ¾ĞèÒªÏŞÖÆ·ÃÎÊµÄ×ÊÔ´¼¯ºÏ**¡£°üÀ¨`web-resource-name`¡¢`description`¡¢`url-pattern`¡¢`http-method`ºÍ`http-method-ommission`µÈ×ÓÔªËØ¡£\r\n"
-		// + "- `web-resource-name`×ÓÔªËØÓÃÓÚÉèÖÃÓëÊÜ±£»¤×ÊÔ´Ïà¹ØÁªµÄÃû³Æ¡£\r\n"
-		// + "Ôò¸Ã·½·¨·µ»Ø:`-1`\r\n" + "±àÂëÎª:`ISO-8859-1`\r\n" + "»ñÈ¡ÄÚ²¿µÄ`id`Öµ\r\n"
-		// + "`url`\r\n" + "`MIME`\r\n" + "`GET`·½·¨\r\n";
-		// String testStr = "ĞŞ¸Ä±í½á¹¹Ê¹ÓÃ`alter
-		// table`£¬ĞŞ¸Ä±í½á¹¹°üÀ¨`Ôö¼ÓÁĞ¶¨Òå`¡¢`ĞŞ¸ÄÁĞ¶¨Òå`¡¢`É¾³ıÁĞ`¡¢`ÖØÃüÃûÁĞ`µÈ²Ù×÷¡£Ôö¼ÓÁĞ¶¨ÒåµÄÓï·¨ÈçÏÂ:\r\n"
-		// + "```java\r\n" + "alter table ±íÃû\r\n" + "add\r\n" + "(\r\n"
+		// "**`web-resource-collection`å…ƒç´ è¡¨ç¤ºéœ€è¦é™åˆ¶è®¿é—®çš„èµ„æºé›†åˆ**ã€‚åŒ…æ‹¬`web-resource-name`ã€`description`ã€`url-pattern`ã€`http-method`å’Œ`http-method-ommission`ç­‰å­å…ƒç´ ã€‚\r\n"
+		// + "- `web-resource-name`å­å…ƒç´ ç”¨äºè®¾ç½®ä¸å—ä¿æŠ¤èµ„æºç›¸å…³è”çš„åç§°ã€‚\r\n"
+		// + "åˆ™è¯¥æ–¹æ³•è¿”å›:`-1`\r\n" + "ç¼–ç ä¸º:`ISO-8859-1`\r\n" + "è·å–å†…éƒ¨çš„`id`å€¼\r\n"
+		// + "`url`\r\n" + "`MIME`\r\n" + "`GET`æ–¹æ³•\r\n";
+		// String testStr = "ä¿®æ”¹è¡¨ç»“æ„ä½¿ç”¨`alter
+		// table`ï¼Œä¿®æ”¹è¡¨ç»“æ„åŒ…æ‹¬`å¢åŠ åˆ—å®šä¹‰`ã€`ä¿®æ”¹åˆ—å®šä¹‰`ã€`åˆ é™¤åˆ—`ã€`é‡å‘½ååˆ—`ç­‰æ“ä½œã€‚å¢åŠ åˆ—å®šä¹‰çš„è¯­æ³•å¦‚ä¸‹:\r\n"
+		// + "```java\r\n" + "alter table è¡¨å\r\n" + "add\r\n" + "(\r\n"
 		// + " colum_nam1 datatype [default expr],\r\n" + " ...\r\n"
 		// + ");\r\n" + "```";
 		String testStr = SysClipboardUtil.getSysClipboardText();
 		System.out.println(testStr);
 		System.out.println(
-				"##################################### Ìæ»»½á¹û: #####################################");
+				"##################################### æ›¿æ¢ç»“æœ: #####################################");
 		// System.out.println(removeMDQuoteBlock(testStr));
 		System.out.println(replaceMD(testStr));
 	}

@@ -1,6 +1,6 @@
 package replace.md.table;
 
-//µ¼ÈëÕıÔò±í´ïÊ½
+//å¯¼å…¥æ­£åˆ™è¡¨è¾¾å¼
 import static regex.RegexJava.javaMethedRegex;
 import static regex.RegexMarkdown.MDCodeInLineInMDTableColsRegex;
 import static regex.RegexMarkdown.MDTableRegex;
@@ -12,10 +12,10 @@ import replace.MDCodeReplace;
 public class MDTableReplace
 {
 	/**
-	 * ÀÊ¶ÁMarkdown±í¸ñ,µ±±í¸ñÖĞÓĞ·½·¨ÉùÃ÷Ê±.
+	 * æœ—è¯»Markdownè¡¨æ ¼,å½“è¡¨æ ¼ä¸­æœ‰æ–¹æ³•å£°æ˜æ—¶.
 	 * 
 	 * @param line
-	 *            markdownÎÄµµÖĞµÄÄÚÈİ×Ö·û´®.
+	 *            markdownæ–‡æ¡£ä¸­çš„å†…å®¹å­—ç¬¦ä¸².
 	 * @return
 	 */
 	public static String MDTableSpeech(String line)
@@ -29,7 +29,7 @@ public class MDTableReplace
 		String table;
 		while (matcher.find())
 		{
-			// »ñÈ¡Æ¥Åäµ½µÄÒ»¸ö·Ö×é
+			// è·å–åŒ¹é…åˆ°çš„ä¸€ä¸ªåˆ†ç»„
 			tableTitle = matcher.group(1);
 			tableBody = matcher.group(2);
 			tableBody = MDTableCodeInLineRepalce(tableBody);
@@ -40,7 +40,7 @@ public class MDTableReplace
 		return sb.toString();
 	}
 	/**
-	 * Ìæ»»±í¸ñÖĞµÄĞĞÄÚ´úÂë.
+	 * æ›¿æ¢è¡¨æ ¼ä¸­çš„è¡Œå†…ä»£ç .
 	 * 
 	 * @param tableBody
 	 * @return
@@ -54,29 +54,29 @@ public class MDTableReplace
 		String group1;
 		while (matcher.find())
 		{
-			// É¾³ı·´ÒıºÅ
+			// åˆ é™¤åå¼•å·
 			group1 = matcher.group(1);
-			// ÀÊ¶ÁJava·½·¨
+			// æœ—è¯»Javaæ–¹æ³•
 			group1 = replaceJavaMethod(group1);
-			// Ìæ»»ÌØÊâ×Ö·û
+			// æ›¿æ¢ç‰¹æ®Šå­—ç¬¦
 			group1 = "|" + MDCodeReplace.replaceSpecialChars(group1) + "|";
-			// Ìæ»»Ô­À´Æ¥ÅäµÄÎÄ±¾
+			// æ›¿æ¢åŸæ¥åŒ¹é…çš„æ–‡æœ¬
 			matcher.appendReplacement(sb, group1);
 		}
-		// Ìí¼ÓºóÃæÃ»ÓĞÆ¥ÅäµÄÎÄ±¾
+		// æ·»åŠ åé¢æ²¡æœ‰åŒ¹é…çš„æ–‡æœ¬
 		matcher.appendTail(sb);
-		// // É¾³ı¶àÓàµÄ·´ÒıºÅ
+		// // åˆ é™¤å¤šä½™çš„åå¼•å·
 		// String result = sb.toString();
 		// result = result.replaceAll(RegexMarkdown.MDCodeInLineRegex, "$1");
 		// return sb.toString();
 		return sb.toString();
 	}
 	/**
-	 * java·½·¨µÄÀÊ¶Á¹æÔò.
+	 * javaæ–¹æ³•çš„æœ—è¯»è§„åˆ™.
 	 * 
 	 * @param matcherStr
-	 *            java·½·¨¶¨Òå×Ö·û´®.
-	 * @return ÀÊ¶ÁºóµÄjava·½·¨.
+	 *            javaæ–¹æ³•å®šä¹‰å­—ç¬¦ä¸².
+	 * @return æœ—è¯»åçš„javaæ–¹æ³•.
 	 */
 	private static String replaceJavaMethod(String matcherStr)
 	{
@@ -87,36 +87,36 @@ public class MDTableReplace
 		String group3;
 		if (matcher.matches())
 		{
-			// »ñÈ¡Æ¥Åäµ½µÄÒ»¸ö·Ö×é
+			// è·å–åŒ¹é…åˆ°çš„ä¸€ä¸ªåˆ†ç»„
 			group1 = matcher.group(1);
 			group2 = matcher.group(2);
 			group3 = matcher.group(3);
-			// System.out.println("²¶»ñµ½±í¸ñ:¿ªÊ¼´¦Àí----------");
+			// System.out.println("æ•è·åˆ°è¡¨æ ¼:å¼€å§‹å¤„ç†----------");
 			// System.out.println(" group1-->" + group1);
 			// System.out.println(" group2-->" + group2);
 			// System.out.println(" group3-->" + group3);
 
-			matcherStr = group2 + " ·½·¨ ";
+			matcherStr = group2 + " æ–¹æ³• ";
 			if (!group1.equals(group2))
 			{
-				group1 = group1.replace("<?>", "·ºĞÍ");
-				group1 = group1.replace("[]", "Êı×é");
-				matcherStr = matcherStr + " ¸Ã·½·¨¶¨Òå " + group1;
+				group1 = group1.replace("<?>", "æ³›å‹");
+				group1 = group1.replace("[]", "æ•°ç»„");
+				matcherStr = matcherStr + " è¯¥æ–¹æ³•å®šä¹‰ " + group1;
 			}
 			if (!"".equals(group3))
 			{
-				group3 = group3.replace("...", "±ä³¤²ÎÊı");
-				group3 = group3.replace("<?>", "·ºĞÍ");
-				group3 = group3.replace("[]", "Êı×é");
-				group3 = group3.replace(",", "¶ººÅ");
-				matcherStr = matcherStr + " ¸Ã·½·¨²ÎÊıÁĞ±í " + group3;
+				group3 = group3.replace("...", "å˜é•¿å‚æ•°");
+				group3 = group3.replace("<?>", "æ³›å‹");
+				group3 = group3.replace("[]", "æ•°ç»„");
+				group3 = group3.replace(",", "é€—å·");
+				matcherStr = matcherStr + " è¯¥æ–¹æ³•å‚æ•°åˆ—è¡¨ " + group3;
 			} else
 			{
-				matcherStr = matcherStr + " ¸Ã·½·¨ÊÇÎŞ²Î·½·¨ ";
+				matcherStr = matcherStr + " è¯¥æ–¹æ³•æ˜¯æ— å‚æ–¹æ³• ";
 			}
-			matcherStr = matcherStr + " ¸Ã·½·¨¹¦ÄÜ ";
-			// System.out.println(" Ìæ»»½á¹û:" + matcherStr);
-			// System.out.println("²¶»ñµ½±í¸ñ:´¦Àí½áÊø----------");
+			matcherStr = matcherStr + " è¯¥æ–¹æ³•åŠŸèƒ½ ";
+			// System.out.println(" æ›¿æ¢ç»“æœ:" + matcherStr);
+			// System.out.println("æ•è·åˆ°è¡¨æ ¼:å¤„ç†ç»“æŸ----------");
 		}
 		return matcherStr;
 	}

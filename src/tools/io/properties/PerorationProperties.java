@@ -3,7 +3,7 @@ package tools.io.properties;
 import java.util.Properties;
 
 /**
- * ½áÊøÓï
+ * ç»“æŸè¯­
  */
 public class PerorationProperties
 {
@@ -19,7 +19,7 @@ public class PerorationProperties
 		return instance;
 	}
 	/**
-	 * ·µ»Ø½áÊøÓï.
+	 * è¿”å›ç»“æŸè¯­.
 	 * 
 	 * @return
 	 */

@@ -8,7 +8,7 @@ import static regex.RegexHTML.htmlRegex;;
 public class RemoveHtmlTags
 {
 	/**
-	 * ÒÆ³ıÇ¶Ì×µÄHTML±êÇ©,ÀàËÆ<code><center><strong>±í19.3input±êÇ©µÄÊôĞÔ</strong></center></code>ÕâÑùµÄ±êÇ©.
+	 * ç§»é™¤åµŒå¥—çš„HTMLæ ‡ç­¾,ç±»ä¼¼<code><center><strong>è¡¨19.3inputæ ‡ç­¾çš„å±æ€§</strong></center></code>è¿™æ ·çš„æ ‡ç­¾.
 	 * 
 	 * @param input
 	 * @return
@@ -22,7 +22,7 @@ public class RemoveHtmlTags
 		while (htmlTagsMatcher.find())
 		{
 			input = htmlTagsMatcher.replaceAll("$2");
-			// ÔÙ´ÎÆ¥ÅäÉ¾³ıÒ»¸ö±êÇ©¶ÔÖ®ºóµÄÇé¿ö
+			// å†æ¬¡åŒ¹é…åˆ é™¤ä¸€ä¸ªæ ‡ç­¾å¯¹ä¹‹åçš„æƒ…å†µ
 			htmlTagsMatcher = htmlTagsPattern.matcher(input);
 		}
 		return input;

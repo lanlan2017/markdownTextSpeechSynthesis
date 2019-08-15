@@ -13,182 +13,156 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import clipboard.util.SysClipboardUtil;
-import read.IOFlag;
 import regex.RegexHTML;
 import tools.io.properties.PropertiesInstance;
+import read.IOFlag;
 
-public class MyMarkdownReader
-{
-	public static void main(String[] args)
-	{
-		String path = SysClipboardUtil.getSysClipboardText();
-		System.out.print(readerMyMarkdownFile(path));
-	}
+public class MyMarkdownReader {
+    public static void main(String[] args) {
+        String path = SysClipboardUtil.getSysClipboardText();
+        System.out.print(readerMyMarkdownFile(path));
+    }
 
-	/**
-	 * @param path
-	 */
-	public static StringBuffer readerMyMarkdownFile(String path)
-	{
-		boolean fileStart = false;
-		boolean read = false;
-		HashMap<String, String> repalceMap = new HashMap<String, String>();
-		StringBuffer sbBuffer = new StringBuffer();
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-				new FileInputStream(new File(path)), "utf-8"));)
-		{
+    /**
+     * @param path
+     */
+    public static StringBuffer readerMyMarkdownFile(String path) {
+        boolean fileStart = false;
+        boolean read = false;
+        HashMap<String, String> repalceMap = new HashMap<String, String>();
+        StringBuffer sbBuffer = new StringBuffer();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(new File(path)), "utf-8"));) {
 
-			String line = null;
-			String[] replaceEntry;
-			String key;
-			String value;
-			while ((line = reader.readLine()) != null)
-			{
-				// Èç¹ûÎÄ¼ş¿ªÊ¼ÁË
-				if (!fileStart && "<!--end-->".equals(line))
-				{
-					fileStart = true;
-					continue;
-				}
-				if (IOFlag.SSTStart.equals(line))
-				{
-					read = true;
-					continue;
-				} else if (IOFlag.SSTStop.equals(line))
-				{
-					read = false;
-					continue;
-				}
-				// Èç¹ûÉ¨Ãèµ½ÕıÈ·¶ÁÒô±ê¼Ç
-				else if (line.matches(RegexHTML.correctReading))
-				{
-					// È¡³ö¶ÁÒôÎÄ¼ş
-					line = line.replaceAll(RegexHTML.correctReading, "$1");
-					replaceEntry = line.split("&");
-					for (int i = 0; i < replaceEntry.length; i++)
-					{
-						key = replaceEntry[i].substring(0,
-								replaceEntry[i].indexOf("="));
-						value = replaceEntry[i]
-								.substring(replaceEntry[i].indexOf("=") + 1);
-						repalceMap.put(key, value);
-					}
-					continue;
-				}
-				if (fileStart && read)
-				{
-					// System.out.print(line + "\r\n");
-					// ±£´æµ½»º³å×Ö·û´®ÖĞ
-					sbBuffer.append(line + "\r\n");
-				}
-			}
-		} catch (UnsupportedEncodingException e)
-		{
-			e.printStackTrace();
-		} catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		// System.out.println(
-		// "------------------------------------------------------------");
-		// É¾³ı×îºóÒ»ĞĞ,ÕâĞĞ´ø×ÅÎÄÕÂµÄ³¬Á´½Ó
-		deleteLastLine(sbBuffer);
-		if (repalceMap.size() > 0)
-		{
-			// Ìæ»»ÌØÊâµ¥´Ê,ÒÔ±ãÕıÈ·ÀÊ¶Á.
-			sbBuffer = replaceKeyToValue(sbBuffer.toString(), repalceMap);
-		}
+            String line = null;
+            String[] replaceEntry;
+            String key;
+            String value;
+            while ((line = reader.readLine()) != null) {
+                // å¦‚æœæ–‡ä»¶å¼€å§‹äº†
+                if (!fileStart && "<!--end-->".equals(line)) {
+                    fileStart = true;
+                    continue;
+                }
+                if (IOFlag.SSTStart.equals(line)) {
+                    read = true;
+                    continue;
+                } else if (IOFlag.SSTStop.equals(line)) {
+                    read = false;
+                    continue;
+                }
+                // å¦‚æœæ‰«æåˆ°æ­£ç¡®è¯»éŸ³æ ‡è®°
+                else if (line.matches(RegexHTML.correctReading)) {
+                    // å–å‡ºè¯»éŸ³æ–‡ä»¶
+                    line = line.replaceAll(RegexHTML.correctReading, "$1");
+                    replaceEntry = line.split("&");
+                    for (int i = 0; i < replaceEntry.length; i++) {
+                        key = replaceEntry[i].substring(0,
+                                replaceEntry[i].indexOf("="));
+                        value = replaceEntry[i]
+                                .substring(replaceEntry[i].indexOf("=") + 1);
+                        repalceMap.put(key, value);
+                    }
+                    continue;
+                }
+                if (fileStart && read) {
+                    // System.out.print(line + "\r\n");
+                    // ä¿å­˜åˆ°ç¼“å†²å­—ç¬¦ä¸²ä¸­
+                    sbBuffer.append(line + "\r\n");
+                }
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // System.out.println(
+        // "------------------------------------------------------------");
+        // åˆ é™¤æœ€åä¸€è¡Œ,è¿™è¡Œå¸¦ç€æ–‡ç« çš„è¶…é“¾æ¥
+        deleteLastLine(sbBuffer);
+        if (repalceMap.size() > 0) {
+            // æ›¿æ¢ç‰¹æ®Šå•è¯,ä»¥ä¾¿æ­£ç¡®æœ—è¯».
+            sbBuffer = replaceKeyToValue(sbBuffer.toString(), repalceMap);
+        }
 
-		return sbBuffer;
-	}
+        return sbBuffer;
+    }
 
-	/**
-	 * Ê¹ÓÃMapÖĞµÄkey,Ìæ»»value.
-	 * 
-	 * @param input
-	 *            ĞèÒªÌæ»»µÄ×Ö·û´®
-	 * @param repalceMap
-	 *            ±£´ækeyºÍvalueµÄmap¼¯ºÏ
-	 * @return ±£´æÌæ»»ºóµÄ×Ö·û´®µÄStringBuffer.
-	 */
-	public static StringBuffer replaceKeyToValue(String input,
-			HashMap<String, String> repalceMap)
-	{
-		//
-		Properties properties = PropertiesInstance
-				.getPropertiesInstanceUTF8("ContainSpecialWords.properties");
-		Set<String> keySet = properties.stringPropertyNames();
+    /**
+     * ä½¿ç”¨Mapä¸­çš„key,æ›¿æ¢value.
+     *
+     * @param input      éœ€è¦æ›¿æ¢çš„å­—ç¬¦ä¸²
+     * @param repalceMap ä¿å­˜keyå’Œvalueçš„mapé›†åˆ
+     * @return ä¿å­˜æ›¿æ¢åçš„å­—ç¬¦ä¸²çš„StringBuffer.
+     */
+    public static StringBuffer replaceKeyToValue(String input,
+                                                 HashMap<String, String> repalceMap) {
+        //
+        Properties properties = PropertiesInstance
+                .getPropertiesInstanceUTF8("ContainSpecialWords.properties");
+        Set<String> keySet = properties.stringPropertyNames();
 
-		// 1 »ñÈ¡Map.Entry¶ÔÏóµÄSet¼¯ºÏ
-		Set<Entry<String, String>> mapEntry = repalceMap.entrySet();
-		// 2 Map.Entry¶ÔÏóµÄSet¼¯ºÏµü´úÆ÷
-		Iterator<Entry<String, String>> mapEntryIt = mapEntry.iterator();
-		while (mapEntryIt.hasNext())
-		{
-			// 2 ´ÓSet¼¯ºÏÖĞÈ¡³öÒ»¸ö Map.EntryÊµÀı
-			Entry<String, String> mapEntryElement = mapEntryIt.next();
-			// 3 ·Ö±ğÈ¡³ö¼üºÍÖµ
-			String key = mapEntryElement.getKey();
-			String value = mapEntryElement.getValue();
-			System.err.println("key=" + key + ",value=" + value);
-			// Ê¹ÓÃkeyÌæ»»value
-			// input = input.replace(key, value);
-			// Ìæ»»¸Ãµ¥´Ê,¶øÊÇ²»Ìæ»»ÆäËûµ¥´ÊÖĞ³öÏÖµÄ×Ó´®¡£
-			input = input.replaceAll("\\b" + key + "\\b", value);
-			// Èç¹ûÊôĞÔÎÄ¼şÖĞÃ»ÓĞÕâ¸ökeyµÄ»°
-			if (!keySet.contains(key))
-			{
-				// ±£´æµ½ÊôĞÔÎÄ¼ş¶ÔÏóÖĞ
-				properties.setProperty(key, value);
-			}
-		}
-		try
-		{
-			// ±£´æµ½´ÅÅÌÉÏµÄÊôĞÔÎÄ¼ş
-			properties.store(
-					new FileOutputStream(
-							new File("ContainSpecialWords.properties")),
-					"utf-8");
-		} catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+        // 1 è·å–Map.Entryå¯¹è±¡çš„Seté›†åˆ
+        Set<Entry<String, String>> mapEntry = repalceMap.entrySet();
+        // 2 Map.Entryå¯¹è±¡çš„Seté›†åˆè¿­ä»£å™¨
+        Iterator<Entry<String, String>> mapEntryIt = mapEntry.iterator();
+        while (mapEntryIt.hasNext()) {
+            // 2 ä»Seté›†åˆä¸­å–å‡ºä¸€ä¸ª Map.Entryå®ä¾‹
+            Entry<String, String> mapEntryElement = mapEntryIt.next();
+            // 3 åˆ†åˆ«å–å‡ºé”®å’Œå€¼
+            String key = mapEntryElement.getKey();
+            String value = mapEntryElement.getValue();
+            System.err.println("key=" + key + ",value=" + value);
+            // ä½¿ç”¨keyæ›¿æ¢value
+            // input = input.replace(key, value);
+            // æ›¿æ¢è¯¥å•è¯,è€Œæ˜¯ä¸æ›¿æ¢å…¶ä»–å•è¯ä¸­å‡ºç°çš„å­ä¸²ã€‚
+            input = input.replaceAll("\\b" + key + "\\b", value);
+            // å¦‚æœå±æ€§æ–‡ä»¶ä¸­æ²¡æœ‰è¿™ä¸ªkeyçš„è¯
+            if (!keySet.contains(key)) {
+                // ä¿å­˜åˆ°å±æ€§æ–‡ä»¶å¯¹è±¡ä¸­
+                properties.setProperty(key, value);
+            }
+        }
+        try {
+            // ä¿å­˜åˆ°ç£ç›˜ä¸Šçš„å±æ€§æ–‡ä»¶
+            properties.store(
+                    new FileOutputStream(
+                            new File("ContainSpecialWords.properties")),
+                    "utf-8");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		StringBuffer sb = new StringBuffer(input);
-		return sb;
-	}
+        StringBuffer sb = new StringBuffer(input);
+        return sb;
+    }
 
-	/**
-	 * É¾³ı×îºóÒ»ĞĞÎÄ±¾.
-	 * 
-	 * @param sbBuffer
-	 */
-	public static void deleteLastLine(StringBuffer sbBuffer)
-	{
-		String lastLine = null;
-		for (int length = sbBuffer.length() - 1, i = length; i > 0; i--)
-		{
-			char ch = sbBuffer.charAt(i);
-			// µ¹ÊıµÚ¶ş¸ö»»ĞĞ·ûÖ®ºóµÄ¾ÍÊÇ»»ĞĞ·û.
-			if (i < length && ch == '\n')
-			{
-				lastLine = sbBuffer.substring(i + 1, length);
-				// System.out.println(lastLine.startsWith(">Ô­ÎÄÁ´½Ó: "));
-				// Èç¹û×îºóÒ»ĞĞÊÇ°æÈ¨ĞÅÏ¢,ÔòÉ¾³ıµôËü
-				if (lastLine.startsWith(">Ô­ÎÄÁ´½Ó: "))
-				{
-					// É¾³ı°æÈ¨ÉùÃ÷
-					sbBuffer.delete(i + 1, length);
-				}
-				break;
-			}
-		}
-	}
+    /**
+     * åˆ é™¤æœ€åä¸€è¡Œæ–‡æœ¬.
+     *
+     * @param sbBuffer
+     */
+    public static void deleteLastLine(StringBuffer sbBuffer) {
+        String lastLine = null;
+        for (int length = sbBuffer.length() - 1, i = length; i > 0; i--) {
+            char ch = sbBuffer.charAt(i);
+            // å€’æ•°ç¬¬äºŒä¸ªæ¢è¡Œç¬¦ä¹‹åçš„å°±æ˜¯æ¢è¡Œç¬¦.
+            if (i < length && ch == '\n') {
+                lastLine = sbBuffer.substring(i + 1, length);
+                // System.out.println(lastLine.startsWith(">åŸæ–‡é“¾æ¥: "));
+                // å¦‚æœæœ€åä¸€è¡Œæ˜¯ç‰ˆæƒä¿¡æ¯,åˆ™åˆ é™¤æ‰å®ƒ
+                if (lastLine.startsWith(">åŸæ–‡é“¾æ¥: ")) {
+                    // åˆ é™¤ç‰ˆæƒå£°æ˜
+                    sbBuffer.delete(i + 1, length);
+                }
+                break;
+            }
+        }
+    }
 }

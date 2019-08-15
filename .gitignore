@@ -12,3 +12,6 @@ runable/xunfei.bat
 runable/msc/
 runable/APPID.properties
 *.txt
+.idea/
+out/
+*.iml

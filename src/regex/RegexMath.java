@@ -3,7 +3,7 @@ package regex;
 public class RegexMath
 {
 	/**
-	 * ƥ�为��
+	 * 匹配负数
 	 */
 	public final static String negativeNumber="-\\d+"; 
 }

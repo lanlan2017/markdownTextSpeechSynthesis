@@ -13,7 +13,7 @@ public class MyStringWriter
 	public static void writerString(String input)
 	{
 		try (BufferedWriter bufferedWriter = new BufferedWriter(
-				new FileWriter(new File("文本替换结果.txt"))))
+				new FileWriter(new File("鏂囨湰鏇挎崲缁撴灉.txt"))))
 		{
 			bufferedWriter.write(input);
 		} catch (IOException e)

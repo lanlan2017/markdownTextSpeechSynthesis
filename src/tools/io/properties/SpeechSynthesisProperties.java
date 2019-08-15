@@ -26,7 +26,7 @@ public class SpeechSynthesisProperties
 		return auditionPath;
 	}
 	/**
-	 * 实例化并加载配置文件.
+	 * 瀹炰緥鍖栧苟鍔犺浇閰嶇疆鏂囦欢.
 	 */
 	public static void initProperties()
 	{

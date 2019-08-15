@@ -7,10 +7,10 @@ import clipboard.util.SysClipboardUtil;
 
 public class ContainSpecialWordsProperties
 {
-	// 1.´´½¨ÅäÖÃÎÄ¼ş¶ÔÏó
+	// 1.åˆ›å»ºé…ç½®æ–‡ä»¶å¯¹è±¡
 	private static Properties pr = null;
 	private static Set<String> keySet;
-	// 3.Ê¹ÓÃµ±Ç°ÅäÖÃÎÄ¼şÖĞµÄÎÄ±¾Ìæ»»Æ¥ÅäµÄÎÄ±¾
+	// 3.ä½¿ç”¨å½“å‰é…ç½®æ–‡ä»¶ä¸­çš„æ–‡æœ¬æ›¿æ¢åŒ¹é…çš„æ–‡æœ¬
 	public static String repalceByProperties(String input)
 	{
 		if (pr == null)

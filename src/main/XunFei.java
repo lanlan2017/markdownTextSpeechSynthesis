@@ -9,37 +9,37 @@ import com.iflytek.cloud.speech.SynthesizeToUriListener;
 
 public class XunFei
 {
-	// Òª´¦ÀíµÄ×Ö·û´®.
+	// è¦å¤„ç†çš„å­—ç¬¦ä¸².
 	String input;
-	// Éú³ÉµÄÎÄ¼ş.
+	// ç”Ÿæˆçš„æ–‡ä»¶.
 	String fileNamePart;
 	// static boolean wait = true;
 	// static ArrayList<String> fileNameList = null;
-	// 1 ÉèÖÃºÏ³É¼àÌıÆ÷
+	// 1 è®¾ç½®åˆæˆç›‘å¬å™¨
 	private SynthesizeToUriListener synthesizeToUriListener = new SynthesizeToUriListener()
 	{
-		// progressÎªºÏ³É½ø¶È0~100
+		// progressä¸ºåˆæˆè¿›åº¦0~100
 		public void onBufferProgress(int progress)
 		{
 		}
-		// »á»°ºÏ³ÉÍê³É»Øµ÷½Ó¿Ú
-		// uriÎªºÏ³É±£´æµØÖ·£¬errorÎª´íÎóĞÅÏ¢£¬ÎªnullÊ±±íÊ¾ºÏ³É»á»°³É¹¦
+		// ä¼šè¯åˆæˆå®Œæˆå›è°ƒæ¥å£
+		// uriä¸ºåˆæˆä¿å­˜åœ°å€ï¼Œerrorä¸ºé”™è¯¯ä¿¡æ¯ï¼Œä¸ºnullæ—¶è¡¨ç¤ºåˆæˆä¼šè¯æˆåŠŸ
 		public void onSynthesizeCompleted(String uri, SpeechError error)
 		{
 			if (error == null)
 			{
-				System.out.println("    ºÏ³É:" + fileNamePart + "-->³É¹¦");
-				// 8.Ê¹ÓÃauditon´ò¿ªÎÄ¼ş.
+				System.out.println("    åˆæˆ:" + fileNamePart + "-->æˆåŠŸ");
+				// 8.ä½¿ç”¨auditonæ‰“å¼€æ–‡ä»¶.
 				// openFileUseAudition(fileName);
-				// µÚÒ»´ÎºÏ³É³É¹¦Ê±,´´½¨¼¯ºÏ±£´æºÏ³É³É¹¦µÄÎÄ¼şÃû
+				// ç¬¬ä¸€æ¬¡åˆæˆæˆåŠŸæ—¶,åˆ›å»ºé›†åˆä¿å­˜åˆæˆæˆåŠŸçš„æ–‡ä»¶å
 				if (XunFeiTools.getFileNameList() == null)
 				{
 					XunFeiTools.setFileNameList(new ArrayList<String>());
 				}
 				XunFeiTools.getFileNameList().add(fileNamePart);
 			} else
-				System.out.println("    ºÏ³É:" + fileNamePart + "-->Ê§°Ü");
-			// ²»ÔÙµÈ´ı,¼ÌĞøºÏ³ÉÏÂÒ»¸ö·Ö×é.
+				System.out.println("    åˆæˆ:" + fileNamePart + "-->å¤±è´¥");
+			// ä¸å†ç­‰å¾…,ç»§ç»­åˆæˆä¸‹ä¸€ä¸ªåˆ†ç»„.
 			XunFeiTools.wait = false;
 		}
 		@Override
@@ -61,25 +61,25 @@ public class XunFei
 	 */
 	public SpeechSynthesizer xunfeiSettings()
 	{
-		// ´ÓÅäÖÃÎÄ¼şÖĞ¶ÁÈ¡APPID
+		// ä»é…ç½®æ–‡ä»¶ä¸­è¯»å–APPID
 		SpeechUtility.createUtility(SpeechConstant.APPID + "=" + "5c80ae6b");
-		// 3.´´½¨SpeechSynthesizer¶ÔÏó
+		// 3.åˆ›å»ºSpeechSynthesizerå¯¹è±¡
 		SpeechSynthesizer mTts = SpeechSynthesizer.createSynthesizer();
-		// ÉèÖÃÓïËÙ£¬·¶Î§0~100
+		// è®¾ç½®è¯­é€Ÿï¼ŒèŒƒå›´0~100
 		mTts.setParameter(SpeechConstant.SPEED, "50");
-		// ÉèÖÃÓïµ÷£¬·¶Î§0~100
+		// è®¾ç½®è¯­è°ƒï¼ŒèŒƒå›´0~100
 		mTts.setParameter(SpeechConstant.PITCH, "50");
-		// ÉèÖÃÒôÁ¿£¬·¶Î§0~100
+		// è®¾ç½®éŸ³é‡ï¼ŒèŒƒå›´0~100
 		mTts.setParameter(SpeechConstant.VOLUME, "50");
-		// 4.ºÏ³É²ÎÊıÉèÖÃ£¬Ïê¼û¡¶MSC Reference Manual¡·SpeechSynthesizer Àà
-		mTts.setParameter(SpeechConstant.VOICE_NAME, "vixy");// Ğ¡ÑĞ
+		// 4.åˆæˆå‚æ•°è®¾ç½®ï¼Œè¯¦è§ã€ŠMSC Reference Manualã€‹SpeechSynthesizer ç±»
+		mTts.setParameter(SpeechConstant.VOICE_NAME, "vixy");// å°ç ”
 		return mTts;
 	}
 	public void xunfei()
 	{
-		// Ñ¶·É»úÆ÷ÈËÉèÖÃ
+		// è®¯é£æœºå™¨äººè®¾ç½®
 		SpeechSynthesizer mTts = xunfeiSettings();
-		// ºÏ³ÉÒôÆµ
+		// åˆæˆéŸ³é¢‘
 		mTts.synthesizeToUri(input, fileNamePart, synthesizeToUriListener);
 	}
 }

@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * É¾³ýÖÐÎÄÖ®¼äµÄ¿Õ¸ñ.
+ * åˆ é™¤ä¸­æ–‡ä¹‹é—´çš„ç©ºæ ¼.
  */
 public class ReplaceSpaceInChineses
 {
@@ -17,7 +17,7 @@ public class ReplaceSpaceInChineses
 	}
 	public static void main(String[] args)
 	{
-		String testStr = "Spring MVCÊÇSpring¿ò¼ÜÖÐÓÃÓÚWebÓ¦ÓÃ¿ìËÙ¿ª ·¢µÄÒ»¸öÄ£¿é£¬ÊÇµ±½ñ×îÁ÷ÐÐµÄWeb¿ª·¢¿ò¼ÜÖ®Ò»¡£ ±¾ÊéÊÇServlet¡¢JSPºÍSpring MVCµÄÑ§Ï°Ö¸ÄÏ¡£È«ÊéÄÚÈÝ·ÖÎªÁ½¸ö²¿·Ö£¬µÚÒ»²¿·ÖÖ÷Òª½éÉÜServletºÍJSP»ù´¡ÖªÊ¶ºÍ¼¼Êõ£¬°üÀ¨µÚ1ÕÂÖÁµÚ15ÕÂ£»µÚ2²¿·ÖÖ÷Òª½éÉÜSpring MVC£¬°üÀ¨µÚ16ÕÂÖÁµÚ24ÕÂ¡£×îºó£¬¸½Â¼²¿ ·Ö¸ø³öÁËTomcat°²×°ºÍÅäÖÃÖ¸µ¼£¬»¹½éÉÜÁËServlet and JSP×¢½âÒÔ¼°SSLÖ¤Êé¡£ ±¾ÊéÄÚÈÝ³äÊµ¡¢½²½âÇåÎú£¬·Ç³£ÊÊºÏWeb¿ª·¢ÕßÓÈ ÆäÊÇ»ùÓÚJavaµÄWebÓ¦ÓÃ¿ª·¢ÕßÔÄ¶Á¡£";
+		String testStr = "Spring MVCæ˜¯Springæ¡†æž¶ä¸­ç”¨äºŽWebåº”ç”¨å¿«é€Ÿå¼€ å‘çš„ä¸€ä¸ªæ¨¡å—ï¼Œæ˜¯å½“ä»Šæœ€æµè¡Œçš„Webå¼€å‘æ¡†æž¶ä¹‹ä¸€ã€‚ æœ¬ä¹¦æ˜¯Servletã€JSPå’ŒSpring MVCçš„å­¦ä¹ æŒ‡å—ã€‚å…¨ä¹¦å†…å®¹åˆ†ä¸ºä¸¤ä¸ªéƒ¨åˆ†ï¼Œç¬¬ä¸€éƒ¨åˆ†ä¸»è¦ä»‹ç»Servletå’ŒJSPåŸºç¡€çŸ¥è¯†å’ŒæŠ€æœ¯ï¼ŒåŒ…æ‹¬ç¬¬1ç« è‡³ç¬¬15ç« ï¼›ç¬¬2éƒ¨åˆ†ä¸»è¦ä»‹ç»Spring MVCï¼ŒåŒ…æ‹¬ç¬¬16ç« è‡³ç¬¬24ç« ã€‚æœ€åŽï¼Œé™„å½•éƒ¨ åˆ†ç»™å‡ºäº†Tomcatå®‰è£…å’Œé…ç½®æŒ‡å¯¼ï¼Œè¿˜ä»‹ç»äº†Servlet and JSPæ³¨è§£ä»¥åŠSSLè¯ä¹¦ã€‚ æœ¬ä¹¦å†…å®¹å……å®žã€è®²è§£æ¸…æ™°ï¼Œéžå¸¸é€‚åˆWebå¼€å‘è€…å°¤ å…¶æ˜¯åŸºäºŽJavaçš„Webåº”ç”¨å¼€å‘è€…é˜…è¯»ã€‚";
 		System.out.println(testStr);
 		System.out.println(
 				"-----------------------------------------------------------------------------");

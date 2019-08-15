@@ -3,26 +3,26 @@ package tools.io.properties;
 import java.util.Properties;
 
 /**
- * Æ¥ÅäÌØ¶¨µÄµ¥´Ê.
+ * åŒ¹é…ç‰¹å®šçš„å•è¯.
  */
 public class SpecialWordsProperties
 {
-	// 1.ÊµÀı»¯ÅäÖÃÎÄ¼ş¶ÔÏó
+	// 1.å®ä¾‹åŒ–é…ç½®æ–‡ä»¶å¯¹è±¡
 	private static Properties properties = null;
 	/**
-	 * Ê¹ÓÃÅäÖÃÎÄ¼şÖĞµÄvalueÌæ»»key
+	 * ä½¿ç”¨é…ç½®æ–‡ä»¶ä¸­çš„valueæ›¿æ¢key
 	 * 
 	 * @param keyToFind
-	 *            ÏëÒª²éÕÒµÄkey.
-	 * @return Èç¹ûÕÒµ½·µ»Økey¶ÔÓ¦µÄvalue±íÊ¾Ìæ»»³Évalue,Èç¹ûÃ»ÓĞÕÒµ½·µ»ØkeyToFind±íÊ¾²»Ìæ»».
+	 *            æƒ³è¦æŸ¥æ‰¾çš„key.
+	 * @return å¦‚æœæ‰¾åˆ°è¿”å›keyå¯¹åº”çš„valueè¡¨ç¤ºæ›¿æ¢æˆvalue,å¦‚æœæ²¡æœ‰æ‰¾åˆ°è¿”å›keyToFindè¡¨ç¤ºä¸æ›¿æ¢.
 	 */
 	//SpecialWordsProperties.replaceByVlaue
 	public static String replaceByVlaue(String keyToFind)
 	{
-		// µ¥ÀıÄ£Ê½»ñÈ¡.
+		// å•ä¾‹æ¨¡å¼è·å–.
 		if (properties == null)
 		{
-			// Éú³É¶ÔÏó²¢¼ÓÔØËùÓĞÅäÖÃ
+			// ç”Ÿæˆå¯¹è±¡å¹¶åŠ è½½æ‰€æœ‰é…ç½®
 			properties = PropertiesInstance
 					.getPropertiesInstanceUTF8("SpecialWords.properties");
 		}

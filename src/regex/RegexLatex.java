@@ -3,7 +3,7 @@ package regex;
 public class RegexLatex
 {
 	/**
-	 * 匹配Latex行内公式的正则表达式.
+	 * 鍖归厤Latex琛屽唴鍏紡鐨勬鍒欒〃杈惧紡.
 	 */
 	public final static String latexFormulaInLine="\\$(.+?)\\$";
 }

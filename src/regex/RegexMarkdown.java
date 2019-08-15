@@ -3,39 +3,39 @@ package regex;
 public class RegexMarkdown
 {
 	/**
-	 * Æ¥ÅäMarkdown ±í¸ñ ÕıÔò±í´ïÊ½.
+	 * åŒ¹é…Markdown è¡¨æ ¼ æ­£åˆ™è¡¨è¾¾å¼.
 	 */
 	public final static String MDTableRegex = "(\\|(?:.+\\|)+)(?:(?:\\r\\n|\\n)\\|(?:[:-]+\\|)+)((?:(?:\\r\\n|\\n)\\|(?:.+\\|)+)+)";
 	/**
-	 * Æ¥ÅäMarkdown ĞĞÄÚ´úÂë ÕıÔò±í´ïÊ½.
+	 * åŒ¹é…Markdown è¡Œå†…ä»£ç  æ­£åˆ™è¡¨è¾¾å¼.
 	 */
 	public final static String MDCodeInLineRegex = "`([^`]+?)`";
 	/**
-	 * Æ¥ÅäMarkdown ±í¸ñÄÚµÄ ĞĞÄÚ´úÂë ÕıÔò±í´ïÊ½ 
+	 * åŒ¹é…Markdown è¡¨æ ¼å†…çš„ è¡Œå†…ä»£ç  æ­£åˆ™è¡¨è¾¾å¼ 
 	 */
 	public final static String MDCodeInLineInMDTableColsRegex = "(?m)^\\|`(.+?)`\\|";
 	/**
-	 * Æ¥Åämarkdown ¼Ó´Ö»òĞ±Ìå µÄÕıÔò±í´ïÊ½.
+	 * åŒ¹é…markdown åŠ ç²—æˆ–æ–œä½“ çš„æ­£åˆ™è¡¨è¾¾å¼.
 	 */
 	public final static String MDStrongOrItalicRegex = "(\\*{1,2})([^*]+?)(?:\\1)?";
 	/**
-	 * Æ¥Åämarkdown ³¬Á´½Ó µÄÕıÔò±í´ïÊ½.
+	 * åŒ¹é…markdown è¶…é“¾æ¥ çš„æ­£åˆ™è¡¨è¾¾å¼.
 	 */
 	public final static String MDLinkRegex = "\\[(.*)\\]\\(.+\\)";
 	/**
-	 * Æ¥ÅäMarkdown ´úÂë¿é µÄÕıÔò±í´ïÊ½.
+	 * åŒ¹é…Markdown ä»£ç å— çš„æ­£åˆ™è¡¨è¾¾å¼.
 	 */
 	public final static String MDCodeBlockRegex = "```\\w*(?:(?:\\r\\n|\\n).*?)+?```";
 	/**
-	 * Æ¥Åämarkdown ÒıÓÃ¿é µÄÕıÔò±í´ïÊ½.
+	 * åŒ¹é…markdown å¼•ç”¨å— çš„æ­£åˆ™è¡¨è¾¾å¼.
 	 */
 	public final static String MDQuoteBlockRegex = "(?m)^> ";
 	/**
-	 * Æ¥Åämarkdown ÎŞĞòÁĞ±í µÄÕıÔò±í´ïÊ½.
+	 * åŒ¹é…markdown æ— åºåˆ—è¡¨ çš„æ­£åˆ™è¡¨è¾¾å¼.
 	 */
 	public final static String MDUnOrderListBlockRegex = "(?m)^\\s*- ";
 	/**
-	 * Æ¥Åämarkdown ±êÌâ µÄÕıÔò±í´ïÊ½.
+	 * åŒ¹é…markdown æ ‡é¢˜ çš„æ­£åˆ™è¡¨è¾¾å¼.
 	 */
 	public final static String MDTitleRegex = "(#+)(\\s+)([^#]+)(?:\\2)?(?:\\1)?";
 

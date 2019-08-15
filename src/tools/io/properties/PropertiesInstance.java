@@ -9,16 +9,16 @@ import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 /**
- * ¾²Ì¬PropertiesÉú³ÉÆ÷.
+ * é™æ€Propertiesç”Ÿæˆå™¨.
  */
 public class PropertiesInstance
 {
 	/**
-	 * ¸ù¾İ¸ø¶¨µÄ±àÂëµÄÅäÖÃÎÄ¼şÉú³ÉPropertiesÊµÀı,²¢¼ÓÔØ¼òÖ±¶Ôµ½ÊµÀıÖĞ.
+	 * æ ¹æ®ç»™å®šçš„ç¼–ç çš„é…ç½®æ–‡ä»¶ç”ŸæˆPropertieså®ä¾‹,å¹¶åŠ è½½ç®€ç›´å¯¹åˆ°å®ä¾‹ä¸­.
 	 * 
 	 * @param path
-	 *            ÅäÖÃÎÄ¼şµÄÂ·¾¶.
-	 * @return ¼ÓÔØºÃ¼üÖµ¶ÔµÄPropertiesÊµÀı;
+	 *            é…ç½®æ–‡ä»¶çš„è·¯å¾„.
+	 * @return åŠ è½½å¥½é”®å€¼å¯¹çš„Propertieså®ä¾‹;
 	 */
 	public static Properties getPropertiesInstance(String path, String charset)
 	{
@@ -43,11 +43,11 @@ public class PropertiesInstance
 		return instance;
 	}
 	/**
-	 * ¸ù¾İutf-8±àÂëµÄÅäÖÃÎÄ¼şÉú³ÉPropertiesÊµÀı,²¢¼ÓÔØ¼òÖ±¶Ôµ½ÊµÀıÖĞ.
+	 * æ ¹æ®utf-8ç¼–ç çš„é…ç½®æ–‡ä»¶ç”ŸæˆPropertieså®ä¾‹,å¹¶åŠ è½½ç®€ç›´å¯¹åˆ°å®ä¾‹ä¸­.
 	 * 
 	 * @param path
-	 *            ÅäÖÃÎÄ¼şµÄÂ·¾¶.
-	 * @return ¼ÓÔØºÃ¼üÖµ¶ÔµÄPropertiesÊµÀı;
+	 *            é…ç½®æ–‡ä»¶çš„è·¯å¾„.
+	 * @return åŠ è½½å¥½é”®å€¼å¯¹çš„Propertieså®ä¾‹;
 	 */
 	public static Properties getPropertiesInstanceUTF8(String path)
 	{

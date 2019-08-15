@@ -16,7 +16,7 @@ public class XunFeiTools
 	static boolean wait = true;
 	static ArrayList<String> fileNameList = null;
 	/**
-	 * Éú³É²¿·ÖÓïÒôµÄÂ·¾¶.
+	 * ç”Ÿæˆéƒ¨åˆ†è¯­éŸ³çš„è·¯å¾„.
 	 * 
 	 * @param fileName
 	 * @param count
@@ -25,13 +25,13 @@ public class XunFeiTools
 	public static String fileNamePart(String fileName, int count)
 	{
 		String fileNamePart;
-		// µÚÒ»¸ö²¿·ÖÊ¹ÓÃÔ­À´µÄÎÄ¼şÃû
+		// ç¬¬ä¸€ä¸ªéƒ¨åˆ†ä½¿ç”¨åŸæ¥çš„æ–‡ä»¶å
 		fileNamePart = fileName.substring(0, fileName.lastIndexOf(".pcm"))
 				+ (count) + fileName.substring(fileName.lastIndexOf(".pcm"));
 		return fileNamePart;
 	}
 	/**
-	 * »ñÈ¡±£´æµÄËùÓĞÎÄ¼şÃûÁĞ±í.
+	 * è·å–ä¿å­˜çš„æ‰€æœ‰æ–‡ä»¶ååˆ—è¡¨.
 	 * 
 	 * @return
 	 */
@@ -45,20 +45,20 @@ public class XunFeiTools
 		XunFeiTools.fileNameList = fileNameList;
 	}
 	/**
-	 * Ê¹ÓÃAuditon´ò¿ªÒôÆµ.
+	 * ä½¿ç”¨Auditonæ‰“å¼€éŸ³é¢‘.
 	 * 
 	 * @param filePath
 	 */
 	public static void openFileUseAudition(String filePath)
 	{
-		String audition = "F:\\Èí¼ş\\°²×°°ü_ÒôÆµ´¦Àí\\Adobe\" \"Audition\" \"CS6\\Adobe\" \"Audition\" \"CS6.exe ";
-		// String filePath = "G:\\Desktop\\ÓïÒôºÏ³É\\·è¿ñJava½²ÒåµÚÈı°æ\\µÚ13ÕÂ\\13.2.4 DDLÓï¾ä
-		// 2.ĞŞ¸Ä±í½á¹¹µÄÓï·¨.pcm";
+		String audition = "F:\\è½¯ä»¶\\å®‰è£…åŒ…_éŸ³é¢‘å¤„ç†\\Adobe\" \"Audition\" \"CS6\\Adobe\" \"Audition\" \"CS6.exe ";
+		// String filePath = "G:\\Desktop\\è¯­éŸ³åˆæˆ\\ç–¯ç‹‚Javaè®²ä¹‰ç¬¬ä¸‰ç‰ˆ\\ç¬¬13ç« \\13.2.4 DDLè¯­å¥
+		// 2.ä¿®æ”¹è¡¨ç»“æ„çš„è¯­æ³•.pcm";
 		audition += "\"" + filePath + "\"";
 		Command.exeCmd("cmd /c start " + audition);
 	}
 	/**
-	 * ×èÈûÏß³Ì.
+	 * é˜»å¡çº¿ç¨‹.
 	 */
 	public static void waitFor()
 	{
@@ -74,62 +74,62 @@ public class XunFeiTools
 		}
 	}
 	/**
-	 * µ÷ÓÃÑ¶·ÉÓïÒôºÏ³ÉËùÓĞµÄÊäÈëÎÄ±¾.
+	 * è°ƒç”¨è®¯é£è¯­éŸ³åˆæˆæ‰€æœ‰çš„è¾“å…¥æ–‡æœ¬.
 	 * 
 	 * @param input
-	 *            ÒªºÏ³ÉµÄÎÄ±¾.
+	 *            è¦åˆæˆçš„æ–‡æœ¬.
 	 * @param maxSize
-	 *            Ñ¶·ÉSDKÃ¿´Î×î¶à½ÓÊÕµÄ×ÖÊıÉÏÏŞ,ÎÒ²âÊÔÁË,Õâ¸öÉèÎª4000Ã»ÓĞÎÊÌâ.
+	 *            è®¯é£SDKæ¯æ¬¡æœ€å¤šæ¥æ”¶çš„å­—æ•°ä¸Šé™,æˆ‘æµ‹è¯•äº†,è¿™ä¸ªè®¾ä¸º4000æ²¡æœ‰é—®é¢˜.
 	 * @param fileName
-	 *            ÒªºÏ³ÉÉú³ÉµÄÎÄ¼ş.
+	 *            è¦åˆæˆç”Ÿæˆçš„æ–‡ä»¶.
 	 */
 	public static void xunfeiAll(String input, int maxSize, String fileName)
 	{
-		// System.out.println("×Ö·û´®×Ü³¤¶È:" + input.length());
-		// Õû¸ö×Ö·û´®µÄ³¤¶È
+		// System.out.println("å­—ç¬¦ä¸²æ€»é•¿åº¦:" + input.length());
+		// æ•´ä¸ªå­—ç¬¦ä¸²çš„é•¿åº¦
 		int inputLength = input.length();
-		// µ±Ç°ÀÊ¶ÁµÄÎÄ±¾.
+		// å½“å‰æœ—è¯»çš„æ–‡æœ¬.
 		String now;
-		// ¼ÆÊıÆ÷
+		// è®¡æ•°å™¨
 		int count = 0;
-		// ²ğ·ÖµÄÎÄ¼şÃû
+		// æ‹†åˆ†çš„æ–‡ä»¶å
 		String fileNamePart;
 		while (inputLength > maxSize)
 		{
-			// ³ıÒÔ2
+			// é™¤ä»¥2
 			int splitIndex = 0;
 			char end;
 			for (int i = maxSize; i > 0; i--)
 			{
 				end = input.charAt(i);
-				if ('\n' == end || '¡£' == end)
+				if ('\n' == end || 'ã€‚' == end)
 				{
 					splitIndex = i;
 					break;
 				}
 			}
-			// »ñÈ¡µ±Ç°µÄÎÄ±¾.
+			// è·å–å½“å‰çš„æ–‡æœ¬.
 			now = input.substring(0, splitIndex + 1);
 			// System.out.println(
-			// "-----------------------ÖĞ¼ä·Ö¶Î-------------------------");
+			// "-----------------------ä¸­é—´åˆ†æ®µ-------------------------");
 			System.out.println(now);
-			// ¶¯Ì¬Éú³ÉÎÄ¼şÃû
+			// åŠ¨æ€ç”Ÿæˆæ–‡ä»¶å
 			fileNamePart = fileNamePart(fileName, count++);
-			// °Ñµ±Ç°µÄºÏ³Éµ±Ç°µÄÎÄ±¾now,±£´æµ½fileNamePart
+			// æŠŠå½“å‰çš„åˆæˆå½“å‰çš„æ–‡æœ¬now,ä¿å­˜åˆ°fileNamePart
 			xunfeiOnes(now, fileNamePart);
 
-			// ¸üĞÂÊ£ÏÂµÄÎÄ±¾
+			// æ›´æ–°å‰©ä¸‹çš„æ–‡æœ¬
 			input = input.substring(splitIndex + 1);
-			// ¸üĞÂÊ£ÏÂÎÄ±¾µÄ³¤¶È
+			// æ›´æ–°å‰©ä¸‹æ–‡æœ¬çš„é•¿åº¦
 			inputLength = input.length();
 		}
-		// Êä³öÊ£ÏÂµÄÎÄ±¾
+		// è¾“å‡ºå‰©ä¸‹çš„æ–‡æœ¬
 		// System.out.println(
-		// "-----------------------×îºó·Ö¶Î-------------------------");
+		// "-----------------------æœ€ååˆ†æ®µ-------------------------");
 		System.out.println(input);
 		fileNamePart = fileNamePart(fileName, count);
 		xunfeiOnes(input, fileNamePart);
-		// ºÏ²¢ÎªÒ»¸öÎÄ¼ş,²¢ÓÃaudition´ò¿ªÕâ¸öÎÄ¼ş.
+		// åˆå¹¶ä¸ºä¸€ä¸ªæ–‡ä»¶,å¹¶ç”¨auditionæ‰“å¼€è¿™ä¸ªæ–‡ä»¶.
 		mergeAndOpenFile(fileName, XunFeiTools.getFileNameList());
 	}
 	/**
@@ -140,21 +140,21 @@ public class XunFeiTools
 	{
 		new XunFei(input, fileNamePart).xunfei();
 		wait = true;
-		// µÈ´ıÉÏ´ÎÖ´ĞĞÍê±Ï
+		// ç­‰å¾…ä¸Šæ¬¡æ‰§è¡Œå®Œæ¯•
 		waitFor();
 	}
 	/**
-	 * ºÏ²¢ÎÄ¼şArrayListÖĞµÄ¶à¸öÔ´ÎÄ¼şÎªÒ»¸öÎÄ¼ş.
+	 * åˆå¹¶æ–‡ä»¶ArrayListä¸­çš„å¤šä¸ªæºæ–‡ä»¶ä¸ºä¸€ä¸ªæ–‡ä»¶.
 	 * 
 	 * @param targetFilePath
-	 *            Ä¿±êÎÄ¼şÂ·¾¶Ãû³Æ×Ö·û´®.
+	 *            ç›®æ ‡æ–‡ä»¶è·¯å¾„åç§°å­—ç¬¦ä¸².
 	 * @param sourceFilePathList
-	 *            ´æ·ÅÔ´ÎÄ¼şµÄÂ·¾¶Ãû³Æ×Ö·û´®µÄArrayList¼¯ºÏ.
+	 *            å­˜æ”¾æºæ–‡ä»¶çš„è·¯å¾„åç§°å­—ç¬¦ä¸²çš„ArrayListé›†åˆ.
 	 */
 	public static void merge2TargetFileDeleteSourceFile(String targetFilePath,
 			ArrayList<String> sourceFilePathList)
 	{
-		// Èç¹ûArrayListÖĞÓĞ¶«Î÷
+		// å¦‚æœArrayListä¸­æœ‰ä¸œè¥¿
 		if (sourceFilePathList.size() > 0)
 		{
 			BufferedInputStream in;
@@ -162,7 +162,7 @@ public class XunFeiTools
 					new FileOutputStream(new File(targetFilePath)));)
 			{
 
-				System.out.println("Ô´ÎÄ¼şÁĞ±í:");
+				System.out.println("æºæ–‡ä»¶åˆ—è¡¨:");
 				for (Iterator<String> iterator = sourceFilePathList
 						.iterator(); iterator.hasNext();)
 				{
@@ -172,19 +172,19 @@ public class XunFeiTools
 					File sourceFile = new File(sourceFilePath);
 					in = new BufferedInputStream(
 							new FileInputStream(sourceFile));
-					// »º´æÊı×é
+					// ç¼“å­˜æ•°ç»„
 					byte[] buffer = new byte[2048];
-					// Ã¿´Î¶ÁÈëµÄ×Ö½ÚÊıÁ¿
+					// æ¯æ¬¡è¯»å…¥çš„å­—èŠ‚æ•°é‡
 					int inSize = -1;
-					// ÅúÁ¿¶ÁÈë×Ö½Úµ½buffer»º´æÖĞ,²¢·µ»Ø¶ÁÈëµÄ×Ô¼ºÊıÁ¿¸øinSize
+					// æ‰¹é‡è¯»å…¥å­—èŠ‚åˆ°bufferç¼“å­˜ä¸­,å¹¶è¿”å›è¯»å…¥çš„è‡ªå·±æ•°é‡ç»™inSize
 					while ((inSize = in.read(buffer)) != -1)
 					{
-						// °Ñbuffer»º´æÖĞµÄ×Ö½ÚĞ´ÈëÊä³öÁ÷(Ò²¾ÍÊÇÄ¿±êÎÄ¼ş)
+						// æŠŠbufferç¼“å­˜ä¸­çš„å­—èŠ‚å†™å…¥è¾“å‡ºæµ(ä¹Ÿå°±æ˜¯ç›®æ ‡æ–‡ä»¶)
 						out.write(buffer, 0, inSize);
 					}
-					// ¹Ø±ÕÔ´ÎÄ¼ş
+					// å…³é—­æºæ–‡ä»¶
 					in.close();
-					// É¾³ıÕâ¸öÔ´ÎÄ¼ş
+					// åˆ é™¤è¿™ä¸ªæºæ–‡ä»¶
 					sourceFile.delete();
 				}
 			} catch (FileNotFoundException e)
@@ -199,10 +199,10 @@ public class XunFeiTools
 	public static void mergeAndOpenFile(String targetFilePath,
 			ArrayList<String> sourceFilePathList)
 	{
-		// ºÏ²¢listÖĞµÄÔ´ÎÄ¼şµ½Ä¿±êÎÄ¼ş,²¢É¾³ıÔ´ÎÄ¼ş
+		// åˆå¹¶listä¸­çš„æºæ–‡ä»¶åˆ°ç›®æ ‡æ–‡ä»¶,å¹¶åˆ é™¤æºæ–‡ä»¶
 		merge2TargetFileDeleteSourceFile(targetFilePath, sourceFilePathList);
-		// ´ò¿ªºÏ²¢ºóµÄÎÄ¼ş
-		System.out.println("´ò¿ªºÏ²¢ºóµÄÎÄ¼ş:" + targetFilePath);
+		// æ‰“å¼€åˆå¹¶åçš„æ–‡ä»¶
+		System.out.println("æ‰“å¼€åˆå¹¶åçš„æ–‡ä»¶:" + targetFilePath);
 		XunFeiTools.openFileUseAudition(targetFilePath);
 	}
 }

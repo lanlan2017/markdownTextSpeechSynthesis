@@ -1,15 +1,7 @@
 package main;
 
-import java.io.File;
-import java.util.Scanner;
-
-import com.iflytek.cloud.speech.SpeechConstant;
-import com.iflytek.cloud.speech.SpeechError;
-import com.iflytek.cloud.speech.SpeechSynthesizer;
-import com.iflytek.cloud.speech.SpeechUtility;
-import com.iflytek.cloud.speech.SynthesizeToUriListener;
-
 import clipboard.util.SysClipboardUtil;
+import com.iflytek.cloud.speech.*;
 import replace.RemoveHtmlTags;
 import replace.RemoveMarkDownTags;
 import replace.ReplaceEnglishString;
@@ -22,12 +14,15 @@ import tools.io.properties.PerorationProperties;
 import tools.io.properties.SpeechSynthesisProperties;
 import tools.io.reader.PropertiesReader;
 import tools.io.writer.MyStringWriter;
+
+import java.io.File;
+import java.util.Scanner;
 public class Main
 {
 
 	static Scanner scanner = new Scanner(System.in);
 	static String fileName = null;
-	// Ò»´ÎÖ§³ÖºÏ³ÉµÄ×î´ó×Ö·ûÊıÁ¿
+	// ä¸€æ¬¡æ”¯æŒåˆæˆçš„æœ€å¤§å­—ç¬¦æ•°é‡
 	static int maxSize = 4000;
 	public static void main(String[] args)
 	{
@@ -45,7 +40,7 @@ public class Main
 	}
 	/**
 	 * @param args
-	 * 
+	 *
 	 */
 	private static void oneArgs(String[] args)
 	{
@@ -59,97 +54,97 @@ public class Main
 				break;
 		}
 	}
-	/**   
-	 *   
+	/**
+	 *
 	 */
 	private static void noArgs()
 	{
-		// ´Ó¼ôÌù°å»ñÈ¡ÎÄ¼şÂ·¾¶
+		// ä»å‰ªè´´æ¿è·å–æ–‡ä»¶è·¯å¾„
 		String path = SysClipboardUtil.getSysClipboardText();
-		// Èç¹ûÊÇÎÄ¼şµÄµØÖ·µÄ»°
+		// å¦‚æœæ˜¯æ–‡ä»¶çš„åœ°å€çš„è¯
 		if (new File(path).isFile() && path.contains("source\\_posts"))
 		{
-			// ¸ù¾İmarkdownÎÄ¼şµÄÂ·¾¶Éú³ÉÒôÆµÎÄ¼şµÄÂ·¾¶
+			// æ ¹æ®markdownæ–‡ä»¶çš„è·¯å¾„ç”ŸæˆéŸ³é¢‘æ–‡ä»¶çš„è·¯å¾„
 			fileName = filePath(path);
-			// ´ÓÎÄ¼şÖĞ¶ÁÈ¡markdownÎÄ±¾
+			// ä»æ–‡ä»¶ä¸­è¯»å–markdownæ–‡æœ¬
 			String input = MyMarkdownReader.readerMyMarkdownFile(path)
 					.toString();
-			// ´¦ÀíÊäÈëµÄÎÄ±¾
+			// å¤„ç†è¾“å…¥çš„æ–‡æœ¬
 			input = inputProcessing(input);
-			// Ìí¼Ó½áÊøÓï
+			// æ·»åŠ ç»“æŸè¯­
 			input = input + PerorationProperties.getPeroration();
-			// ºÏ³ÉËùÓĞµÄÎÄ±¾
+			// åˆæˆæ‰€æœ‰çš„æ–‡æœ¬
 			XunFeiTools.xunfeiAll(input, maxSize, fileName);
-			// 7.¸ø³öÌáÊ¾
+			// 7.ç»™å‡ºæç¤º
 			MyStringWriter.writerString(input);
 		} else
 		{
-			// ÎªÁËÔÄ¶Á·½±ã
+			// ä¸ºäº†é˜…è¯»æ–¹ä¾¿
 			String input = path;
-			// ´¦ÀíÊäÈëµÄÎÄ±¾
+			// å¤„ç†è¾“å…¥çš„æ–‡æœ¬
 			input = inputProcessing(input);
-			System.out.println("---------------- Ö±½ÓºÏ³É --------------------");
+			System.out.println("---------------- ç›´æ¥åˆæˆ --------------------");
 			System.out.println(input);
-			System.out.println("---------------- Ö±½ÓºÏ³É --------------------");
+			System.out.println("---------------- ç›´æ¥åˆæˆ --------------------");
 			fileName = System.getProperty("user.dir") + File.separator
-					+ "Ö±½ÓºÏ³É.pcm";
-			// ºÏ³ÉËùÓĞµÄÎÄ±¾
+					+ "ç›´æ¥åˆæˆ.pcm";
+			// åˆæˆæ‰€æœ‰çš„æ–‡æœ¬
 			XunFeiTools.xunfeiAll(input, maxSize, fileName);
 		}
 	}
 
-	/**   
-	 *   
+	/**
+	 *
 	 */
 	public static void openFileUseAudition(String filePath)
 	{
 		String audition = SpeechSynthesisProperties.getAuditionPath();
-		// String filePath = "G:\\Desktop\\ÓïÒôºÏ³É\\·è¿ñJava½²ÒåµÚÈı°æ\\µÚ13ÕÂ\\13.2.4 DDLÓï¾ä
-		// 2.ĞŞ¸Ä±í½á¹¹µÄÓï·¨.pcm";
+		// String filePath = "G:\\Desktop\\è¯­éŸ³åˆæˆ\\ç–¯ç‹‚Javaè®²ä¹‰ç¬¬ä¸‰ç‰ˆ\\ç¬¬13ç« \\13.2.4 DDLè¯­å¥
+		// 2.ä¿®æ”¹è¡¨ç»“æ„çš„è¯­æ³•.pcm";
 		audition += "\"" + filePath + "\"";
 		Command.exeCmd("cmd /c start " + audition);
 	}
 
 	/**
-	 * Éú³ÉÒôÆµÎÄ¼şµÄ¾ø¶ÔÂ·¾¶.
-	 * 
+	 * ç”ŸæˆéŸ³é¢‘æ–‡ä»¶çš„ç»å¯¹è·¯å¾„.
+	 *
 	 * @param path
-	 *            hexo²©¿ÍÖĞmarkdownÎÄ¼şµÄÂ·¾¶.
-	 * @return Éú³ÉµÄÒôÆµÎÄ¼şµÄÂ·¾¶.
+	 *            hexoåšå®¢ä¸­markdownæ–‡ä»¶çš„è·¯å¾„.
+	 * @return ç”Ÿæˆçš„éŸ³é¢‘æ–‡ä»¶çš„è·¯å¾„.
 	 */
 	public static String filePath(String path)
 	{
-		// ´æ·ÅÓïÒôÎÄ¼şµÄ¸ùÄ¿Â¼
-		// String fileName = "G:\\Desktop\\ÓïÒôºÏ³É";
+		// å­˜æ”¾è¯­éŸ³æ–‡ä»¶çš„æ ¹ç›®å½•
+		// String fileName = "G:\\Desktop\\è¯­éŸ³åˆæˆ";
 		String fileName = SpeechSynthesisProperties.getRootDir();
-		// markdownÎÄ¼şÏà¶ÔÓÚ²©¿ÍÎÄÕÂÄ¿Â¼µÄÏà¶ÔÂ·¾¶
+		// markdownæ–‡ä»¶ç›¸å¯¹äºåšå®¢æ–‡ç« ç›®å½•çš„ç›¸å¯¹è·¯å¾„
 		String relativePath = path.substring(
 				path.indexOf("source\\_posts") + "source\\_posts".length());
-		// ÓïÒôÎÄ¼şµÄ¸ùÂ·¾¶Æ´½ÓÉÏÏà¶ÔÂ·¾¶µÃµ½ÓïÒôÎÄ¼şµÄ¾ø¶ÔÂ·¾¶
+		// è¯­éŸ³æ–‡ä»¶çš„æ ¹è·¯å¾„æ‹¼æ¥ä¸Šç›¸å¯¹è·¯å¾„å¾—åˆ°è¯­éŸ³æ–‡ä»¶çš„ç»å¯¹è·¯å¾„
 		fileName = fileName + relativePath.replace(".md", ".pcm");
 		return fileName;
 	}
 
 	/**
-	 * ´¦ÀíÓÃ»§ÊìÈËµÄMarkdownÎÄ±¾.
-	 * 
+	 * å¤„ç†ç”¨æˆ·ç†Ÿäººçš„Markdownæ–‡æœ¬.
+	 *
 	 * @return
 	 */
 	public static String inputProcessing(String input)
 	{
 		System.out.println(
-				"######################################## Ñ¶·ÉÓïÒôºÏ³ÉÏµÍ³ ########################################");
-		// ÒÆ³ıÖĞÎÄÖ®¼äµÄÒ»¸ö»ò¶à¸ö¿Õ¸ñ
+				"######################################## è®¯é£è¯­éŸ³åˆæˆç³»ç»Ÿ ########################################");
+		// ç§»é™¤ä¸­æ–‡ä¹‹é—´çš„ä¸€ä¸ªæˆ–å¤šä¸ªç©ºæ ¼
 		input = ReplaceSpaceInChineses.replaceSpaceInChineses(input);
-		// ÒÆ³ıÀàËÆ`<center><strong>±í19.3input±êÇ©µÄÊôĞÔ</strong></center>`ÕâÑùµÄ±êÇ©
+		// ç§»é™¤ç±»ä¼¼`<center><strong>è¡¨19.3inputæ ‡ç­¾çš„å±æ€§</strong></center>`è¿™æ ·çš„æ ‡ç­¾
 		input = RemoveHtmlTags.removeHtmlDoubleTags(input);
-		// Ìæ»»¶àÒô´Ê,ÈçÖØÔØ,³¤¶È,»úÆ÷¿ÉÄÜ»á¶Á´í
+		// æ›¿æ¢å¤šéŸ³è¯,å¦‚é‡è½½,é•¿åº¦,æœºå™¨å¯èƒ½ä¼šè¯»é”™
 		input = ChinesePolysyllabicWordsProperties.replaceByValue(input);
-		// Ìæ»»ÈİÒ×¶Á´íµÄµ¥´Ê
+		// æ›¿æ¢å®¹æ˜“è¯»é”™çš„å•è¯
 		input = ContainSpecialWordsProperties.repalceByProperties(input);
-		// ÒÆ³ımarkdown±ê¼Ç
+		// ç§»é™¤markdownæ ‡è®°
 		input = RemoveMarkDownTags.replaceMD(input);
-		// ²ğ·ÖjavaÍÕ·åÃüÃû·¨
+		// æ‹†åˆ†javaé©¼å³°å‘½åæ³•
 		input = ReplaceEnglishString.replaceEnglish(input);
 		//
 		input = input.replaceAll("(?m)[ ]+$", "");
@@ -168,14 +163,14 @@ public class Main
 //		String latexCode;
 //		while (matcher.find())
 //		{
-//			// »ñÈ¡Æ¥Åäµ½µÄÒ»¸ö·Ö×é
+//			// è·å–åŒ¹é…åˆ°çš„ä¸€ä¸ªåˆ†ç»„
 //			latexCode = matcher.group(1);
-//			// ÀÊ¶ÁLatexĞĞÄÚ¹«Ê½
+//			// æœ—è¯»Latexè¡Œå†…å…¬å¼
 //			latexCode = LatexReader.readeLaTexCode(latexCode);
-//			// Ìæ»»Ô­À´Æ¥ÅäµÄÎÄ±¾
+//			// æ›¿æ¢åŸæ¥åŒ¹é…çš„æ–‡æœ¬
 //			matcher.appendReplacement(sb, latexCode);
 //		}
-//		// Ìí¼ÓºóÃæÃ»ÓĞÆ¥ÅäµÄÎÄ±¾
+//		// æ·»åŠ åé¢æ²¡æœ‰åŒ¹é…çš„æ–‡æœ¬
 //		matcher.appendTail(sb);
 //		input = sb.toString();
 //		return input;
@@ -186,45 +181,45 @@ public class Main
 	 */
 	public static SpeechSynthesizer xunfeiSettings()
 	{
-		// ´ÓÅäÖÃÎÄ¼şÖĞ¶ÁÈ¡APPID
+		// ä»é…ç½®æ–‡ä»¶ä¸­è¯»å–APPID
 		SpeechUtility.createUtility(
 				SpeechConstant.APPID + "=" + PropertiesReader.getAPPID());
-		// 3.´´½¨SpeechSynthesizer¶ÔÏó
+		// 3.åˆ›å»ºSpeechSynthesizerå¯¹è±¡
 		SpeechSynthesizer mTts = SpeechSynthesizer.createSynthesizer();
-		// ÉèÖÃÓïËÙ£¬·¶Î§0~100
+		// è®¾ç½®è¯­é€Ÿï¼ŒèŒƒå›´0~100
 		mTts.setParameter(SpeechConstant.SPEED, "50");
-		// ÉèÖÃÓïµ÷£¬·¶Î§0~100
+		// è®¾ç½®è¯­è°ƒï¼ŒèŒƒå›´0~100
 		mTts.setParameter(SpeechConstant.PITCH, "50");
-		// ÉèÖÃÒôÁ¿£¬·¶Î§0~100
+		// è®¾ç½®éŸ³é‡ï¼ŒèŒƒå›´0~100
 		mTts.setParameter(SpeechConstant.VOLUME, "50");
-		// 4.ºÏ³É²ÎÊıÉèÖÃ£¬Ïê¼û¡¶MSC Reference Manual¡·SpeechSynthesizer Àà
-		mTts.setParameter(SpeechConstant.VOICE_NAME, "vixy");// Ğ¡ÑĞ
+		// 4.åˆæˆå‚æ•°è®¾ç½®ï¼Œè¯¦è§ã€ŠMSC Reference Manualã€‹SpeechSynthesizer ç±»
+		mTts.setParameter(SpeechConstant.VOICE_NAME, "vixy");// å°ç ”
 		return mTts;
 	}
 
-	// 1 ÉèÖÃºÏ³É¼àÌıÆ÷
+	// 1 è®¾ç½®åˆæˆç›‘å¬å™¨
 	static SynthesizeToUriListener synthesizeToUriListener = new SynthesizeToUriListener()
 	{
-		// progressÎªºÏ³É½ø¶È0~100
+		// progressä¸ºåˆæˆè¿›åº¦0~100
 		public void onBufferProgress(int progress)
 		{
 		}
-		// »á»°ºÏ³ÉÍê³É»Øµ÷½Ó¿Ú
-		// uriÎªºÏ³É±£´æµØÖ·£¬errorÎª´íÎóĞÅÏ¢£¬ÎªnullÊ±±íÊ¾ºÏ³É»á»°³É¹¦
+		// ä¼šè¯åˆæˆå®Œæˆå›è°ƒæ¥å£
+		// uriä¸ºåˆæˆä¿å­˜åœ°å€ï¼Œerrorä¸ºé”™è¯¯ä¿¡æ¯ï¼Œä¸ºnullæ—¶è¡¨ç¤ºåˆæˆä¼šè¯æˆåŠŸ
 		public void onSynthesizeCompleted(String uri, SpeechError error)
 		{
 			if (error == null)
 			{
-				System.out.println("    ºÏ³É³É¹¦");
-				// 8.Ê¹ÓÃauditon´ò¿ªÎÄ¼ş.
+				System.out.println("    åˆæˆæˆåŠŸ");
+				// 8.ä½¿ç”¨auditonæ‰“å¼€æ–‡ä»¶.
 				openFileUseAudition(fileName);
 			} else
-				System.out.println("    ºÏ³ÉÊ§°Ü");
+				System.out.println("    åˆæˆå¤±è´¥");
 
 		}
 		@Override
 		public void onEvent(int arg0, int arg1, int arg2, int arg3, Object arg4,
-				Object arg5)
+							Object arg5)
 		{
 
 		}

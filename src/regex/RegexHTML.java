@@ -3,11 +3,11 @@ package regex;
 public class RegexHTML
 {
 	/**
-	 * 匹配Html代码的正则表达式.
+	 * 鍖归厤Html浠ｇ爜鐨勬鍒欒〃杈惧紡.
 	 */
 	public final static String htmlRegex = "<(.+?)>(.+)</\\1>";
 	/**
-	 * 讯飞语音朗读正确标记
+	 * 璁璇煶鏈楄姝ｇ‘鏍囪
 	 */
 	public final static String correctReading = "<!\\-\\-replace:(.+)\\-\\->";
 

@@ -6,29 +6,29 @@ import java.util.regex.Pattern;
 public class ReplaceJavaKeyWord
 {
 	/**
-	 * ²ğ·ÖÍÕ·åÃüÃû·¨,ÔÚ´óĞ´Ç°Ãæ¼ÓÉÏ¿Õ¸ñ.
+	 * æ‹†åˆ†é©¼å³°å‘½åæ³•,åœ¨å¤§å†™å‰é¢åŠ ä¸Šç©ºæ ¼.
 	 * 
 	 * @param englishWord
-	 *            Ó¢ÎÄµ¥´Ê.
-	 * @return javaKeyWord ´óĞ´×ÖÄ¸Ç°Ãæ¼ÓÉÏ¿Õ¸ñµÄ×Ö·û×Ö·û´®.
+	 *            è‹±æ–‡å•è¯.
+	 * @return javaKeyWord å¤§å†™å­—æ¯å‰é¢åŠ ä¸Šç©ºæ ¼çš„å­—ç¬¦å­—ç¬¦ä¸².
 	 */
 	public static String replaceJavaKeyWord(String englishWord)
 	{
-		// Ìæ»»ÍÕ·å
+		// æ›¿æ¢é©¼å³°
 		Pattern javaKeyWordPattern = Pattern.compile("([A-Z][a-z]+)");
-		// java¹Ø¼ü×ÖÆ¥ÅäÆ÷
+		// javaå…³é”®å­—åŒ¹é…å™¨
 		Matcher javaKeyWordMatcher;
 		javaKeyWordMatcher = javaKeyWordPattern.matcher(englishWord);
 		String javaKeyWord = null;
-		// ÔÚËùÓĞµÄ´óĞ´×Ö·ûÖ®Ç°Ìí¼ÓÒ»¸ö¿Õ¸ñ
+		// åœ¨æ‰€æœ‰çš„å¤§å†™å­—ç¬¦ä¹‹å‰æ·»åŠ ä¸€ä¸ªç©ºæ ¼
 		if (javaKeyWordMatcher.find())
 		{
 			javaKeyWord = javaKeyWordMatcher.replaceAll(" $1");
 		}
-		// Èç¹ûÕâ¸öµ¥´Ê²»°üº¬´óĞ´×ÖÄ¸
+		// å¦‚æœè¿™ä¸ªå•è¯ä¸åŒ…å«å¤§å†™å­—æ¯
 		if (javaKeyWord == null)
 			javaKeyWord = " " + englishWord;
-		// Èç¹û´¦ÀíºóÕâ¸öµ¥´ÊÇ°ÃæÃ»ÓĞ´ø¿Õ¸ñ,ÕâËµÃ÷Õâ¸öµ¥´ÊÊÇĞ¡Ğ´×ÖÄ¸
+		// å¦‚æœå¤„ç†åè¿™ä¸ªå•è¯å‰é¢æ²¡æœ‰å¸¦ç©ºæ ¼,è¿™è¯´æ˜è¿™ä¸ªå•è¯æ˜¯å°å†™å­—æ¯
 		else if (!javaKeyWord.startsWith(" "))
 			javaKeyWord = " " + javaKeyWord;
 		return javaKeyWord;

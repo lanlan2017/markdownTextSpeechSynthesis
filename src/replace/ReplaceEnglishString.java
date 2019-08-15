@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 public class ReplaceEnglishString
 {
 	/**
-	 * ²ğ·ÖÓ¢ÎÄ×Ö·û´®.
+	 * æ‹†åˆ†è‹±æ–‡å­—ç¬¦ä¸².
 	 * 
 	 * @param text
-	 *            Ò»´®ÎÄ±¾.
-	 * @return ²ğ·ÖÍÕ·åÃüÃû·¨Ö®ºóµÄÎÄ±¾.
+	 *            ä¸€ä¸²æ–‡æœ¬.
+	 * @return æ‹†åˆ†é©¼å³°å‘½åæ³•ä¹‹åçš„æ–‡æœ¬.
 	 */
 	public static String replaceEnglish(String text)
 	{
@@ -22,11 +22,11 @@ public class ReplaceEnglishString
 		while (englishMatcher.find())
 		{
 			line = englishMatcher.group();
-			// ²ğ·Öjava¹Ø¼ü×Ö.
+			// æ‹†åˆ†javaå…³é”®å­—.
 			line = ReplaceJavaKeyWord.replaceJavaKeyWord(line);
 			englishMatcher.appendReplacement(sb, line);
 		}
-		// °ÑÎÄ±¾ÖĞÃ»ÓĞÆ¥ÅäµÄÊ£ÏÂµÄÎÄ±¾Ò²¼ÓÈëµ½StringBufferÖĞ
+		// æŠŠæ–‡æœ¬ä¸­æ²¡æœ‰åŒ¹é…çš„å‰©ä¸‹çš„æ–‡æœ¬ä¹ŸåŠ å…¥åˆ°StringBufferä¸­
 		englishMatcher.appendTail(sb);
 		return sb.toString();
 	}

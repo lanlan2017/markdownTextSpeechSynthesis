@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class PropertiesReader
 {
-	// Ñ¶·ÉÓïÒôºÏ³ÉAPPID
+	// è®¯é£è¯­éŸ³åˆæˆAPPID
 	private static String APPID = null;
 	// 
 	public static String getAPPID()
@@ -19,19 +19,19 @@ public class PropertiesReader
 		return APPID;
 	}
 	/**
-	 * ´Ó.PropertiesÅäÖÃÎÄ¼şÖĞ¶ÁÈ¡³õÊ¼»¯²ÎÊı.
-	 * @param filepath ÅäÖÃÎÄ¼şµÄ×Ö·û´®Â·¾¶.
+	 * ä».Propertiesé…ç½®æ–‡ä»¶ä¸­è¯»å–åˆå§‹åŒ–å‚æ•°.
+	 * @param filepath é…ç½®æ–‡ä»¶çš„å­—ç¬¦ä¸²è·¯å¾„.
 	 * @return 
 	 */
 	private static void initByProperties(String filePath)
 	{
-		// 1 ÊµÀı»¯
+		// 1 å®ä¾‹åŒ–
 		Properties properties = new Properties();
 		try (InputStream inputStream = new FileInputStream(filePath);)
 		{
-			// 2¼ÓÔØÅäÖÃÎÄ¼şµ½Properties¶ÔÏóÖĞ
+			// 2åŠ è½½é…ç½®æ–‡ä»¶åˆ°Propertieså¯¹è±¡ä¸­
 			properties.load(inputStream);
-			// 3¶ÁÈ¡ÅäÖÃÎÄ¼şÖĞµÄÕ¾µãĞÅÏ¢
+			// 3è¯»å–é…ç½®æ–‡ä»¶ä¸­çš„ç«™ç‚¹ä¿¡æ¯
 			APPID = properties.getProperty("APPID");
 		} catch (IOException e)
 		{

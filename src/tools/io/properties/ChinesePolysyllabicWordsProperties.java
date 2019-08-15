@@ -6,10 +6,10 @@ import java.util.Set;
 
 public class ChinesePolysyllabicWordsProperties
 {
-	// 创建Properties
+	// 鍒涘缓Properties
 	static Properties properties = PropertiesInstance
 			.getPropertiesInstanceUTF8("ChinesePolysyllabicWords.properties");
-	// 获取所有的key
+	// 鑾峰彇鎵�鏈夌殑key
 	static Set<Object> keySet = properties.keySet();
 
 	public static String replaceByValue(String input)
@@ -18,7 +18,7 @@ public class ChinesePolysyllabicWordsProperties
 		{
 			String key = (String) iterator.next();
 			String value = properties.getProperty(key);
-			// 替换该中文多音词
+			// 鏇挎崲璇ヤ腑鏂囧闊宠瘝
 			input = input.replace(key, value);
 		}
 		return input;

@@ -9,7 +9,7 @@ import tools.io.properties.SpecialWordsProperties;
 public class MDCodeReplace
 {
 	/**
-	 * ´¦Àí°üº¬ÕâĞ©µ¥´ÊµÄÇé¿ö.
+	 * å¤„ç†åŒ…å«è¿™äº›å•è¯çš„æƒ…å†µ.
 	 * 
 	 * @param matcherStr
 	 * @return
@@ -21,64 +21,64 @@ public class MDCodeReplace
 		return matcherStr;
 	}
 	/**
-	 * Ìæ»»ÌØÊâ×Ö·û.
+	 * æ›¿æ¢ç‰¹æ®Šå­—ç¬¦.
 	 * 
 	 * @param matcherStr.
 	 * @return
 	 */
 	public static String replaceSpecialChars(String matcherStr)
 	{
-		matcherStr = matcherStr.replace("=", "µÈÓÚ");
-		matcherStr = matcherStr.replace("-", "¸Ü");
-		matcherStr = matcherStr.replace("&", "µ¥Óë·ûºÅ");
-		matcherStr = matcherStr.replace("?", "ÎÊºÅ");
-		matcherStr = matcherStr.replace("*", "ĞÇºÅ");
-		matcherStr = matcherStr.replace("/", "Ğ±¸Ü");
-		matcherStr = matcherStr.replace("\\", "·´Ğ±¸Ü");
-		matcherStr = matcherStr.replace(":", "Ã°ºÅ");
-		matcherStr = matcherStr.replace("$", "ÃÀÔª");
-		matcherStr = matcherStr.replace("#", "¾®ºÅ");
-		matcherStr = matcherStr.replace(".", "µã");
-		matcherStr = matcherStr.replace("|", "Êú¸Ü");
-		matcherStr = matcherStr.replace("!", "¸ĞÌ¾ºÅ");
-//		matcherStr = matcherStr.replace(",", "¶ººÅ");
+		matcherStr = matcherStr.replace("=", "ç­‰äº");
+		matcherStr = matcherStr.replace("-", "æ ");
+		matcherStr = matcherStr.replace("&", "å•ä¸ç¬¦å·");
+		matcherStr = matcherStr.replace("?", "é—®å·");
+		matcherStr = matcherStr.replace("*", "æ˜Ÿå·");
+		matcherStr = matcherStr.replace("/", "æ–œæ ");
+		matcherStr = matcherStr.replace("\\", "åæ–œæ ");
+		matcherStr = matcherStr.replace(":", "å†’å·");
+		matcherStr = matcherStr.replace("$", "ç¾å…ƒ");
+		matcherStr = matcherStr.replace("#", "äº•å·");
+		matcherStr = matcherStr.replace(".", "ç‚¹");
+		matcherStr = matcherStr.replace("|", "ç«–æ ");
+		matcherStr = matcherStr.replace("!", "æ„Ÿå¹å·");
+//		matcherStr = matcherStr.replace(",", "é€—å·");
 		return matcherStr;
 	}
 	/**
-	 * ´¦ÀíÆ¥ÅäÌØ¶¨ÕıÔò±í´ïÊ½µÄÇé¿ö.
+	 * å¤„ç†åŒ¹é…ç‰¹å®šæ­£åˆ™è¡¨è¾¾å¼çš„æƒ…å†µ.
 	 * 
 	 * @param matcherStr
 	 * @return
 	 */
 	public static String replaceMatcher(String matcherStr)
 	{
-		// HTML´úÂë
+		// HTMLä»£ç 
 		Pattern htmlTagPattern = Pattern.compile("<(.+?)/?>");
 		Matcher htmlTagMatcher = htmlTagPattern.matcher(matcherStr);
-		// Èç¹ûÊÇ¸ºÊıµÄÇé¿ö
+		// å¦‚æœæ˜¯è´Ÿæ•°çš„æƒ…å†µ
 //		if (matcherStr.matches("-\\d+"))
 		if (matcherStr.matches(RegexMath.negativeNumber))
 		{
-			// System.out.println("Æ¥Åäµ½¸ºÊı: " + matcherStr);
-			matcherStr = matcherStr.replace("-", "¸º");
+			// System.out.println("åŒ¹é…åˆ°è´Ÿæ•°: " + matcherStr);
+			matcherStr = matcherStr.replace("-", "è´Ÿ");
 		}
-		// ÀÊ¶ÁÈ«´óĞ´×Ö·û´®
+		// æœ—è¯»å…¨å¤§å†™å­—ç¬¦ä¸²
 		matcherStr = replaceStringAllUpperCase(matcherStr);
 
-		// Èç¹ûÊÇhtml±êÇ©
+		// å¦‚æœæ˜¯htmlæ ‡ç­¾
 		if (htmlTagMatcher.matches())
 		{
-			// ÒÆ³ıhtml±êÇ©µÄ`<`ºÍ`/?>`
+			// ç§»é™¤htmlæ ‡ç­¾çš„`<`å’Œ`/?>`
 			matcherStr = htmlTagMatcher.replaceAll("$1");
 		}
 		return matcherStr;
 	}
 	/**
-	 * ÀÊ¶ÁÈ«´óĞ´µÄ×Ö·û´®.
+	 * æœ—è¯»å…¨å¤§å†™çš„å­—ç¬¦ä¸².
 	 * 
 	 * @param matcherStr
-	 *            È«²¿´óĞ´µÄ×Ö·û´®.
-	 * @return ¸÷¸ö´óĞ´·Ö¿ªµÄ×Ö·û´®.
+	 *            å…¨éƒ¨å¤§å†™çš„å­—ç¬¦ä¸².
+	 * @return å„ä¸ªå¤§å†™åˆ†å¼€çš„å­—ç¬¦ä¸².
 	 */
 	private static String replaceStringAllUpperCase(String matcherStr)
 	{
@@ -96,10 +96,10 @@ public class MDCodeReplace
 		return matcherStr;
 	}
 	/**
-	 * Ìæ»»ÈİÒ×¶Á´íµÄµ¥´Ê.
+	 * æ›¿æ¢å®¹æ˜“è¯»é”™çš„å•è¯.
 	 * 
 	 * @param matcherStr
-	 *            ÈİÒ×¶Á´íµÄµ¥´Ê.
+	 *            å®¹æ˜“è¯»é”™çš„å•è¯.
 	 * @return
 	 */
 	public static String replaceSpecialWords(String matcherStr)
