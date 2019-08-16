@@ -1,15 +1,14 @@
 package main;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import system.call.cmd.Command;
+import tools.io.markdown.reader.MyMarkdownReader;
+import tools.io.properties.PerorationProperties;
+import tools.io.properties.SpeechSynthesisProperties;
+import tools.io.writer.MyStringWriter;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import system.call.cmd.Command;
 
 public class XunFeiTools
 {
@@ -132,9 +131,11 @@ public class XunFeiTools
 		// 合并为一个文件,并用audition打开这个文件.
 		mergeAndOpenFile(fileName, XunFeiTools.getFileNameList());
 	}
+
 	/**
+	 * 合成一部分.
 	 * @param input
-	 * @param fileName
+	 * @param fileNamePart
 	 */
 	public static void xunfeiOnes(String input, String fileNamePart)
 	{
@@ -201,8 +202,11 @@ public class XunFeiTools
 	{
 		// 合并list中的源文件到目标文件,并删除源文件
 		merge2TargetFileDeleteSourceFile(targetFilePath, sourceFilePathList);
+		// 清空List
+		fileNameList.clear();
 		// 打开合并后的文件
 		System.out.println("打开合并后的文件:" + targetFilePath);
 		XunFeiTools.openFileUseAudition(targetFilePath);
 	}
+
 }
