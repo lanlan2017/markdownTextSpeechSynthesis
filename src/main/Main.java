@@ -1,7 +1,6 @@
 package main;
 
 import clipboard.util.SysClipboardUtil;
-import com.iflytek.cloud.speech.*;
 import replace.RemoveHtmlTags;
 import replace.RemoveMarkDownTags;
 import replace.ReplaceEnglishString;
@@ -12,16 +11,12 @@ import tools.io.properties.ChinesePolysyllabicWordsProperties;
 import tools.io.properties.ContainSpecialWordsProperties;
 import tools.io.properties.PerorationProperties;
 import tools.io.properties.SpeechSynthesisProperties;
-import tools.io.reader.PropertiesReader;
 import tools.io.writer.MyStringWriter;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Scanner;
 
 public class Main {
-
-    static Scanner scanner = new Scanner(System.in);
     static String fileName = null;
     // 一次支持合成的最大字符数量
     static int maxSize = 4000;
@@ -40,7 +35,8 @@ public class Main {
     }
 
     /**
-     * @param args
+     * 当有一个命令参数的情况.
+     * @param args 命令行参数.
      */
     private static void oneArgs(String[] args) {
         switch (args[0]) {
@@ -75,7 +71,6 @@ public class Main {
     }
 
 
-
     /**
      * 直接合成文本.
      *
@@ -95,18 +90,6 @@ public class Main {
         XunFeiTools.xunfeiAll(input, maxSize, fileName);
     }
 
-
-
-    /**
-     *
-     */
-    public static void openFileUseAudition(String filePath) {
-        String audition = SpeechSynthesisProperties.getAuditionPath();
-        // String filePath = "G:\\Desktop\\语音合成\\疯狂Java讲义第三版\\第13章\\13.2.4 DDL语句
-        // 2.修改表结构的语法.pcm";
-        audition += "\"" + filePath + "\"";
-        Command.exeCmd("cmd /c start " + audition);
-    }
     /**
      * 处理用户熟人的Markdown文本.
      *
@@ -131,6 +114,7 @@ public class Main {
         input = input.replaceAll("(?m)[ ]+$", "");
         return input;
     }
+
     /**
      * 生成音频文件的绝对路径.
      *
@@ -148,6 +132,7 @@ public class Main {
         fileName = fileName + relativePath.replace(".md", ".pcm");
         return fileName;
     }
+
     /**
      * 合成一个文件.
      *
@@ -168,6 +153,7 @@ public class Main {
         // 7.给出提示
         MyStringWriter.writerString(input);
     }
+
     /**
      * 合成整个目录.
      *
@@ -192,49 +178,4 @@ public class Main {
 
         }
     }
-
-    /**
-     * @return
-     */
-    public static SpeechSynthesizer xunfeiSettings() {
-        // 从配置文件中读取APPID
-        SpeechUtility.createUtility(
-                SpeechConstant.APPID + "=" + PropertiesReader.getAPPID());
-        // 3.创建SpeechSynthesizer对象
-        SpeechSynthesizer mTts = SpeechSynthesizer.createSynthesizer();
-        // 设置语速，范围0~100
-        mTts.setParameter(SpeechConstant.SPEED, "50");
-        // 设置语调，范围0~100
-        mTts.setParameter(SpeechConstant.PITCH, "50");
-        // 设置音量，范围0~100
-        mTts.setParameter(SpeechConstant.VOLUME, "50");
-        // 4.合成参数设置，详见《MSC Reference Manual》SpeechSynthesizer 类
-        mTts.setParameter(SpeechConstant.VOICE_NAME, "vixy");// 小研
-        return mTts;
-    }
-
-    // 1 设置合成监听器
-    static SynthesizeToUriListener synthesizeToUriListener = new SynthesizeToUriListener() {
-        // progress为合成进度0~100
-        public void onBufferProgress(int progress) {
-        }
-
-        // 会话合成完成回调接口
-        // uri为合成保存地址，error为错误信息，为null时表示合成会话成功
-        public void onSynthesizeCompleted(String uri, SpeechError error) {
-            if (error == null) {
-                System.out.println("    合成成功");
-                // 8.使用auditon打开文件.
-                openFileUseAudition(fileName);
-            } else
-                System.out.println("    合成失败");
-
-        }
-
-        @Override
-        public void onEvent(int arg0, int arg1, int arg2, int arg3, Object arg4,
-                            Object arg5) {
-
-        }
-    };
 }
