@@ -142,7 +142,7 @@ public class XunFeiTools {
     /**
      * 合成一部分.
      *
-     * @param input 输入文本.
+     * @param input        输入文本.
      * @param fileNamePart 部分文件路径.
      */
     private static void xunfeiOnes(String input, String fileNamePart) {
@@ -207,6 +207,7 @@ public class XunFeiTools {
         System.out.println("打开合并后的文件:" + targetFilePath);
         XunFeiTools.openFileUseAudition(targetFilePath);
     }
+
     /**
      * 生成音频文件的绝对路径.
      *
@@ -224,6 +225,7 @@ public class XunFeiTools {
         fileName = fileName + relativePath.replace(".md", ".pcm");
         return fileName;
     }
+
     /**
      * 合成一个文件.
      *
@@ -244,6 +246,7 @@ public class XunFeiTools {
         // 7.给出提示
         MyStringWriter.writerString(input);
     }
+
     /**
      * 合成整个目录.
      *
@@ -258,16 +261,19 @@ public class XunFeiTools {
                 return name.endsWith(".md") || new File(dir, name).isDirectory();
             }
         });
+        // 遍历当前目录列表
         for (int i = 0; i < fileDirList.length; i++) {
             if (fileDirList[i].isFile()) {
                 System.out.println("文件:" + file.getAbsolutePath());
+                // 合成文件
                 xunfeiOneFile(fileDirList[i].getAbsolutePath());
             } else if (fileDirList[i].isDirectory()) {
+                // 递归目录
                 xunfeiDir(fileDirList[i]);
             }
-
         }
     }
+
     /**
      * 处理用户输入的Markdown文本.
      *
@@ -280,18 +286,19 @@ public class XunFeiTools {
         input = ReplaceSpaceInChineses.replaceSpaceInChineses(input);
         // 移除类似`<center><strong>表19.3input标签的属性</strong></center>`这样的标签
         input = RemoveHtmlTags.removeHtmlDoubleTags(input);
+        // 移除markdown标记
+        input = RemoveMarkDownTags.replaceMD(input);
         // 替换多音词,如重载,长度,机器可能会读错
         input = ChinesePolysyllabicWordsProperties.replaceByValue(input);
         // 替换容易读错的单词
         input = ContainSpecialWordsProperties.repalceByProperties(input);
-        // 移除markdown标记
-        input = RemoveMarkDownTags.replaceMD(input);
         // 拆分java驼峰命名法
         input = ReplaceEnglishString.replaceEnglish(input);
         //
         input = input.replaceAll("(?m)[ ]+$", "");
         return input;
     }
+
     /**
      * 直接合成文本.
      *

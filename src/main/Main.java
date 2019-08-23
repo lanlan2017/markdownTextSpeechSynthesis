@@ -22,6 +22,7 @@ public class Main {
 
     /**
      * 当有一个命令参数的情况.
+     *
      * @param args 命令行参数.
      */
     private static void oneArgs(String[] args) {
@@ -43,11 +44,13 @@ public class Main {
         String path = SysClipboardUtil.getSysClipboardText();
         if (path.contains("source\\_posts")) {
             File file = new File(path);
-            // 如果是文件的地址的话
+            // 如果是文件
             if (file.isFile()) {
                 //合成一个文件
                 XunFeiTools.xunfeiOneFile(path);
-            } else if (file.isDirectory()) {
+            }
+//            如果是目录
+            else if (file.isDirectory()) {
                 XunFeiTools.xunfeiDir(file);
             }
         } else {
