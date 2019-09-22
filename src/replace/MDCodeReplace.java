@@ -27,16 +27,16 @@ public class MDCodeReplace {
      * @return
      */
     public static String replaceSpecialChars(String matcherStr) {
-        matcherStr = matcherStr.replace("=", "等于");
-        matcherStr = matcherStr.replace("-", "杠");
-        matcherStr = matcherStr.replace("&", "单与符号");
-        matcherStr = matcherStr.replace("?", "问号");
-        matcherStr = matcherStr.replace("*", "星号");
+        matcherStr = matcherStr.replace("=", " 等于");
+        matcherStr = matcherStr.replace("-", " 杠");
+        matcherStr = matcherStr.replace("&", " 单与符号");
+        matcherStr = matcherStr.replace("?", " 问号");
+        matcherStr = matcherStr.replace("*", " 星号");
         matcherStr = matcherStr.replace("/", "斜杠");
         matcherStr = matcherStr.replace("\\", "反斜杠");
-        matcherStr = matcherStr.replace(":", "冒号");
-        matcherStr = matcherStr.replace("$", "美元");
-        matcherStr = matcherStr.replace("#", "井号");
+        matcherStr = matcherStr.replace(":", " 冒号");
+        matcherStr = matcherStr.replace("$", " 美元");
+        matcherStr = matcherStr.replace("#", " 井号");
         matcherStr = matcherStr.replace(".", "点");
         matcherStr = matcherStr.replace("|", "竖杠");
         matcherStr = matcherStr.replace("!", "感叹号");

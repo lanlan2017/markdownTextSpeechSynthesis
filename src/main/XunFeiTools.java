@@ -290,10 +290,10 @@ public class XunFeiTools {
         input = RemoveMarkDownTags.replaceMD(input);
         // 替换多音词,如重载,长度,机器可能会读错
         input = ChinesePolysyllabicWordsProperties.replaceByValue(input);
-        // 替换容易读错的单词
-        input = ContainSpecialWordsProperties.repalceByProperties(input);
         // 拆分java驼峰命名法
         input = ReplaceEnglishString.replaceEnglish(input);
+        // 替换容易读错的单词
+        input = ContainSpecialWordsProperties.repalceByProperties(input);
         //
         input = input.replaceAll("(?m)[ ]+$", "");
         return input;

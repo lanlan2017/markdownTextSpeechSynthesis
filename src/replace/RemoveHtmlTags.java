@@ -2,8 +2,10 @@ package replace;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import clipboard.util.SysClipboardUtil;
-import static regex.RegexHTML.htmlRegex;;
+
+import static regex.RegexHTML.htmlRegex;
+
+;
 
 public class RemoveHtmlTags
 {
@@ -27,10 +29,10 @@ public class RemoveHtmlTags
 		}
 		return input;
 	}
-
-	public static void main(String[] args)
-	{
-		String input = SysClipboardUtil.getSysClipboardText();
-		System.out.println(removeHtmlDoubleTags(input));
-	}
+//
+//	public static void main(String[] args)
+//	{
+//		String input = SysClipboardUtil.getSysClipboardText();
+//		System.out.println(removeHtmlDoubleTags(input));
+//	}
 }
