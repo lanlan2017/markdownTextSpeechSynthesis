@@ -20,12 +20,7 @@ public class MDCodeReplace {
         return matcherStr;
     }
 
-    /**
-     * 替换特殊字符.
-     *
-     * @param matcherStr.
-     * @return
-     */
+
     public static String replaceSpecialChars(String matcherStr) {
         matcherStr = matcherStr.replace("=", " 等于");
         matcherStr = matcherStr.replace("-", " 杠");
@@ -42,7 +37,6 @@ public class MDCodeReplace {
         matcherStr = matcherStr.replace("!", "感叹号");
         matcherStr = matcherStr.replace("~", "波浪号");
         matcherStr = matcherStr.replace("^", "脱字符");
-//		matcherStr = matcherStr.replace(",", "逗号");
         return matcherStr;
     }
 

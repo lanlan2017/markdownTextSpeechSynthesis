@@ -1,13 +1,10 @@
 package replace.md.table;
 
 //导入正则表达式
-
 import clipboard.util.SysClipboardUtil;
 import replace.MDCodeReplace;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import static regex.RegexJava.javaMethedRegex;
 import static regex.RegexMarkdown.MDCodeInLineInMDTableColsRegex;
 import static regex.RegexMarkdown.MDTableRegex;
@@ -17,20 +14,23 @@ public class MDTableReplace {
      * 朗读Markdown表格,当表格中有方法声明时.
      *
      * @param line markdown文档中的内容字符串.
-     * @return
+     * @return 移除markdown表格后的字符串.
      */
     public static String MDTableSpeech(String line) {
         Pattern pattern = Pattern.compile(MDTableRegex);
         Matcher matcher = pattern.matcher(line);
         StringBuffer sb = new StringBuffer();
         String tableTitle;
-        // String tableAlign;
         String tableBody;
         String table;
         while (matcher.find()) {
             // 获取匹配到的一个分组
             tableTitle = matcher.group(1);
+            // System.out.println(tableTitle);
+            // System.out.println("---------------------------------------");
             tableBody = matcher.group(2);
+            // System.out.println(tableBody);
+            // System.out.println("---------------------------------------");
             tableBody = MDTableCodeInLineRepalce(tableBody);
             table = tableTitle + tableBody;
             //转义字符,$在这里表示捕获组,\\$表示这个字符本身.
@@ -44,11 +44,10 @@ public class MDTableReplace {
     /**
      * 替换表格中的行内代码.
      *
-     * @param tableBody
-     * @return
+     * @param tableBody 表格体中的字符串.
+     * @return 正确的朗读方法.
      */
     public static String MDTableCodeInLineRepalce(String tableBody) {
-        // Pattern pattern = Pattern.compile(MDCodeInLineRegex);
         Pattern pattern = Pattern.compile(MDCodeInLineInMDTableColsRegex);
         Matcher matcher = pattern.matcher(tableBody);
         StringBuffer sb = new StringBuffer();
@@ -65,10 +64,6 @@ public class MDTableReplace {
         }
         // 添加后面没有匹配的文本
         matcher.appendTail(sb);
-        // // 删除多余的反引号
-        // String result = sb.toString();
-        // result = result.replaceAll(RegexMarkdown.MDCodeInLineRegex, "$1");
-        // return sb.toString();
         return sb.toString();
     }
 
@@ -89,11 +84,6 @@ public class MDTableReplace {
             group1 = matcher.group(1);
             group2 = matcher.group(2);
             group3 = matcher.group(3);
-            // System.out.println("捕获到表格:开始处理----------");
-            // System.out.println(" group1-->" + group1);
-            // System.out.println(" group2-->" + group2);
-            // System.out.println(" group3-->" + group3);
-
             matcherStr = group2 + " 方法 ";
             if (!group1.equals(group2)) {
                 group1 = group1.replace("<?>", "泛型");

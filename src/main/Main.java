@@ -26,13 +26,9 @@ public class Main {
      * @param args 命令行参数.
      */
     private static void oneArgs(String[] args) {
-        switch (args[0]) {
-            case "setting":
-                Command.exeCmd(
-                        "explorer.exe " + System.getProperty("user.dir"));
-                break;
-            default:
-                break;
+        if ("setting".equals(args[0])) {
+            Command.exeCmd(
+                    "explorer.exe " + System.getProperty("user.dir"));
         }
     }
 

@@ -1,23 +1,17 @@
 package tools.io.markdown.reader;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import clipboard.util.SysClipboardUtil;
+import read.IOFlag;
 import regex.RegexHTML;
 import tools.io.properties.PropertiesInstance;
-import read.IOFlag;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
 
 public class MyMarkdownReader {
     public static void main(String[] args) {
@@ -26,17 +20,17 @@ public class MyMarkdownReader {
     }
 
     /**
-     * @param path
+     * @param path Markdown文件的路径.
      */
     public static StringBuffer readerMyMarkdownFile(String path) {
         boolean fileStart = false;
         boolean read = false;
-        HashMap<String, String> repalceMap = new HashMap<String, String>();
+        HashMap<String, String> repalceMap = new HashMap<>();
         StringBuffer sbBuffer = new StringBuffer();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(new File(path)), "utf-8"));) {
+                new FileInputStream(new File(path)), StandardCharsets.UTF_8))) {
 
-            String line = null;
+            String line;
             String[] replaceEntry;
             String key;
             String value;
@@ -68,15 +62,10 @@ public class MyMarkdownReader {
                     continue;
                 }
                 if (fileStart && read) {
-                    // System.out.print(line + "\r\n");
                     // 保存到缓冲字符串中
-                    sbBuffer.append(line + "\r\n");
+                    sbBuffer.append(line).append("\r\n");
                 }
             }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,8 +88,8 @@ public class MyMarkdownReader {
      * @param repalceMap 保存key和value的map集合
      * @return 保存替换后的字符串的StringBuffer.
      */
-    public static StringBuffer replaceKeyToValue(String input,
-                                                 HashMap<String, String> repalceMap) {
+    private static StringBuffer replaceKeyToValue(String input,
+                                                  HashMap<String, String> repalceMap) {
         //
         Properties properties = PropertiesInstance
                 .getPropertiesInstanceUTF8("ContainSpecialWords.properties");
@@ -146,7 +135,7 @@ public class MyMarkdownReader {
     /**
      * 删除最后一行文本.
      *
-     * @param sbBuffer
+     * @param sbBuffer 保存文本的字符串缓存.
      */
     public static void deleteLastLine(StringBuffer sbBuffer) {
         String lastLine = null;
