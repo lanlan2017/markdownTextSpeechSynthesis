@@ -14,7 +14,6 @@ import tools.io.writer.MyStringWriter;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class XunFeiTools {
     /**
@@ -24,13 +23,13 @@ public class XunFeiTools {
     /**
      * 部分临时文件路径列表.
      */
-    static ArrayList<String> fileNameList = null;
+    private static ArrayList<String> fileNameList = null;
     /**
      * 传入的文件名称.
      */
-    static String fileName = null;
+    private static String fileName = null;
     // 一次支持合成的最大字符数量
-    static int maxSize = 4000;
+    private static int maxSize = 4000;
 
     /**
      * 生成部分语音的路径.
@@ -167,9 +166,7 @@ public class XunFeiTools {
                     new FileOutputStream(new File(targetFilePath)))) {
 
                 System.out.println("源文件列表:");
-                for (Iterator<String> iterator = sourceFilePathList
-                        .iterator(); iterator.hasNext(); ) {
-                    String sourceFilePath = iterator.next();
+                for (String sourceFilePath : sourceFilePathList) {
                     System.out.println("    " + sourceFilePath);
 
                     File sourceFile = new File(sourceFilePath);
@@ -178,7 +175,7 @@ public class XunFeiTools {
                     // 缓存数组
                     byte[] buffer = new byte[2048];
                     // 每次读入的字节数量
-                    int inSize = -1;
+                    int inSize;
                     // 批量读入字节到buffer缓存中,并返回读入的自己数量给inSize
                     while ((inSize = in.read(buffer)) != -1) {
                         // 把buffer缓存中的字节写入输出流(也就是目标文件)
@@ -231,7 +228,7 @@ public class XunFeiTools {
      *
      * @param path 文件的路径.
      */
-    public static void xunfeiOneFile(String path) {
+    static void xunfeiOneFile(String path) {
         // 根据markdown文件的路径生成音频文件的路径
         fileName = filePath(path);
         // 从文件中读取markdown文本
@@ -250,26 +247,21 @@ public class XunFeiTools {
     /**
      * 合成整个目录.
      *
-     * @param file
+     * @param file 目录.
      */
     public static void xunfeiDir(File file) {
         System.out.println("-------------------------合成整个目录-----------------");
         // 获取该目录下的所有markdown文件,或者子目录
-        File[] fileDirList = file.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".md") || new File(dir, name).isDirectory();
-            }
-        });
+        File[] fileDirList = file.listFiles((dir, name) -> name.endsWith(".md") || new File(dir, name).isDirectory());
         // 遍历当前目录列表
-        for (int i = 0; i < fileDirList.length; i++) {
-            if (fileDirList[i].isFile()) {
+        for (File value : fileDirList) {
+            if (value.isFile()) {
                 System.out.println("文件:" + file.getAbsolutePath());
                 // 合成文件
-                xunfeiOneFile(fileDirList[i].getAbsolutePath());
-            } else if (fileDirList[i].isDirectory()) {
+                xunfeiOneFile(value.getAbsolutePath());
+            } else if (value.isDirectory()) {
                 // 递归目录
-                xunfeiDir(fileDirList[i]);
+                xunfeiDir(value);
             }
         }
     }
@@ -304,7 +296,7 @@ public class XunFeiTools {
      *
      * @param context 文本内容.
      */
-    public static void xunfeiByContext(String context) {
+    static void xunfeiByContext(String context) {
         String input = context;
         // 处理输入的文本
         input = XunFeiTools.inputProcessing(input);

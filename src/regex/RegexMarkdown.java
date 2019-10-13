@@ -8,7 +8,7 @@ public class RegexMarkdown {
     /**
      * 匹配Markdown 行内代码 正则表达式.
      */
-    public final static String MDCodeInLineRegex = "`([^`]+?)`";
+    public final static String MDCodeInLineRegex = "`([^`、]+?)`";
     /**
      * 匹配Markdown 表格内的 行内代码 正则表达式
      */

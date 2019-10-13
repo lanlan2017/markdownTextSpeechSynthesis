@@ -47,7 +47,7 @@ public class MDTableReplace {
      * @param tableBody 表格体中的字符串.
      * @return 正确的朗读方法.
      */
-    public static String MDTableCodeInLineRepalce(String tableBody) {
+    private static String MDTableCodeInLineRepalce(String tableBody) {
         Pattern pattern = Pattern.compile(MDCodeInLineInMDTableColsRegex);
         Matcher matcher = pattern.matcher(tableBody);
         StringBuffer sb = new StringBuffer();

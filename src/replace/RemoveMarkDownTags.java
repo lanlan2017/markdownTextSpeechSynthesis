@@ -7,8 +7,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RemoveMarkDownTags {
+    /**
+     * 标记,是否已经处理了行内代码.
+     * 标题,加粗中都可以嵌套行内代码,所以在处理标题和加粗之前,要先确保处理过行内代码.
+     */
+    private static boolean isRemoveCodeInLine;
+    /**
+     * 标记,是否已经处理了代码块.要先处理代码块,然后在处理行内代码.
+     */
+    private static boolean isRemoveCodeBlock;
 
     private static String removeMDTitle(String line) {
+        // 因为标题中可以有行内代码,所以先确保移除掉了行内代码.
+        if (!isRemoveCodeInLine)
+            line = removeMDCodeInLine(line);
         // 先删除掉后面的井号
         Pattern pattern = Pattern.compile(RegexMarkdown.MDTitleRegex);
         Matcher matcher = pattern.matcher(line);
@@ -52,6 +64,9 @@ public class RemoveMarkDownTags {
      * @return 没有加粗或者斜体的字符串.
      */
     private static String removeMDStrongOrItalic(String line) {
+        // 因为加粗标记中可以包括行内代码,所以要先移除行内代码。
+        if (!isRemoveCodeInLine)
+            line = removeMDCodeInLine(line);
         return line.replaceAll(RegexMarkdown.MDStrongOrItalicRegex, "$2");
     }
 
@@ -61,7 +76,11 @@ public class RemoveMarkDownTags {
      * @param line 要处理的字符串.
      * @return 没有markdown行内代码的字符串.
      */
-    private static String removeMDCode(String line) {
+    private static String removeMDCodeInLine(String line) {
+        // 要先移除代码块
+        if (!isRemoveCodeBlock)
+            line = removeMDCodeBlock(line);
+        // 然后再移除行内代码.
         Pattern pattern = Pattern.compile(RegexMarkdown.MDCodeInLineRegex);
         Matcher matcher = pattern.matcher(line);
         StringBuffer sb = new StringBuffer();
@@ -69,6 +88,9 @@ public class RemoveMarkDownTags {
         while (matcher.find()) {
             // 获取匹配文本
             matcherStr = matcher.group(1);
+            // System.out.println("----------------------------------");
+            // System.out.println(matcherStr);
+            // System.out.println("----------------------------------");
             // 处理匹配特定字符的情况
             matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
             // 处理匹配特定单词的情况
@@ -81,6 +103,8 @@ public class RemoveMarkDownTags {
             matcher.appendReplacement(sb, matcherStr);
         }
         matcher.appendTail(sb);
+        // 设置标记为true,表示已经处理好行内代码了.
+        isRemoveCodeInLine = true;
         return sb.toString();
     }
 
@@ -106,11 +130,11 @@ public class RemoveMarkDownTags {
         Matcher codeBlockMatcher = codeBlockPattern.matcher(line);
         StringBuffer sb = new StringBuffer();
         while (codeBlockMatcher.find()) {
-            // System.out.println(codeBlockMatcher.group());
-            // System.out.println("捕获到代码块:结束-----------");
             codeBlockMatcher.appendReplacement(sb, "");
         }
         codeBlockMatcher.appendTail(sb);
+        // 设置标记,表示已经移除了代码块,这样才可以移除行内代码.
+        isRemoveCodeBlock = true;
         return sb.toString();
     }
 
@@ -142,8 +166,6 @@ public class RemoveMarkDownTags {
      * @return 没有markdown标记的字符串.
      */
     public static String replaceMD(String input) {
-        // 移除加粗
-        input = removeMDStrongOrItalic(input);
         // 移除图片
         input = removeMDIMG(input);
         // 移除超链接
@@ -153,8 +175,10 @@ public class RemoveMarkDownTags {
         // 移除代码块
         input = removeMDCodeBlock(input);
         // 移除行内代码
-        input = removeMDCode(input);
-        // 移除标题
+        input = removeMDCodeInLine(input);
+        // 移除加粗 要放在 行内代码之后,因为加粗可以包括行内代码,行内代码可以有星号
+        input = removeMDStrongOrItalic(input);
+        // 移除标题,要放在 行内代码之后,以为标题中可以有海内代码。
         input = removeMDTitle(input);
         // 移除无序列表
         input = removeMDUnorderListBlock(input);
