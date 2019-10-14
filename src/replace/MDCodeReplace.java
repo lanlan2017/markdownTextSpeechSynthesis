@@ -11,12 +11,11 @@ public class MDCodeReplace {
     /**
      * 处理包含这些单词的情况.
      *
-     * @param matcherStr
-     * @return
+     * @param matcherStr 包含特殊单词的字符串.
+     * @return 正确朗读特殊单词.
      */
-    public static String replaceContainSpecialWords(String matcherStr) {
-        matcherStr = ContainSpecialWordsProperties
-                .repalceByProperties(matcherStr);
+    static String replaceContainSpecialWords(String matcherStr) {
+        matcherStr = ContainSpecialWordsProperties.repalceByProperties(matcherStr);
         return matcherStr;
     }
 
@@ -43,10 +42,10 @@ public class MDCodeReplace {
     /**
      * 处理匹配特定正则表达式的情况.
      *
-     * @param matcherStr
-     * @return
+     * @param matcherStr 包含匹配特定正则表达式的情况.
+     * @return 正确的读法.
      */
-    public static String replaceMatcher(String matcherStr) {
+    private static String replaceMatcher(String matcherStr) {
         // HTML代码
         Pattern htmlTagPattern = Pattern.compile("<(.+?)/?>");
         Matcher htmlTagMatcher = htmlTagPattern.matcher(matcherStr);
@@ -77,9 +76,10 @@ public class MDCodeReplace {
         Pattern pattern = Pattern.compile("[A-Z]+");
         Matcher matcher = pattern.matcher(matcherStr);
         if (matcher.matches()) {
-            StringBuffer sbBuffer = new StringBuffer(matcherStr.length() * 2);
+            StringBuilder sbBuffer = new StringBuilder(matcherStr.length() * 2);
             for (int i = 0, length = matcherStr.length(); i < length; i++) {
-                sbBuffer.append(matcherStr.charAt(i) + " ");
+                // sbBuffer.append(matcherStr.charAt(i) + " ");
+                sbBuffer.append(matcherStr.charAt(i)).append(" ");
             }
             return sbBuffer.toString();
         }
@@ -90,10 +90,22 @@ public class MDCodeReplace {
      * 替换容易读错的单词.
      *
      * @param matcherStr 容易读错的单词.
-     * @return
+     * @return 正确读法.
      */
-    public static String replaceSpecialWords(String matcherStr) {
+    private static String replaceSpecialWords(String matcherStr) {
         matcherStr = SpecialWordsProperties.replaceByVlaue(matcherStr);
+        return matcherStr;
+    }
+
+    static String replaceMdCode(String matcherStr) {
+        // 处理匹配正则表达式的情况
+        matcherStr = MDCodeReplace.replaceMatcher(matcherStr);
+        // 朗读特殊字符
+        matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
+        // 处理匹配特定单词的情况
+        matcherStr = MDCodeReplace.replaceSpecialWords(matcherStr);
+        // 替换容易读出的单词
+        matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
         return matcherStr;
     }
 }

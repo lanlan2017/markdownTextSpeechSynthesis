@@ -24,7 +24,7 @@ public class RegexMarkdown {
     /**
      * 匹配Markdown 代码块 的正则表达式.
      */
-    public final static String MDCodeBlockRegex = "```\\w*(?:(?:\\r\\n|\\n).*?)+?```";
+    public final static String MDCodeBlockRegex = "```(\\w*)((?:(?:\\r\\n|\\n).*?)+?)```";
     /**
      * 匹配markdown 引用块 的正则表达式.
      */

@@ -31,8 +31,9 @@ public class RemoveMarkDownTags {
             matcherStr = matcher.group(2).trim();
             // 删除特殊字符
             matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
-            // 替换特殊字符
+            // 替换特殊单词
             matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
+            // matcherStr = MDCodeReplace.replaceMdCode(matcherStr);
             matcher.appendReplacement(sb, matcherStr);
         }
         matcher.appendTail(sb);
@@ -88,17 +89,8 @@ public class RemoveMarkDownTags {
         while (matcher.find()) {
             // 获取匹配文本
             matcherStr = matcher.group(1);
-            // System.out.println("----------------------------------");
-            // System.out.println(matcherStr);
-            // System.out.println("----------------------------------");
-            // 处理匹配特定字符的情况
-            matcherStr = MDCodeReplace.replaceSpecialChars(matcherStr);
-            // 处理匹配特定单词的情况
-            matcherStr = MDCodeReplace.replaceSpecialWords(matcherStr);
-            // 处理匹配正则表达式的情况
-            matcherStr = MDCodeReplace.replaceMatcher(matcherStr);
-            // 替换容易读出的单词
-            matcherStr = MDCodeReplace.replaceContainSpecialWords(matcherStr);
+            // 朗读代码.
+            matcherStr = MDCodeReplace.replaceMdCode(matcherStr);
             // 添加空格让机器人好识别
             matcher.appendReplacement(sb, matcherStr);
         }
@@ -129,8 +121,23 @@ public class RemoveMarkDownTags {
                 .compile(RegexMarkdown.MDCodeBlockRegex);
         Matcher codeBlockMatcher = codeBlockPattern.matcher(line);
         StringBuffer sb = new StringBuffer();
+        String language;
+        String sqlCodes;
         while (codeBlockMatcher.find()) {
-            codeBlockMatcher.appendReplacement(sb, "");
+            // 如果是sql代码.
+            language = codeBlockMatcher.group(1);
+            if ("sql".equals(language)) {
+                // 取出sql代码
+                sqlCodes = codeBlockMatcher.group(2);
+                // 朗读代码.
+                sqlCodes = MDCodeReplace.replaceMdCode(sqlCodes);
+                // 保留sql代码.
+                codeBlockMatcher.appendReplacement(sb, sqlCodes);
+            }
+            // 删除其他代码.
+            else {
+                codeBlockMatcher.appendReplacement(sb, "");
+            }
         }
         codeBlockMatcher.appendTail(sb);
         // 设置标记,表示已经移除了代码块,这样才可以移除行内代码.
@@ -184,6 +191,11 @@ public class RemoveMarkDownTags {
         input = removeMDUnorderListBlock(input);
         // 移除引用块
         input = removeMDQuoteBlock(input);
+        // 删除多余换行符
+        // input = Deletor.deleteBlankLine(input);
+        // System.out.println("---------------------------");
+        // System.out.println(input);
+        // System.out.println("---------------------------");
         return input;
     }
 }
