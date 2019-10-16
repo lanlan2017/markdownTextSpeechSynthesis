@@ -21,21 +21,26 @@ public class MDCodeReplace {
 
 
     public static String replaceSpecialChars(String matcherStr) {
-        matcherStr = matcherStr.replace("=", " 等于");
-        matcherStr = matcherStr.replace("-", " 杠");
-        matcherStr = matcherStr.replace("&", " 单与符号");
-        matcherStr = matcherStr.replace("?", " 问号");
-        matcherStr = matcherStr.replace("*", " 星号");
+        matcherStr = matcherStr.replace("!=", "不等于");
+        matcherStr = matcherStr.replace("=", "等于");
+        matcherStr = matcherStr.replace("-", "杠");
+        matcherStr = matcherStr.replace("&", "单与符");
+        matcherStr = matcherStr.replace("?", "问号");
+        matcherStr = matcherStr.replace("*", "星号");
         matcherStr = matcherStr.replace("/", "斜杠");
         matcherStr = matcherStr.replace("\\", "反斜杠");
-        matcherStr = matcherStr.replace(":", " 冒号");
-        matcherStr = matcherStr.replace("$", " 美元");
-        matcherStr = matcherStr.replace("#", " 井号");
+        matcherStr = matcherStr.replace(":", "冒号");
+        matcherStr = matcherStr.replace("$", "美元符");
+        matcherStr = matcherStr.replace("#", "井号");
         matcherStr = matcherStr.replace(".", "点");
         matcherStr = matcherStr.replace("|", "竖杠");
         matcherStr = matcherStr.replace("!", "感叹号");
         matcherStr = matcherStr.replace("~", "波浪号");
         matcherStr = matcherStr.replace("^", "脱字符");
+        matcherStr = matcherStr.replace("<", "小于");
+        matcherStr = matcherStr.replace(">", "大于");
+        matcherStr = matcherStr.replace(";", "分号");
+        matcherStr = matcherStr.replace("_", "下划线");
         return matcherStr;
     }
 

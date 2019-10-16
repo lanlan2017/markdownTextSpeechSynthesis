@@ -191,11 +191,6 @@ public class RemoveMarkDownTags {
         input = removeMDUnorderListBlock(input);
         // 移除引用块
         input = removeMDQuoteBlock(input);
-        // 删除多余换行符
-        // input = Deletor.deleteBlankLine(input);
-        // System.out.println("---------------------------");
-        // System.out.println(input);
-        // System.out.println("---------------------------");
         return input;
     }
 }
