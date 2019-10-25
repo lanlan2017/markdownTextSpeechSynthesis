@@ -129,6 +129,8 @@ public class RemoveMarkDownTags {
             if ("sql".equals(language)) {
                 // 取出sql代码
                 sqlCodes = codeBlockMatcher.group(2);
+                // 删除SQL注释`-- `
+                sqlCodes=sqlCodes.replaceAll("(?m)^[ ]*--.+$","");
                 // 朗读代码.
                 sqlCodes = MDCodeReplace.replaceMdCode(sqlCodes);
                 // 保留sql代码.

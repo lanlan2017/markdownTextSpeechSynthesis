@@ -41,6 +41,8 @@ public class MDCodeReplace {
         matcherStr = matcherStr.replace(">", "大于");
         matcherStr = matcherStr.replace(";", "分号");
         matcherStr = matcherStr.replace("_", "下划线");
+        // 删除单引号免得读多了
+        matcherStr = matcherStr.replace("'", "");
         return matcherStr;
     }
 
