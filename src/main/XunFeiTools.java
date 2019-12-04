@@ -65,10 +65,10 @@ public class XunFeiTools {
      * @param filePath 音频文件的路径.
      */
     private static void openFileUseAudition(String filePath) {
-        String audition = "F:\\软件\\安装包_音频处理\\Adobe\" \"Audition\" \"CS6\\Adobe\" \"Audition\" \"CS6.exe ";
-        // String filePath = "G:\\Desktop\\语音合成\\疯狂Java讲义第三版\\第13章\\13.2.4 DDL语句
+        // 读取配置文件中的auditon类路径
+        String audition = SpeechSynthesisProperties.getAuditionPath();
         // 2.修改表结构的语法.pcm";
-        audition += "\"" + filePath + "\"";
+        audition += " \"" + filePath + "\"";
         Command.exeCmd("cmd /c start " + audition);
     }
 
